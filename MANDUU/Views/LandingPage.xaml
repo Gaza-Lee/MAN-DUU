@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:animations="clr-namespace:MANDUU.Animations"
+             x:Class="MANDUU.Views.LandingPage"
+             NavigationPage.HasNavigationBar="False"
+             Title="LandingPage">
+    <Grid Margin="0"
+          Padding="0"
+          HorizontalOptions="Start"
+          VerticalOptions="Start">
+        <GraphicsView Drawable="{x:Static animations:TopOrangePanel.Instance}"
+                      HeightRequest="800"/>
+        <Label BackgroundColor="#FF7B1C"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Text="Manduu"/>
+
+        <Label Text="Get started"
+               VerticalOptions="End"
+               HorizontalOptions="Center"
+               Margin="0,0,0,20"
+               BackgroundColor="#FF7B1C"/>
+    </Grid>
+</ContentPage>
