@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:animations="clr-namespace:MANDUU.Animations"
+             x:Class="MANDUU.Views.AuthenticationPages.CreateAccountOrSignInPage"
+             Shell.NavBarIsVisible="False"
+             Title="CreateAccountOrSignInPage">
+    <Grid HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+        <GraphicsView Drawable="{x:Static animations:TopOrangePanel.Instance}"
+                      HeightRequest="400"
+                      VerticalOptions="Start"/>
+
+        <ActivityIndicator
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    Color="#FF7B1C"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0,0,0,100"/>
+
+        <Button BackgroundColor="#FF7B1C"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="Manduu"
+                FontSize="32"
+                TextColor="#fff"
+                CornerRadius="15"
+                Margin="0,0,0,450"/>
+        <Button HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="Sign In"
+                FontSize="20"
+                Padding="20,0"
+                CharacterSpacing="1"
+                CornerRadius="15">
+            <Button.Shadow>
+                <Shadow Brush="#000"
+                        Offset="5,5"
+                        Radius="10"
+                        Opacity="0.3"/>
+            </Button.Shadow>
+        </Button>
+
+        <Button HorizontalOptions="Center"
+                VerticalOptions="End"
+                Text="Create Account"
+                TextColor="#000"
+                BackgroundColor="#f7f7f7"
+                Margin="0,0,0,50"
+                CharacterSpacing="2"
+                FontSize="20"
+                CornerRadius="15">
+            <Button.Shadow>
+                <Shadow Brush="#000"
+                        Offset="5,5"
+                        Radius="10"
+                        Opacity="0.3"/>
+            </Button.Shadow>
+        </Button>
+    </Grid>
+</ContentPage>

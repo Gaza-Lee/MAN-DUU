@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using MANDUU.Views;
+using MANDUU.ViewModels;
+using MANDUU.Views.AuthenticationPages;
 
 namespace MANDUU
 {
@@ -11,15 +14,39 @@ namespace MANDUU
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("ADLaMDisplay-Regular.ttf", "ADLaMDisplay");
+                    fonts.AddFont("Findlandica-Regular.ttf", "Finlandica");
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
+            builder.RegisterAppServices();
+            builder.RegisterViews();
+            builder.RegisterViewModels();
 
             return builder.Build();
+        }
+
+        //Register application services
+        public static MauiAppBuilder RegisterAppServices(this MauiAppBuilder builder)
+        {
+            return builder;
+        }
+
+        public static MauiAppBuilder RegisterViews (this MauiAppBuilder builder)
+        {
+            builder.Services.AddSingleton<LandingPage>();
+            builder.Services.AddSingleton<CreateAccountOrSignInPage>();
+
+            return builder;
+        }
+
+        public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
+        {
+            builder.Services.AddSingleton<LandingPageViewModel>();
+
+            return builder;
         }
     }
 }

@@ -3,23 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:animations="clr-namespace:MANDUU.Animations"
              x:Class="MANDUU.Views.LandingPage"
-             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
              Title="LandingPage">
     <Grid Margin="0"
           Padding="0"
-          HorizontalOptions="Start"
+          HorizontalOptions="Fill"
           VerticalOptions="Start">
         <GraphicsView Drawable="{x:Static animations:TopOrangePanel.Instance}"
                       HeightRequest="800"/>
-        <Label BackgroundColor="#FF7B1C"
+        <BoxView
+                 IsVisible="{Binding IsBusy}"
+                 BackgroundColor="Black"
+                 Opacity="0.3"
+                 InputTransparent="False" />
+        <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                Color="#FF7B1C"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="0,0,0,100"/>
+
+        <Button BackgroundColor="#FF7B1C"
                HorizontalOptions="Center"
                VerticalOptions="Center"
-               Text="Manduu"/>
+               Text="Manduu"
+               FontSize="32"
+               TextColor="#fff"
+               CornerRadius="15"/>
 
-        <Label Text="Get started"
-               VerticalOptions="End"
-               HorizontalOptions="Center"
-               Margin="0,0,0,20"
-               BackgroundColor="#FF7B1C"/>
+        <Button Text="Get started"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                Margin="0,0,0,60"
+                BackgroundColor="#FF7B1C"
+                TextColor="#fff"
+                Padding="30,0"
+                CharacterSpacing="2"
+                CornerRadius="15"
+                FontSize="20"
+                Command="{Binding GetStartedCommand}"/>
     </Grid>
 </ContentPage>
