@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using MANDUU.Views;
+﻿using CommunityToolkit.Maui;
 using MANDUU.ViewModels;
+using MANDUU.Views;
 using MANDUU.Views.AuthenticationPages;
+using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Handlers;
 
 namespace MANDUU
 {
@@ -12,11 +14,20 @@ namespace MANDUU
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("ADLaMDisplay-Regular.ttf", "ADLaMDisplay");
                     fonts.AddFont("Findlandica-Regular.ttf", "Finlandica");
                 });
+
+            // Customize Entry handler to remove underline on Android
+            EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
+            {
+#if ANDROID
+                handler.PlatformView.Background = null;
+#endif
+            });
 
 #if DEBUG
             builder.Logging.AddDebug();
@@ -38,6 +49,10 @@ namespace MANDUU
         {
             builder.Services.AddSingleton<LandingPage>();
             builder.Services.AddSingleton<CreateAccountOrSignInPage>();
+            builder.Services.AddTransient<SignInPage>();
+            builder.Services.AddTransient<CreateAccountPage>();
+            builder.Services.AddTransient<VerificationPage>();
+            builder.Services.AddTransient<ResetPasswordPage>();
 
             return builder;
         }
@@ -45,6 +60,9 @@ namespace MANDUU
         public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<LandingPageViewModel>();
+            builder.Services.AddSingleton<CreateAccountOrSignInPageViewModel>();
+            builder.Services.AddTransient<SignInViewModel>();
+
 
             return builder;
         }

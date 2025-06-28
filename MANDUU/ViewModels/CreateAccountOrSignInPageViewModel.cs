@@ -10,12 +10,13 @@ namespace MANDUU.ViewModels
 {
     public class CreateAccountOrSignInPageViewModel : BaseViewModel
     {
-        public ICommand SignIn {  get; set; }
-        public ICommand CreateAccount { get; set; }
+        public ICommand SignInCommand {  get; set; }
+        public ICommand CreateAccountCommand { get; set; }
 
         public CreateAccountOrSignInPageViewModel()
         {
-
+            SignInCommand = new Command(async () => await OnSignIn());
+            CreateAccountCommand = new Command(async() => await OnCreateAccount());
         }
 
         public async Task OnSignIn()

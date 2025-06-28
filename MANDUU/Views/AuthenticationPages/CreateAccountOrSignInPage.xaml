@@ -11,14 +11,6 @@
                       HeightRequest="400"
                       VerticalOptions="Start"/>
 
-        <ActivityIndicator
-                    IsRunning="{Binding IsBusy}"
-                    IsVisible="{Binding IsBusy}"
-                    Color="#FF7B1C"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Margin="0,0,0,100"/>
-
         <Button BackgroundColor="#FF7B1C"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
@@ -29,11 +21,14 @@
                 Margin="0,0,0,450"/>
         <Button HorizontalOptions="Center"
                 VerticalOptions="Center"
+                BackgroundColor="#FF7B1C"
                 Text="Sign In"
+                TextColor="#fff"
                 FontSize="20"
                 Padding="20,0"
                 CharacterSpacing="1"
-                CornerRadius="15">
+                CornerRadius="15"
+                Command="{Binding SignInCommand}">
             <Button.Shadow>
                 <Shadow Brush="#000"
                         Offset="5,5"
@@ -50,7 +45,8 @@
                 Margin="0,0,0,50"
                 CharacterSpacing="2"
                 FontSize="20"
-                CornerRadius="15">
+                CornerRadius="15"
+                Command="{Binding CreateAccountCommand}">
             <Button.Shadow>
                 <Shadow Brush="#000"
                         Offset="5,5"
