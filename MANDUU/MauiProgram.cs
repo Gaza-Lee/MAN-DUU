@@ -24,7 +24,7 @@ namespace MANDUU
             // Customize Entry handler to remove underline on Android
             EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
             {
-#if ANDROID
+#if ANDROID || WINDOWS
                 handler.PlatformView.Background = null;
 #endif
             });
@@ -61,8 +61,9 @@ namespace MANDUU
         {
             builder.Services.AddSingleton<LandingPageViewModel>();
             builder.Services.AddSingleton<CreateAccountOrSignInPageViewModel>();
-            builder.Services.AddTransient<SignInViewModel>();
-
+            builder.Services.AddTransient<SignInPageViewModel>();
+            builder.Services.AddTransient<CreateAccountPageViewModel>();
+            builder.Services.AddTransient<VerificationPageViewModel>();
 
             return builder;
         }

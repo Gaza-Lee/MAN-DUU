@@ -4,10 +4,22 @@
              x:Class="MANDUU.Views.AuthenticationPages.SignInPage"
              xmlns:controls="clr-namespace:MANDUU.Controls"
              Title="Sign In">
-    <Grid Padding="40"
+    <Grid Padding="0"
           RowDefinitions="0.25*,0.45*,0.50*"
           RowSpacing="10">
-        
+
+        <BoxView IsVisible="{Binding IsBusy}"
+                 BackgroundColor="#000"
+                 Opacity="0.3"
+                 Grid.RowSpan="3"/>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Color="#FF7B1C"
+                           Grid.Row="1"/>
+
         <!--MANDUU-->
         <Button BackgroundColor="#FF7B1C"
                 HorizontalOptions="Center"
@@ -20,12 +32,14 @@
         <!--Entry Fields-->
         <Grid RowDefinitions="auto, auto"
               Grid.Row="1"
-              RowSpacing="10">
+              RowSpacing="10"
+              HorizontalOptions="Center">
             <!--Email-->
             <Border  Grid.Row="0"
                  Padding="15,5,15,0"
                  Stroke="#cccccc"
-                 StrokeThickness="1">
+                 StrokeThickness="1"
+                     WidthRequest="400">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="12"/>
                 </Border.StrokeShape>
@@ -45,7 +59,8 @@
                 <Border  
                          Padding="15,5,15,0"
                          Stroke="#cccccc"
-                         StrokeThickness="1">
+                         StrokeThickness="1"
+                         WidthRequest="400">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="12"/>
                     </Border.StrokeShape>
@@ -58,8 +73,10 @@
                     <controls:FloatingLabel Placeholder="Password"
                                             Text="{Binding Password}"/>
                 </Border>
+                <!--Forgot Password-->
                 <Label Text="Forget Password?"
-                       Margin="20,5">
+                       FontSize="18"
+                       Margin="20,2">
                     
                 </Label>
             </VerticalStackLayout>

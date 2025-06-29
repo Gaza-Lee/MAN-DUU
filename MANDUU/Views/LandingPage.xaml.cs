@@ -4,11 +4,9 @@ namespace MANDUU.Views;
 
 public partial class LandingPage : ContentPage
 {
-	public LandingPage(LandingPageViewModel landingPageViewModel)
+	public LandingPage(LandingPageViewModel _landingPageViewModel)
 	{
 		InitializeComponent();
-		BindingContext = landingPageViewModel;
+		BindingContext = _landingPageViewModel;
 	}
-
-
 }

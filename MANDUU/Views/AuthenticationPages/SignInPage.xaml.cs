@@ -3,7 +3,7 @@ namespace MANDUU.Views.AuthenticationPages;
 
 public partial class SignInPage : ContentPage
 {
-	public SignInPage(SignInViewModel signInViewModel)
+	public SignInPage(SignInPageViewModel signInViewModel)
 	{
 		InitializeComponent();
 		BindingContext = signInViewModel;

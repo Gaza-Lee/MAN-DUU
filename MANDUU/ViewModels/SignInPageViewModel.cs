@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace MANDUU.ViewModels
 {
-    public class SignInViewModel : BaseViewModel
+    public class SignInPageViewModel : BaseViewModel
     {
         private string _username;
         private string _email;
@@ -18,7 +18,7 @@ namespace MANDUU.ViewModels
         public ICommand ProceedCommand { get; }
 
 
-        public SignInViewModel()
+        public SignInPageViewModel()
         {
             ProceedCommand = new Command(async () => await OnProceed());
             _username = string.Empty;
@@ -88,7 +88,7 @@ namespace MANDUU.ViewModels
         {
             IsBusy = true;
             await Task.Delay(2000);
-            await Shell.Current.GoToAsync("HomePage");
+            await Shell.Current.GoToAsync("VerificationPage");
             IsBusy = false;
         }
         #endregion

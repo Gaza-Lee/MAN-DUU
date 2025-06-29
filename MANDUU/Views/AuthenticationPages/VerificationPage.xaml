@@ -2,11 +2,123 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MANDUU.Views.AuthenticationPages.VerificationPage"
-             Title="VerificationPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Verification">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="VerificationEntry" TargetType="Entry">
+                <Setter Property="Placeholder" Value="1"/>
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="Keyboard" Value="Numeric"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="MaxLength" Value="1"/>
+                <Setter Property="FontFamily" Value="Finlandica"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid RowDefinitions="0.1*, 0.1*,0.1*, 0.5*"
+          RowSpacing="10">
+        <Label Text="Verification Code sent"
+               Grid.Row="0"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
+               FontSize="20"/>
+
+        <BoxView IsVisible="{Binding IsBusy}"
+         BackgroundColor="#000"
+         Opacity="0.3"
+         Grid.RowSpan="4"/>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                   IsVisible="{Binding IsBusy}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Color="#FF7B1C"
+                   Grid.Row="1"
+                           Grid.RowSpan="2"/>
+
+        <!--MANDUU-->
+        <Button BackgroundColor="#FF7B1C"
+                HorizontalOptions="Center"
+                Text="Manduu"
+                Grid.Row="1"
+                FontSize="32"
+                TextColor="#fff"
+                CornerRadius="15"
+                VerticalOptions="Start"/>
+        <!--Entry-->
+        <Grid Grid.Row="2"
+              ColumnDefinitions="auto, auto, auto, auto"
+              HorizontalOptions="Center"
+              VerticalOptions="Start"
+              ColumnSpacing="10">
+            <Border Grid.Column="0"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="10,5">
+                <Border.Shadow>
+                    <Shadow Brush="#000"
+                            Offset="5,5"
+                            Opacity="0.5"/>
+                </Border.Shadow>
+                <Entry Style="{x:StaticResource VerificationEntry}"/>
+            </Border>
+
+            <Border Grid.Column="1"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="10,5">
+                <Border.Shadow>
+                    <Shadow Brush="#000"
+                            Offset="5,5"
+                            Opacity="0.5"/>
+                </Border.Shadow>
+                <Entry Style="{x:StaticResource VerificationEntry}"/>
+            </Border>
+
+            <Border Grid.Column="2"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="10,5">
+                <Border.Shadow>
+                    <Shadow Brush="#000"
+                            Offset="5,5"
+                            Opacity="0.5"/>
+                </Border.Shadow>
+                <Entry Style="{x:StaticResource VerificationEntry}"/>
+            </Border>
+
+            <Border Grid.Column="3"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="10,5">
+                <Border.Shadow>
+                    <Shadow Brush="#000"
+                            Offset="5,5"
+                            Opacity="0.5"/>
+                </Border.Shadow>
+                <Entry Style="{x:StaticResource VerificationEntry}"/>
+            </Border>
+        </Grid>
+        
+        <!--Proceed-->
+        <Border StrokeThickness="0"
+                 StrokeShape="RoundRectangle 15"
+                 Grid.Row="3"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Start"
+                 Background="#FF7B1C"
+                 Padding="20,5">
+            <Border.Shadow>
+                <Shadow Offset="5,5"
+                 Brush="#000"
+                 Opacity="0.3"/>
+            </Border.Shadow>
+            <Label Text="Proceed"
+            FontSize="20"
+            TextColor="#fff">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ProceedCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Border>
+    </Grid>
 </ContentPage>
