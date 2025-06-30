@@ -8,26 +8,31 @@ using System.Windows.Input;
 
 namespace MANDUU.ViewModels
 {
-    public partial class VerificationPageViewModel : BaseViewModel
+    public class NewPasswordPageViewModel : BaseViewModel
     {
-        private string VerificationCode { get; set; }
-        
-        public ICommand ProceedCommand { get; set; }
+        #region Variables
+        private string _newPassword { get; set; }
+        private string _confirmNewPassword { get; set; }
+        #endregion
 
-
-        public VerificationPageViewModel()
+        public NewPasswordPageViewModel()
         {
             ProceedCommand = new Command(async () => await OnProceed());
         }
+
+
+        #region Commands
+        public ICommand ProceedCommand { get; }
+        #endregion
 
         #region Methods
         private async Task OnProceed()
         {
             IsBusy = true;
-            await Task.Delay(1000);
             await Shell.Current.GoToAsync("HomePage");
             IsBusy = false;
         }
         #endregion
+
     }
 }

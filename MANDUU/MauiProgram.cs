@@ -2,6 +2,7 @@
 using MANDUU.ViewModels;
 using MANDUU.Views;
 using MANDUU.Views.AuthenticationPages;
+using MANDUU.Views.MainPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 
@@ -53,6 +54,9 @@ namespace MANDUU
             builder.Services.AddTransient<CreateAccountPage>();
             builder.Services.AddTransient<VerificationPage>();
             builder.Services.AddTransient<ResetPasswordPage>();
+            builder.Services.AddTransient<NewPasswordPage>();
+            builder.Services.AddTransient<ResetPswVerificationPage>();
+            builder.Services.AddTransient<HomePage>();
 
             return builder;
         }
@@ -64,6 +68,9 @@ namespace MANDUU
             builder.Services.AddTransient<SignInPageViewModel>();
             builder.Services.AddTransient<CreateAccountPageViewModel>();
             builder.Services.AddTransient<VerificationPageViewModel>();
+            builder.Services.AddTransient<ResetPasswordPageViewModel>();
+            builder.Services.AddTransient<ResetPswVerificationViewModel>();
+            builder.Services.AddTransient<NewPasswordPageViewModel>();
 
             return builder;
         }

@@ -8,14 +8,11 @@ using System.Windows.Input;
 
 namespace MANDUU.ViewModels
 {
-    public partial class VerificationPageViewModel : BaseViewModel
+    public class ResetPasswordPageViewModel: BaseViewModel
     {
-        private string VerificationCode { get; set; }
-        
         public ICommand ProceedCommand { get; set; }
 
-
-        public VerificationPageViewModel()
+        public ResetPasswordPageViewModel()
         {
             ProceedCommand = new Command(async () => await OnProceed());
         }
@@ -23,10 +20,8 @@ namespace MANDUU.ViewModels
         #region Methods
         private async Task OnProceed()
         {
-            IsBusy = true;
-            await Task.Delay(1000);
-            await Shell.Current.GoToAsync("HomePage");
             IsBusy = false;
+            await Shell.Current.GoToAsync("ResetPswVerificationPage");
         }
         #endregion
     }

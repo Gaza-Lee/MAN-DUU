@@ -16,16 +16,13 @@ namespace MANDUU.ViewModels
         private string _password;
 
         public ICommand ProceedCommand { get; }
+        public ICommand ForgetPasswordCommand { get; }
 
 
         public SignInPageViewModel()
         {
             ProceedCommand = new Command(async () => await OnProceed());
-            _username = string.Empty;
-            _email = string.Empty;
-            _phoneNumber = string.Empty;
-            _password = string.Empty;
-           
+            ForgetPasswordCommand = new Command(async () => await OnForgetPassword());
         }
 
         #region Properties
@@ -84,12 +81,18 @@ namespace MANDUU.ViewModels
         #endregion
 
         #region Methods
-        public async Task OnProceed()
+        private async Task OnProceed()
         {
             IsBusy = true;
             await Task.Delay(2000);
             await Shell.Current.GoToAsync("VerificationPage");
             IsBusy = false;
+        }
+
+        private async Task OnForgetPassword()
+        {
+            IsBusy = false;
+            await Shell.Current.GoToAsync("ResetPasswordPage");
         }
         #endregion
     }
