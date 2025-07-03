@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Maui.Alerts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -29,6 +30,12 @@ namespace MANDUU.ViewModels.Base
                     OnPropertyChanged();
                 }
             }
+        }
+
+        public async void ShowToast(string message)
+        {
+            var toast = Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short);
+            await toast.Show();
         }
 
         public virtual Task InitializeAsync() => Task.CompletedTask;
