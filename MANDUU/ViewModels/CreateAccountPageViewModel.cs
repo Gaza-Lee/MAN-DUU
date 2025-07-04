@@ -13,12 +13,15 @@ namespace MANDUU.ViewModels
 {
     public class CreateAccountPageViewModel : BaseViewModel
     {
+        #region Variables
         private string _firstName { get; set; }
         private string _lastName { get; set; }
         private string _phoneNumber { get; set; }
         private string _email { get; set; }
         private string _password { get; set; }
         private string _confirmPassword { get; set; }
+
+        #endregion
         
 
         public ICommand ProceedCommand { get; set; }
@@ -159,23 +162,9 @@ namespace MANDUU.ViewModels
                 IsBusy = false;
                 return;
             }
-
-            if (string.IsNullOrWhiteSpace(PhoneNumber))
-            {
-                ShowToast("Phone number is required");
-                IsBusy = false;
-                return;
-            }
             if (!InputValidation.IsValidPhoneNumber(PhoneNumber))
             {
                 ShowToast("Invalid phone number");
-                IsBusy = false;
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(Email))
-            {
-                ShowToast("Email is required");
                 IsBusy = false;
                 return;
             }

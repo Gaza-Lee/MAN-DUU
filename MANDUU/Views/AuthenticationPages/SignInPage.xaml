@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MANDUU.Views.AuthenticationPages.SignInPage"
              xmlns:controls="clr-namespace:MANDUU.Controls"
+             Shell.BackgroundColor="#FF7B1C"
              Title="Sign In">
     <Grid Padding="0"
-          RowDefinitions="0.25*,0.45*,0.50*"
+          RowDefinitions="0.85*,0.90*,0.90*"
           RowSpacing="10">
-
+        <GraphicsView Style="{x:StaticResource topwave}" />
         <BoxView IsVisible="{Binding IsBusy}"
                  BackgroundColor="#000"
                  Opacity="0.3"
@@ -49,8 +50,8 @@
                          Opacity="0.2"
                          Radius="8"/>
                 </Border.Shadow>
-                <controls:FloatingLabel Placeholder="Email/Phone/Username"
-                                        Text="{Binding Email}"/>
+                <controls:FloatingLabel Placeholder="Email/Phone"
+                                        Text="{Binding EmailOrPhone}"/>
             </Border>
 
             <!--Password-->

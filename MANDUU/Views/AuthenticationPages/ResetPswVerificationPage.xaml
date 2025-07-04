@@ -20,6 +20,9 @@
 
     <Grid RowDefinitions="0.1*, 0.1*,0.1*, 0.5*"
       RowSpacing="10">
+        <GraphicsView Style="{x:StaticResource topwave}"/>
+        
+        
         <Label Text="Verification Code sent"
            Grid.Row="0"
            HorizontalOptions="Center"

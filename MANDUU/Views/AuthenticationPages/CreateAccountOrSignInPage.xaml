@@ -7,9 +7,8 @@
              Title="CreateAccountOrSignInPage">
     <Grid HorizontalOptions="FillAndExpand"
           VerticalOptions="FillAndExpand">
-        <GraphicsView Drawable="{x:Static animations:TopOrangePanel.Instance}"
-                      HeightRequest="400"
-                      VerticalOptions="Start"/>
+        <GraphicsView Style="{x:StaticResource topwave}"
+                      HeightRequest="600"/>
 
         <Button BackgroundColor="#FF7B1C"
                 HorizontalOptions="Center"

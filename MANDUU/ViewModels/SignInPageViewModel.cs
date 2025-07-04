@@ -1,4 +1,6 @@
-﻿using MANDUU.ViewModels.Base;
+﻿using MANDUU.RegexValidation;
+using MANDUU.ViewModels.Base;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,8 @@ namespace MANDUU.ViewModels
 {
     public class SignInPageViewModel : BaseViewModel
     {
-        private string _username;
-        private string _email;
-        private string _phoneNumber;
+        
+        private string _emailORPhone;
         private string _password;
 
         public ICommand ProceedCommand { get; }
@@ -26,40 +27,15 @@ namespace MANDUU.ViewModels
         }
 
         #region Properties
-        public string Username
-        {
-            get => _username;
-            set
-            {
-                if (_username != value)
-                {
-                    _username = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
-        public string Email
+        public string EmailOrPhone
         {
-            get => _email;
+            get => _emailORPhone;
             set
             {
-                if(_email != value)
+                if(_emailORPhone != value)
                 {
-                    _email = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string PhoneNumber
-        {
-            get => _phoneNumber;
-            set
-            {
-                if (_phoneNumber != value)
-                {
-                    _phoneNumber = value;
+                    _emailORPhone = value;
                     OnPropertyChanged();
                 }
             }
@@ -81,9 +57,46 @@ namespace MANDUU.ViewModels
         #endregion
 
         #region Methods
+
         private async Task OnProceed()
         {
             IsBusy = true;
+
+            if (string.IsNullOrWhiteSpace(EmailOrPhone) || 
+                string.IsNullOrWhiteSpace(Password))
+            {
+                ShowToast("Fields must not be empty");
+                IsBusy = false;
+                return;
+            }
+
+            //Chack if Email or Password is valid type
+            bool isEmailLike = EmailOrPhone.Contains("@");
+            bool isValidEmail = InputValidation.IsValidEmail(EmailOrPhone);
+            bool isValidPhone = InputValidation.IsValidPhoneNumber(EmailOrPhone);
+
+            if (isEmailLike && !isValidEmail)
+            {
+                ShowToast("Invalid email");
+                IsBusy = false;
+                return;
+            }
+            if (!isValidPhone)
+            {
+                ShowToast("Invalid Phone");
+                IsBusy = false;
+                return;
+            }
+
+
+            if (!InputValidation.IsValidPassword(Password))
+            {
+                ShowToast("Invalid Password");
+                IsBusy = false;
+                return;
+            }
+
+
             await Task.Delay(2000);
             await Shell.Current.GoToAsync("VerificationPage");
             IsBusy = false;
