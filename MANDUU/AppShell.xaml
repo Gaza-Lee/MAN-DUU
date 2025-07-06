@@ -9,9 +9,15 @@
     <Shell.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor ="#FF7B1C"/>
     </Shell.Behaviors>
-
+    
+    <!--Landing page-->
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate views:LandingPage}"
         Route="LandingPage" />
+    
+    <!--Tabbed Pages-->
+    <TabBar>
+        
+    </TabBar>
 </Shell>
