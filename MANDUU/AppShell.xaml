@@ -4,20 +4,25 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:MANDUU.Views"
+    xmlns:mainPages="clr-namespace:MANDUU.Views.MainPages"
+    xmlns:Icon ="clr-namespace:MANDUU.Helpers"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="MANDUU">
     <Shell.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor ="#FF7B1C"/>
+        <toolkit:StatusBarBehavior StatusBarColor ="{StaticResource Primary}"/>
     </Shell.Behaviors>
-    
-    <!--Landing page-->
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:LandingPage}"
-        Route="LandingPage" />
-    
     <!--Tabbed Pages-->
     <TabBar>
-        
+        <ShellContent 
+            Title="Home"
+            Icon="{x:Static Icon:Icons.homeIcon}"
+            ContentTemplate="{DataTemplate mainPages:HomePage}"
+            Route="HomePage"/>
+
+        <ShellContent 
+            Title="Electronic Printing"
+            Icon="{x:Static Icon:Icons.ePrintIcon}"
+            ContentTemplate="{DataTemplate mainPages:EPrintingPage}"
+            Route="EPrinting"/>
     </TabBar>
 </Shell>

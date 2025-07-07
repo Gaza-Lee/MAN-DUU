@@ -19,6 +19,7 @@ namespace MANDUU
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("ADLaMDisplay-Regular.ttf", "ADLaMDisplay");
+                    fonts.AddFont("MaterialIcon-Regular.ttf", "MaterialIcon");
                     fonts.AddFont("Findlandica-Regular.ttf", "Finlandica");
                 });
 
