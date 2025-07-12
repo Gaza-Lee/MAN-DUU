@@ -58,48 +58,63 @@ namespace MANDUU.ViewModels
 
         #region Methods
 
-        private async Task OnProceed()
+        private bool PhoneNumberOrEmailvalidation()
         {
-            IsBusy = true;
-
-            if (string.IsNullOrWhiteSpace(EmailOrPhone) || 
-                string.IsNullOrWhiteSpace(Password))
-            {
-                ShowToast("Fields must not be empty");
-                IsBusy = false;
-                return;
-            }
-
-            //Chack if Email or Password is valid type
-            bool isEmailLike = EmailOrPhone.Contains("@");
             bool isValidEmail = InputValidation.IsValidEmail(EmailOrPhone);
             bool isValidPhone = InputValidation.IsValidPhoneNumber(EmailOrPhone);
 
-            if (isEmailLike && !isValidEmail)
-            {
-                ShowToast("Invalid email");
-                IsBusy = false;
-                return;
-            }
-            if (!isValidPhone)
-            {
-                ShowToast("Invalid Phone");
-                IsBusy = false;
-                return;
-            }
+            if (isValidEmail || isValidPhone)
+                return true;
 
-
-            if (!InputValidation.IsValidPassword(Password))
+            if (EmailOrPhone.Contains("@"))
+                ShowToast("Invalid Email Address");
+            else if (EmailOrPhone.All(char.IsDigit) && EmailOrPhone.Length >= 8 && EmailOrPhone.Length <= 15)
             {
-                ShowToast("Invalid Password");
-                IsBusy = false;
-                return;
+                ShowToast("Invalid Phone Number");
+            }
+            else
+            {
+                ShowToast("Enter a valid email or phone number");
             }
 
+                return false;
+        }
 
-            await Task.Delay(2000);
-            await Shell.Current.GoToAsync("VerificationPage");
-            IsBusy = false;
+        private async Task OnProceed()
+        {
+            try
+            {
+                IsBusy = true;
+
+                if (string.IsNullOrWhiteSpace(EmailOrPhone) ||
+                    string.IsNullOrWhiteSpace(Password))
+                {
+                    ShowToast("Fields must not be empty");
+                    IsBusy = false;
+                    return;
+                }
+
+                if (!PhoneNumberOrEmailvalidation())
+                {
+                    IsBusy = false;
+                    return;
+                }
+
+                if (!InputValidation.IsValidPassword(Password))
+                {
+                    ShowToast("Invalid Password");
+                    IsBusy = false;
+                    return;
+                }
+
+                await Task.Delay(2000);
+                await Shell.Current.GoToAsync("VerificationPage");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+            
         }
 
         private async Task OnForgetPassword()

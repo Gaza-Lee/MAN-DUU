@@ -5,6 +5,7 @@ using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
+using Sharpnado.Tabs;
 
 namespace MANDUU
 {
@@ -16,11 +17,12 @@ namespace MANDUU
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseSharpnadoTabs(loggerEnable:false)
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("ADLaMDisplay-Regular.ttf", "ADLaMDisplay");
-                    fonts.AddFont("MaterialIcon-Regular.ttf", "MaterialIcon");
-                    fonts.AddFont("Findlandica-Regular.ttf", "Finlandica");
+                    fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcon");
+                    fonts.AddFont("Finlandica-Regular.ttf", "Finlandica");
                 });
 
             // Customize Entry handler to remove underline on Android

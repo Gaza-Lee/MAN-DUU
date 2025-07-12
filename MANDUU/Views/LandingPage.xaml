@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:animations="clr-namespace:MANDUU.Animations"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
              x:Class="MANDUU.Views.LandingPage"
              Shell.NavBarIsVisible="False"
              Title="LandingPage">
@@ -32,16 +33,29 @@
                TextColor="#fff"
                CornerRadius="15"/>
 
-        <Button Text="Get started"
-                VerticalOptions="End"
+
+        <Border VerticalOptions="End"
                 HorizontalOptions="Center"
                 Margin="0,0,0,60"
                 BackgroundColor="#FF7B1C"
-                TextColor="#fff"
-                Padding="30,0"
-                CharacterSpacing="2"
-                CornerRadius="15"
-                FontSize="20"
-                Command="{Binding GetStartedCommand}"/>
+                StrokeShape="RoundRectangle 15"
+                Padding="20,5,10,5">
+            <HorizontalStackLayout VerticalOptions="Center">
+                <Label Text="Get started"
+                       TextColor="#fff"
+                       CharacterSpacing="2"
+                       FontSize="20">
+                </Label>
+                <Label Text="{x:Static icons:Icons.getStartedIcon}"
+                       Style="{x:StaticResource MaterialIcon}"
+                       FontSize="30"
+                       TextColor="#fff"
+                       VerticalOptions="Center">
+                </Label>
+            </HorizontalStackLayout>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GetStartedCommand}"/>
+            </Border.GestureRecognizers>
+        </Border>
     </Grid>
 </ContentPage>
