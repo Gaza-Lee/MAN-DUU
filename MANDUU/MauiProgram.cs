@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using MANDUU.Services;
 using MANDUU.ViewModels;
 using MANDUU.Views;
 using MANDUU.Views.AuthenticationPages;
@@ -46,6 +47,7 @@ namespace MANDUU
         //Register application services
         public static MauiAppBuilder RegisterAppServices(this MauiAppBuilder builder)
         {
+            builder.Services.AddSingleton<CategoryService>();
             return builder;
         }
 
@@ -74,6 +76,7 @@ namespace MANDUU
             builder.Services.AddTransient<ResetPasswordPageViewModel>();
             builder.Services.AddTransient<ResetPswVerificationViewModel>();
             builder.Services.AddTransient<NewPasswordPageViewModel>();
+            builder.Services.AddSingleton<HomePageViewModel>();
 
             return builder;
         }

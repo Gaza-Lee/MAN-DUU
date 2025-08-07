@@ -30,5 +30,7 @@ namespace MANDUU.Helpers
         public static string documentIcon = "\ue873";
 
         public static string UploadIcon = "\uf09b";
+
+        public static string ExpandIcon = "\ue99b";
     }
 }

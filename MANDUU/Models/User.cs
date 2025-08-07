@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MANDUU.Models
 {
-    public class NewPasswordModel
+    public class User
     {
-        public string NewPassword { get; set; }
-        public string ConfirmPassword { get; set; } 
+        
     }
 }
