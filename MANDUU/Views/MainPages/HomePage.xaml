@@ -44,11 +44,12 @@
                     <Span Text="Salute, &#10;"
                           TextColor="DarkGray"
                           FontAttributes="Bold"
-                          FontSize="Body"
-                          FontFamily="ADLamDisplay"/>
+                          FontSize="Body"/>
                     <Span Text="GrandMa"
                           FontFamily="Finlandica"
-                          FontSize="20"/>
+                          FontSize="25"
+                          TextColor="#ff7b1c"
+                          FontAttributes="Bold"/>
                 </FormattedString>
             </Label.FormattedText>
         </Label>
@@ -66,8 +67,7 @@
                             StrokeShape="RoundRectangle 10"
                             WidthRequest="250">
                         <Grid>
-                            <BoxView Color="{Binding BgColor}"
-                                     Opacity="0.4"/>
+                            <BoxView Color="{Binding BgColor}"/>
 
                             <Grid RowDefinitions="auto, *, auto"
                                   Margin="5">
@@ -107,8 +107,9 @@
                     StrokeThickness="0"
                     WidthRequest="100">
                             <Grid>
-                                <BoxView Color="#ff7b1c"
-                                         Opacity="0.2"/>
+                                <BoxView Color="#ff7b1c" 
+                                         Opacity="0.4"
+                                         ZIndex="-1"/>
                                 <Grid RowDefinitions="*, auto"
                           Margin="5">
                                     <Image Source="{Binding Image}"
