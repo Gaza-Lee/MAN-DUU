@@ -1,6 +1,7 @@
 ﻿using MANDUU.Views;
 using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
+using MANDUU.Views.MainPages.SubPages;
 
 namespace MANDUU
 {
@@ -19,6 +20,8 @@ namespace MANDUU
             Routing.RegisterRoute("ResetPasswordPage", typeof(ResetPasswordPage));
             Routing.RegisterRoute("ResetPswVerificationPage", typeof(ResetPswVerificationPage));
             Routing.RegisterRoute("NewPasswordPage", typeof(NewPasswordPage));
+            Routing.RegisterRoute("productdetailpage", typeof(ProductDetailsPage));
+            Routing.RegisterRoute("productbycategorypage", typeof(ProductsByCategoryPage));
         }
     }
 }

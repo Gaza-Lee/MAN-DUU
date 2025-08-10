@@ -8,27 +8,31 @@ namespace MANDUU.Models
 {
     public class Product
     {
-
-        public Product(int id, string name, string description, string imageUrl, decimal price, string categoryName, short categoryId, int totalSold)
+        public Product(int id, string name, string description, string imageUrl, decimal price, string mainCategoryName, string subCategoryName, int totalSold)
         {
             Id = id;
             Name = name;
             Description = description;
             ImageUrl = imageUrl;
             Price = price;
-            CategoryName = categoryName;
-            CategoryId = categoryId;
+            MainCategoryName = mainCategoryName;
+            SubCategoryName = subCategoryName;
             TotalSold = totalSold;
         }
-
 
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
-        public string CategoryName { get; set; }
-        public short CategoryId { get; set; }
+        public string MainCategoryName { get; set; }
+        public string SubCategoryName { get; set; }
         public int TotalSold { get; set; } 
+    }
+
+    public class MainCategory
+    {
+        public string Name { get; set; }
+        public string BannerImageUrl { get; set; }
     }
 }

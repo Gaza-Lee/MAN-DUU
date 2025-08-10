@@ -4,6 +4,7 @@ using MANDUU.ViewModels;
 using MANDUU.Views;
 using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
+using MANDUU.Views.MainPages.SubPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 using Sharpnado.Tabs;
@@ -47,7 +48,9 @@ namespace MANDUU
         //Register application services
         public static MauiAppBuilder RegisterAppServices(this MauiAppBuilder builder)
         {
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<CategoryService>();
+            builder.Services.AddSingleton<ProductService>();
             return builder;
         }
 
@@ -62,6 +65,8 @@ namespace MANDUU
             builder.Services.AddTransient<NewPasswordPage>();
             builder.Services.AddTransient<ResetPswVerificationPage>();
             builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient <ProductDetailsPage>();
+            builder.Services.AddTransient<ProductsByCategoryPage>();
 
             return builder;
         }
@@ -77,6 +82,8 @@ namespace MANDUU
             builder.Services.AddTransient<ResetPswVerificationViewModel>();
             builder.Services.AddTransient<NewPasswordPageViewModel>();
             builder.Services.AddSingleton<HomePageViewModel>();
+            builder.Services.AddTransient<ProductDetailViewModel>();
+            builder.Services.AddTransient<ProductByCategoryViewModel>();
 
             return builder;
         }

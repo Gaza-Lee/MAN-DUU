@@ -94,9 +94,13 @@
                 <Label Text="Categories"
                        Style="{x:StaticResource CatTitleText}"/>
             </Border>
+            
             <CollectionView ItemsSource="{Binding MainCategories}"
-                Margin="0,10"
-                HorizontalOptions="Center">
+                            Margin="0,10"
+                            HorizontalOptions="Center"
+                            SelectionMode="Single"
+                            SelectionChangedCommand="{Binding SelectedCategoryCommand}"
+                            SelectionChangedCommandParameter="{Binding CurrentSelection[0], Source={x:Reference CategoriesCollectionView}}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"
                            ItemSpacing="10"/>
@@ -145,6 +149,28 @@
                Style="{x:StaticResource CatTitleText}"/>
             </Border>
 
+            <CollectionView  x:Name="BestSalesCollectionView"
+                            ItemsSource="{Binding BestSellingProducts}"
+                            SelectionMode="Single"
+                            SelectionChangedCommand="{Binding SelectedProductCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference BestSalesCollectionView}}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Product">
+                        <Border StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0.2"
+                                Stroke="#000">
+                            <Grid RowDefinitions="*,auto">
+                                <Grid Grid.Row="0">
+                                    <Image Source="{Binding ImageUrl}"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>            
         </VerticalStackLayout>
         
         <!--Recommendations-->

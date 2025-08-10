@@ -2,40 +2,70 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MANDUU.Services
 {
     public class ProductService
     {
-        public IEnumerable<Product> _products;
-        public async ValueTask<IEnumerable<Product>> GetProductsAsync()
+        private readonly List<Product> _products;
+
+        public ProductService()
         {
-           if (_products == null)
+            _products = new List<Product>
             {
-                var products = new List<Product>
-                {
-                    new(1, "Smartwatch", "Feature-rich smartwatch", "smartwatch.png", 199.99m, "electronics", 9, 150),
-                    new(2, "T-Shirt", "Cotton round neck", "tshirt.png", 25.00m, "clothing", 2, 250),
-                    new(3, "Sneakers", "Comfortable running shoes", "sneakers.png", 89.99m, "footWear", 3, 50),
-                    new(4, "Foundation", "Skin-friendly makeup base", "foundation.png", 35.00m, "beauty", 7, 120),
-                    new(5, "Pizza", "Cheesy pepperoni pizza", "pizza.png", 12.99m, "food", 8, 180),
-                };
-            }
-           return _products;
+                new Product(1, "Legion 9i", "RTX 3060\nIntel core i9", "legion.png", 25909.99m, "Electronics", "Laptops", 150),
+                new Product(2, "Ipad Pro 11", "1TB", "ipad.png", 11087.99m, "Electronics", "Tablets", 100),
+                new Product(3, "Beautiful Nails", "Nice design of nail painting", "nail.png", 79.99m, "Beauty", "Nails", 310)
+            };
+        }
+
+        public async ValueTask<IEnumerable<Product>> GetProductsAsync()
+            => await Task.FromResult(_products);
+
+        public async ValueTask<Product?> GetProductByIdAsync(int id)
+            => await Task.FromResult(_products.FirstOrDefault(p => p.Id == id));
+
+        public async ValueTask<IEnumerable<Product>> GetProductsByCategoryAsync(string categoryName)
+        {
+            var products = await GetProductsAsync();
+            return products.Where(p =>
+                string.Equals(p.MainCategoryName, categoryName, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(p.SubCategoryName, categoryName, StringComparison.OrdinalIgnoreCase));
         }
 
         public async ValueTask<IEnumerable<Product>> GetBestSellingProductsAsync(int count = 10)
+            => await Task.FromResult(_products.OrderByDescending(p => p.TotalSold).Take(count));
+
+        // Return main category info (banner, etc.)
+        public async Task<MainCategory?> GetMainCategoryAsync(string mainCategoryName)
         {
-            var products = await GetProductsAsync();
-            return products.OrderByDescending(p => p.TotalSold).Take(count);
+            var mainCategories = new List<MainCategory>
+            {
+
+                //TODO: Replace with actual data retrieval logic
+                new MainCategory { Name = "Fashion", BannerImageUrl = "fashion-banner.png" },
+                new MainCategory { Name = "Electronics", BannerImageUrl = "electronics-banner.png" },
+                new MainCategory { Name = "Beauty", BannerImageUrl = "beauty-banner.png" }
+            };
+
+            return await Task.FromResult(
+                mainCategories.FirstOrDefault(c => string.Equals(c.Name, mainCategoryName, StringComparison.OrdinalIgnoreCase))
+            );
         }
 
-        public async ValueTask<IEnumerable<Product>> GetProductsByCategoryIdAsync(int categoryId)
+        public async ValueTask AddProductAsync(Product product) { _products.Add(product); await Task.CompletedTask; }
+        public async ValueTask DeleteProductAsync(int id)
         {
-            var products = await GetProductsAsync();
-            return products.Where(p => p.CategoryId == categoryId);
+            var product = _products.FirstOrDefault(p => p.Id == id);
+            if (product != null) _products.Remove(product);
+            await Task.CompletedTask;
+        }
+        public async ValueTask UpdateProductAsync(Product updatedProduct)
+        {
+            var index = _products.FindIndex(p => p.Id == updatedProduct.Id);
+            if (index != -1) _products[index] = updatedProduct;
+            await Task.CompletedTask;
         }
     }
 }

@@ -15,12 +15,19 @@ namespace MANDUU.Services
 
         public async Task NavigateToAsync(string route, IDictionary<string, object> parameters = null)
         {
-            
+            if (parameters != null)
+            {
+                await Shell.Current.GoToAsync(route, true, parameters);
+            }
+            else
+            {
+                await Shell.Current.GoToAsync(route, true);
+            }
         }
 
         public Task PopAsync()
         {
-            return Shell.Current.GoToAsync("..");
+            return Shell.Current.GoToAsync("..", true);
         }
     }
 }

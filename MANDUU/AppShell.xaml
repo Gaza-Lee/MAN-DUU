@@ -11,119 +11,13 @@
     <Shell.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor ="{StaticResource Primary}"/>
     </Shell.Behaviors>
-    <Shell.FlyoutHeader>
-        <StackLayout Background="#EFF6EC" Padding="10" Opacity="0.9">
-            <Grid RowDefinitions="Auto,*"
-              RowSpacing="10"
-              ColumnDefinitions="*,*">
-                <Border Grid.Row="0"
-                    Grid.Column="0"
-                    Background="{x:StaticResource Primary}"
-                    HorizontalOptions="Start"
-                    Padding="10,5"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 10">
-                    <Border.Shadow>
-                        <Shadow Offset="1,1" Opacity="0.4" />
-                    </Border.Shadow>
-                    <Label Text="Manduu"
-                       TextColor="#fff"
-                       HorizontalTextAlignment="Center"
-                       FontFamily="Adlam"/>
-                </Border>
-                <Label Grid.Row="0"
-                   Grid.Column="1"
-                   HorizontalOptions="End"
-                   FontSize="30"
-                   FontFamily="MaterialIconGoogle"
-                   TextColor="#000"/>
 
-
-                <AbsoluteLayout HeightRequest="200" WidthRequest="200"
-                            HorizontalOptions="Center" VerticalOptions="Center"
-                            Grid.Row="1"
-                            Grid.ColumnSpan="2">
-
-
-                    <Border HeightRequest="200" WidthRequest="200"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 100"
-                        AbsoluteLayout.LayoutBounds="0,0,1,1"
-                        AbsoluteLayout.LayoutFlags="All">
-
-
-                        <Border.Shadow>
-                            <Shadow Brush="Black" Opacity="0.6"/>
-                        </Border.Shadow>
-
-                        <BoxView />
-                    </Border>
-
-
-                    <Label FontFamily="MaterialIconGoogle"
-                       FontSize="200"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       AbsoluteLayout.LayoutBounds="0.5,0.5,200,200"
-                       AbsoluteLayout.LayoutFlags="PositionProportional"/>
-
-                    <Label 
-                       FontFamily="MaterialIconGoogle"
-                       FontSize="40"
-                       HorizontalOptions="End"
-                       VerticalOptions="Start"
-                       TextColor="Green"
-                       AbsoluteLayout.LayoutBounds="0.95,0.1,40,40"
-                       AbsoluteLayout.LayoutFlags="PositionProportional"/>
-                </AbsoluteLayout>
-
-
-            </Grid>
-        </StackLayout>
-    </Shell.FlyoutHeader>
-
-    <Shell.FlyoutFooter>
-        <Grid RowDefinitions="Auto, *" RowSpacing="5">
-            <BoxView Grid.Row="0" HeightRequest="1.5" Margin="10,0"/>
-            <Grid Grid.Row="1" Padding="20,0">
-                <VerticalStackLayout Spacing="5">
-                    <Border Background="{x:StaticResource Primary}"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 12">
-                        <Border.Shadow>
-                            <Shadow Brush="Black" Opacity="0.6"/>
-                        </Border.Shadow>
-                        <HorizontalStackLayout >
-                            <Label 
-                                FontFamily="MaterialIconGoogle"
-                                FontSize="35"
-                                RotationY="180"
-                                VerticalOptions="Center"
-                                Margin="10,0,0,0"/>
-                            <Button Text="LOGOUT"
-                                FontFamily="Adlam"
-                                FontSize="25"
-                                VerticalOptions="Center"
-                                Background="{x:StaticResource Primary}"
-                                TextColor="#fff"/>
-                        </HorizontalStackLayout>
-                    </Border>
-                    <Label Text="Team Manduu"
-                        HorizontalOptions="Center"
-                        FontSize="Caption"
-                        FontAttributes="Italic"
-                        FontFamily="Adlam"
-                       Opacity="0.8"/>
-                </VerticalStackLayout>
-            </Grid>
-        </Grid>
-    </Shell.FlyoutFooter>
     <!--Tabbed Pages-->
     <TabBar>
         <ShellContent 
             Title="Home"
             ContentTemplate="{DataTemplate mainPages:HomePage}"
-            Route="HomePage">
+            Route="home">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="MaterialIcon"
                                  Glyph="{x:Static Icon:Icons.homeIcon}"/>
