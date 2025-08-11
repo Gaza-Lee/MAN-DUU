@@ -1,12 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:MANDUU.Models"
+             xmlns:icon="clr-namespace:MANDUU.Helpers"
              x:Class="MANDUU.Views.MainPages.SubPages.ProductDetailsPage"
-             Title="ProductDetailsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="{Binding Product.Name}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="ChangeImage" >
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="TextColor" Value="#fff"/>
+                <Setter Property="FontFamily" Value="MaterialIcon"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    
+    <ScrollView HorizontalOptions="Center">
+        <HorizontalStackLayout  VerticalOptions="Start"
+                                HorizontalOptions="Center"
+                                Spacing="10">
+            <Border HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Stroke="#000"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="10,5,0,5"
+                    StrokeThickness="0.1"
+                    Background="#757575"
+                    Opacity="0.4">
+                <Label Text="{x:Static icon:Icons.moveLeft}"
+                       Style="{x:StaticResource ChangeImage}"/>
+            </Border>
+            <VerticalStackLayout>
+                <Image Source="{Binding Product.ImageUrl}"/>
+            </VerticalStackLayout>
+
+            <Border HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Stroke="#000"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="5"
+                    StrokeThickness="0.1"
+                    Background="#757575"
+                    Opacity="0.4">
+                <Label Text="{x:Static icon:Icons.moveRight}"
+                       Style="{x:StaticResource ChangeImage}"/>
+            </Border>
+
+        </HorizontalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -66,7 +66,7 @@ namespace MANDUU
             builder.Services.AddTransient<ResetPswVerificationPage>();
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient <ProductDetailsPage>();
-            builder.Services.AddTransient<ProductsByCategoryPage>();
+            builder.Services.AddTransient<CategoryPage>();
 
             return builder;
         }
@@ -83,7 +83,6 @@ namespace MANDUU
             builder.Services.AddTransient<NewPasswordPageViewModel>();
             builder.Services.AddSingleton<HomePageViewModel>();
             builder.Services.AddTransient<ProductDetailViewModel>();
-            builder.Services.AddTransient<ProductByCategoryViewModel>();
 
             return builder;
         }

@@ -32,5 +32,10 @@ namespace MANDUU.Helpers
         public static string UploadIcon = "\uf09b";
 
         public static string ExpandIcon = "\ue99b";
+
+        public static string moveLeft = "\ue5e0";
+
+        public static string moveRight = "\ue5e1";
+
     }
 }

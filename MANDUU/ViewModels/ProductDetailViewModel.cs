@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace MANDUU.ViewModels
 {
-    public partial class ProductDetailViewModel : ObservableObject
+    public partial class ProductDetailViewModel : ObservableObject, IQueryAttributable
     {
         private readonly ProductService _productService;
 
@@ -24,15 +24,22 @@ namespace MANDUU.ViewModels
             SuggestedProducts = new ObservableCollection<Product>();
         }
 
+        public async void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.TryGetValue("ProductId", out var id))
+            {
+                if (id is int productId)
+                    await LoadProductAsync(productId);
+            }
+        }
+
         [RelayCommand]
         public async Task LoadProductAsync(int productId)
         {
-            // Load main product
             Product = await _productService.GetProductByIdAsync(productId);
 
             if (Product != null)
             {
-                // Get products in the same subcategory, excluding the current product
                 var products = await _productService.GetProductsAsync();
                 var suggestions = products
                     .Where(p => p.SubCategoryName == Product.SubCategoryName && p.Id != Product.Id)

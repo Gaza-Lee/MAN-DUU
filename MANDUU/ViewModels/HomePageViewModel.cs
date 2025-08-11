@@ -9,6 +9,7 @@ using MANDUU.Models;
 using MANDUU.Services;
 using CommunityToolkit.Mvvm.Input;
 using MANDUU.Views.MainPages.SubPages;
+using System.Diagnostics;
 
 namespace MANDUU.ViewModels
 {
@@ -33,6 +34,8 @@ namespace MANDUU.ViewModels
 
         #region Commands
 
+
+        //Navigation to Product Detail Page
         [RelayCommand]
         private async Task SelectedProductAsync(Product selectedProduct)
         {
@@ -45,28 +48,33 @@ namespace MANDUU.ViewModels
            });
         }
 
+        //Navigation to Category Page
         [RelayCommand]
         private async Task SelectedCategoryAsync(Category selectedCategory)
         {
             if (selectedCategory == null)
                 return;
-            await _navigationService.NavigateToAsync("productbycategorypage", new Dictionary<string, object>
+
+            await _navigationService.NavigateToAsync("categorypage", new Dictionary<string, object>
             {
-                {"CategoryName", selectedCategory.Name}
+                {"categoryName", selectedCategory.Name }
             });
         }
         #endregion
 
 
-        public HomePageViewModel()
-        {
+        public HomePageViewModel(
+            CategoryService categoryService,
+            ProductService productService,
+            INavigationService navigationService)
+        { 
             offers = [];
             mainCategories = [];
             bestSellingProducts = [];
 
-            _productService = new ProductService();
-            _categoryService = new CategoryService();
-            _navigationService = new NavigationService();
+            _productService = productService;
+            _categoryService = categoryService;
+            _navigationService = navigationService;
         }
 
         #region Properties

@@ -21,7 +21,7 @@ namespace MANDUU
             Routing.RegisterRoute("ResetPswVerificationPage", typeof(ResetPswVerificationPage));
             Routing.RegisterRoute("NewPasswordPage", typeof(NewPasswordPage));
             Routing.RegisterRoute("productdetailpage", typeof(ProductDetailsPage));
-            Routing.RegisterRoute("productbycategorypage", typeof(ProductsByCategoryPage));
+            Routing.RegisterRoute("categorypage", typeof(CategoryPage));
         }
     }
 }

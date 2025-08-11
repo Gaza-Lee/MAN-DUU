@@ -99,8 +99,9 @@
                             Margin="0,10"
                             HorizontalOptions="Center"
                             SelectionMode="Single"
+                            x:Name="CategoriesCollectionView"
                             SelectionChangedCommand="{Binding SelectedCategoryCommand}"
-                            SelectionChangedCommandParameter="{Binding CurrentSelection[0], Source={x:Reference CategoriesCollectionView}}">
+                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference CategoriesCollectionView}}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"
                            ItemSpacing="10"/>
@@ -109,7 +110,7 @@
                     <DataTemplate x:DataType="models:Category">
                         <Border StrokeShape="RoundRectangle 10"
                     StrokeThickness="0"
-                    WidthRequest="100">
+                    WidthRequest="80">
                             <Grid>
                                 <BoxView Color="#ff7b1c" 
                                          Opacity="0.4"
@@ -128,8 +129,9 @@
                                         Opacity="0.3"/>
                                         </Border.Shadow>
                                         <Label Text="{Binding Name}"
-                                   Margin="6,3"
-                                   HorizontalTextAlignment="Center"/>
+                                               Margin="6,3"
+                                               FontSize="10"
+                                               HorizontalTextAlignment="Center"/>
                                     </Border>
                                 </Grid>
                             </Grid>

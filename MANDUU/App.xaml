@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MANDUU"
              xmlns:animations="clr-namespace:MANDUU.Animations"
+             xmlns:model="clr-namespace:MANDUU.Models"
+             xmlns:icon="clr-namespace:MANDUU.Helpers"
              xmlns:droid="clr-namespace:CommunityToolkit.Maui.PlatformConfiguration.AndroidSpecific;assembly=CommunityToolkit.Maui"
              droid:NavigationBar.Color="#FF7B1C"
              x:Class="MANDUU.App">
