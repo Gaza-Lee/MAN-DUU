@@ -10,51 +10,69 @@ namespace MANDUU.Services
     public class CategoryService
     {
         private IEnumerable<Category> _categories;
+        private short _nextId = 1;
+
+        private short NextId() => _nextId++;
+
         public async ValueTask<IEnumerable<Category>> GetCategoriesAsync()
         {
             if (_categories == null)
             {
-                var Categories = new List<Category>();
+                var categories = new List<Category>();
 
-                var Fashion = new List<Category>
-                {
-                    new(1, "Fashion", "fashion.png",0),
-                    new(2, "Clothing", "",1 ),
-                    new(3, "FootWear","", 2),
-                    new(4, "Hats","",3),
-                    new(5, "Accesories","",4)
-                };
-                Categories.AddRange(Fashion);
+                // Fashion
+                var fashionId = NextId();
+                categories.Add(new Category(fashionId, "Fashion", "fashion.png", 0));
+                categories.Add(new Category(NextId(), "Clothing", "", fashionId));
+                categories.Add(new Category(NextId(), "FootWear", "", fashionId));
+                categories.Add(new Category(NextId(), "Hats", "", fashionId));
+                categories.Add(new Category(NextId(), "Accessories", "", fashionId));
 
-                var Grocery = new List<Category>
-                {
-                    new(6,"Grocery","grocery.png",0),
-                };
-                Categories.AddRange(Grocery);
+                // Grocery
+                var groceryId = NextId();
+                categories.Add(new Category(groceryId, "Grocery", "grocery.png", 0));
+                categories.Add(new Category(NextId(), "Fruits & Vegetables", "", groceryId));
+                categories.Add(new Category(NextId(), "Dairy Products", "", groceryId));
 
-                var Beauty = new List<Category>
-                {
-                    new Category(7,"Beauty", "beauty.png", 0),
-                };
-                Categories.AddRange(Beauty);
 
-                var Food = new List<Category>
-                {
-                    new(8,"Food", "food.png",0)
-                };
-                Categories.AddRange(Food);
+                // Beauty
+                var beautyId = NextId();
+                categories.Add(new Category(beautyId, "Beauty", "beauty.png", 0));
+                categories.Add(new Category(NextId(), "Makeup", "", beautyId));
+                categories.Add(new Category(NextId(), "Hair Care", "", beautyId));
+                categories.Add(new Category(NextId(), "Skin Care", "", beautyId));
+                categories.Add(new Category(NextId(), "Nails", "", beautyId));
+                categories.Add(new Category(NextId(), "Fragrances", "", beautyId));
+                categories.Add(new Category(NextId(), "Tools & Accessories", "", beautyId));
+                categories.Add(new Category(NextId(), "Bath & Body", "", beautyId));
+                categories.Add(new Category(NextId(), "Health & Wellness", "", beautyId));
 
-                var Electronics = new List<Category>
-                {
-                    new(9,"Electronics","electronics.png",0)
-                };
-                Categories.AddRange(Electronics);
+                // Food
+                var foodId = NextId();
+                categories.Add(new Category(foodId, "Food", "food.png", 0));
+                categories.Add(new Category(NextId(), "Local Foods", "", foodId));
+                categories.Add(new Category(NextId(), "Continental", "", foodId));
+                categories.Add(new Category(NextId(), "Drinks", "", foodId));
+                categories.Add(new Category(NextId(), "Pastries", "", foodId));
+                categories.Add(new Category(NextId(), "Snacks", "", foodId));
 
-                _categories = Categories;
+
+                // Electronics
+                var electronicsId = NextId();
+                categories.Add(new Category(electronicsId, "Electronics", "electronics.png", 0));
+                categories.Add(new Category(NextId(), "Mobile Phones", "", electronicsId));
+                categories.Add(new Category(NextId(), "Laptops", "", electronicsId));
+                categories.Add(new Category(NextId(), "Accessories", "", electronicsId));
+                categories.Add(new Category(NextId(), "Appliances", "", electronicsId));
+                categories.Add(new Category(NextId(), "Gaming", "", electronicsId));
+                categories.Add(new Category(NextId(), "Tablets", "", electronicsId));
+
+                _categories = categories;
             }
-            
+
             return _categories;
         }
+
         public async ValueTask<IEnumerable<Category>> GetMainCategoriesAsync() =>
             (await GetCategoriesAsync()).Where(c => c.ParentId == 0);
     }

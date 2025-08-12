@@ -83,6 +83,7 @@ namespace MANDUU
             builder.Services.AddTransient<NewPasswordPageViewModel>();
             builder.Services.AddSingleton<HomePageViewModel>();
             builder.Services.AddTransient<ProductDetailViewModel>();
+            builder.Services.AddTransient<CategoryViewModel>();
 
             return builder;
         }

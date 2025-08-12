@@ -14,9 +14,21 @@ namespace MANDUU.Services
         {
             _products = new List<Product>
             {
-                new Product(1, "Legion 9i", "RTX 3060\nIntel core i9", "legion.png", 25909.99m, "Electronics", "Laptops", 150),
-                new Product(2, "Ipad Pro 11", "1TB", "ipad.png", 11087.99m, "Electronics", "Tablets", 100),
-                new Product(3, "Beautiful Nails", "Nice design of nail painting", "nail.png", 79.99m, "Beauty", "Nails", 310)
+                new(1, "Legion 9i", "RTX 3060\nIntel core i9", "legion.png", new List<string>{"legion1.png","legion2.png","legion3.png"},
+                25909.99m, "electronics", "laptops", 150),
+
+                new(2, "Ipad Pro 11", "1TB", "ipad.png",new List<string>{
+                    "ipad1.png","ipad2.png","ipad3.png" }, 
+                    11087.99m, "electronics", "tablets", 100),
+
+                new(3, "Butterfly Locs", "Beautiful butterfly locs", "butterflylocks.png", new List<string>{
+                    "butterflylocks1.png", "butterflylocks2.png","butterflylocks3.png" }, 
+                    59.99m, "beauty", "hair", 200),
+
+                new(4, "Beautiful Nails", "Nice design of nail painting", "acrylic.png",new List<string>{ 
+                    "acrylic1.png", "acrylic2.png","acrylic3.png" }, 
+                    79.99m, "beauty", "nails", 310)
+                
             };
         }
 

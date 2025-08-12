@@ -1,54 +1,72 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:model="clr-namespace:MANDUU.Models"
              xmlns:icon="clr-namespace:MANDUU.Helpers"
              x:Class="MANDUU.Views.MainPages.SubPages.ProductDetailsPage"
              Title="{Binding Product.Name}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="Label" x:Key="ChangeImage" >
+            <Style TargetType="Label" x:Key="ChangeImageButton">
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="FontSize" Value="30"/>
-                <Setter Property="TextColor" Value="#fff"/>
+                <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontFamily" Value="MaterialIcon"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    
+
     <ScrollView HorizontalOptions="Center">
-        <HorizontalStackLayout  VerticalOptions="Start"
+        <HorizontalStackLayout VerticalOptions="Start"
                                 HorizontalOptions="Center"
                                 Spacing="10">
+
+            <!-- Previous Button -->
             <Border HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    Stroke="#000"
                     StrokeShape="RoundRectangle 12"
-                    Padding="10,5,0,5"
-                    StrokeThickness="0.1"
+                    Padding="10,5"
                     Background="#757575"
                     Opacity="0.4">
                 <Label Text="{x:Static icon:Icons.moveLeft}"
-                       Style="{x:StaticResource ChangeImage}"/>
+                       Style="{x:StaticResource ChangeImageButton}"/>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PreviousImageCommand}"
+                                          CommandParameter="{x:Reference ProductImage}"/>
+                </Border.GestureRecognizers>
             </Border>
-            <VerticalStackLayout>
-                <Image Source="{Binding Product.ImageUrl}"/>
-            </VerticalStackLayout>
 
+            <!-- Image -->
+            <Border StrokeThickness="0"
+                    WidthRequest="250"
+                    HeightRequest="300"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="Center">
+                <Image x:Name="ProductImage"
+                       Source="{Binding CurrentImage}"
+                       Aspect="AspectFill">
+                    <Image.Clip>
+                        <RoundRectangleGeometry CornerRadius="15"
+                                                Rect="0,0,250,300"/>
+                    </Image.Clip>
+                </Image>
+            </Border>
+
+            <!-- Next Button -->
             <Border HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    Stroke="#000"
                     StrokeShape="RoundRectangle 12"
-                    Padding="5"
-                    StrokeThickness="0.1"
+                    Padding="10,5"
                     Background="#757575"
                     Opacity="0.4">
                 <Label Text="{x:Static icon:Icons.moveRight}"
-                       Style="{x:StaticResource ChangeImage}"/>
+                       Style="{x:StaticResource ChangeImageButton}"/>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NextImageCommand}"
+                                          CommandParameter="{x:Reference ProductImage}"/>
+                </Border.GestureRecognizers>
             </Border>
 
         </HorizontalStackLayout>

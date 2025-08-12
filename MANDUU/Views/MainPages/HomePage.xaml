@@ -163,10 +163,13 @@
                     <DataTemplate x:DataType="models:Product">
                         <Border StrokeShape="RoundRectangle 10"
                                 StrokeThickness="0.2"
-                                Stroke="#000">
+                                Stroke="#000"
+                                WidthRequest="120"
+                                HeightRequest="150">
                             <Grid RowDefinitions="*,auto">
                                 <Grid Grid.Row="0">
-                                    <Image Source="{Binding ImageUrl}"/>
+                                    <Image Source="{Binding ImageUrl}"
+                                           Aspect="AspectFill"/>
                                 </Grid>
                             </Grid>
                         </Border>
