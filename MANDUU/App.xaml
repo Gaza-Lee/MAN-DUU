@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
             <Style TargetType="GraphicsView" x:Key="topwave">
                 <Setter Property="Drawable" Value="{x:Static animations:TopOrangePanel.Instance}"/>
                 <Setter Property="VerticalOptions" Value="Start"/>

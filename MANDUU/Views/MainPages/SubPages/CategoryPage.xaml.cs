@@ -1,12 +1,16 @@
+using MANDUU.Services;
 using MANDUU.ViewModels;
 
 namespace MANDUU.Views.MainPages.SubPages;
 
 public partial class CategoryPage : ContentPage
 {
-	public CategoryPage(CategoryViewModel _categoryViewModel)
-	{
-		InitializeComponent();
-		BindingContext = _categoryViewModel;
-	}
+    private readonly CategoryViewModel _categoryViewModel;
+
+    public CategoryPage(ProductService productService, INavigationService navigationService)
+    {
+        InitializeComponent();
+        _categoryViewModel = new CategoryViewModel(productService, navigationService);
+        BindingContext = _categoryViewModel;
+    }
 }

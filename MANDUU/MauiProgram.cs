@@ -49,8 +49,10 @@ namespace MANDUU
         public static MauiAppBuilder RegisterAppServices(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddSingleton<CategoryService>();
+            builder.Services.AddSingleton<ShopCategoryService>();
             builder.Services.AddSingleton<ProductService>();
+            builder.Services.AddSingleton<ProductCategoryService>();
+            builder.Services.AddSingleton<ShopService>();
             return builder;
         }
 

@@ -7,7 +7,7 @@ public partial class HomePage : ContentPage
 {
 
 	private readonly HomePageViewModel _homePageViewModel;
-	public HomePage(CategoryService categoryService, ProductService productService, INavigationService navigationService)
+	public HomePage(ProductCategoryService categoryService, ProductService productService, INavigationService navigationService)
 	{
 		InitializeComponent();
 		_homePageViewModel = new HomePageViewModel(categoryService, productService, navigationService);

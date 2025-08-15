@@ -21,13 +21,13 @@
     <ScrollView HorizontalOptions="Center">
         <HorizontalStackLayout VerticalOptions="Start"
                                 HorizontalOptions="Center"
-                                Spacing="10">
+                                Spacing="2">
 
             <!-- Previous Button -->
-            <Border HorizontalOptions="Center"
+            <Border HorizontalOptions="Start"
                     VerticalOptions="Center"
                     StrokeShape="RoundRectangle 12"
-                    Padding="10,5"
+                    Padding="10,5,0,5"
                     Background="#757575"
                     Opacity="0.4">
                 <Label Text="{x:Static icon:Icons.moveLeft}"
@@ -39,26 +39,26 @@
             </Border>
 
             <!-- Image -->
-            <Border StrokeThickness="0"
-                    WidthRequest="250"
-                    HeightRequest="300"
-                    BackgroundColor="Transparent"
-                    HorizontalOptions="Center">
-                <Image x:Name="ProductImage"
-                       Source="{Binding CurrentImage}"
-                       Aspect="AspectFill">
-                    <Image.Clip>
-                        <RoundRectangleGeometry CornerRadius="15"
-                                                Rect="0,0,250,300"/>
-                    </Image.Clip>
-                </Image>
-            </Border>
+            <VerticalStackLayout>
+                <Border StrokeThickness="0"
+                        WidthRequest="320"
+                        HeightRequest="300"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 15">
+                    <Image x:Name="ProductImage"
+                           Source="{Binding CurrentImage}"
+                           Aspect="AspectFill"
+                           HorizontalOptions="Center">
+                    </Image>
+                </Border>
 
+            </VerticalStackLayout>
             <!-- Next Button -->
-            <Border HorizontalOptions="Center"
+            <Border HorizontalOptions="End"
                     VerticalOptions="Center"
                     StrokeShape="RoundRectangle 12"
-                    Padding="10,5"
+                    Padding="5"
                     Background="#757575"
                     Opacity="0.4">
                 <Label Text="{x:Static icon:Icons.moveRight}"
@@ -68,7 +68,6 @@
                                           CommandParameter="{x:Reference ProductImage}"/>
                 </Border.GestureRecognizers>
             </Border>
-
         </HorizontalStackLayout>
     </ScrollView>
 </ContentPage>

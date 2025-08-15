@@ -1,63 +1,89 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MANDUU.Models;
 using MANDUU.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace MANDUU.ViewModels
 {
+    public class SubCategoryGroup
+    {
+        public string SubCategoryName { get; set; }
+        public ObservableCollection<Product> Products { get; set; }
+
+        public SubCategoryGroup(string name, IEnumerable<Product> products)
+        {
+            SubCategoryName = string.IsNullOrWhiteSpace(name)
+                ? name
+                : char.ToUpper(name[0]) + name.Substring(1);
+
+            Products = new ObservableCollection<Product>(products);
+        }
+    }
+
     public partial class CategoryViewModel : ObservableObject, IQueryAttributable
     {
         private readonly ProductService _productService;
+        private readonly ProductCategoryService _categoryService;
+        private readonly INavigationService _navigationService;
 
-        [ObservableProperty]
-        private string categoryName;
-        [ObservableProperty]
-        private ObservableCollection<Product> products = new();
-        [ObservableProperty]
-        private MainCategory selectedMainCategory;
+        [ObservableProperty] private string categoryName;
+        [ObservableProperty] private MainCategory selectedMainCategory;
+        [ObservableProperty] private ObservableCollection<SubCategoryGroup> subCategoryGroups = new();
 
-        public CategoryViewModel(ProductService productService)
+        public CategoryViewModel(
+            ProductService productService,
+            INavigationService navigationService)
         {
-            _productService = productService ?? throw new ArgumentNullException(nameof(productService));
+            _productService = productService;
+            _navigationService = navigationService;
         }
 
-        // subCategoryName is optional — when null/empty we show all products for the main category
-        public async Task LoadProductsAsync(string subCategoryName = null)
+        [RelayCommand]
+        private async Task GoToProductDetailAsync(Product product)
         {
-            if (string.IsNullOrWhiteSpace(CategoryName))
-                return;
+            if (product == null) return;
 
-            var allProducts = await _productService.GetProductsAsync();
-
-            var filtered = allProducts.Where(p =>
-                string.Equals(p.MainCategoryName, CategoryName, StringComparison.OrdinalIgnoreCase));
-
-            if (!string.IsNullOrWhiteSpace(subCategoryName))
+            await _navigationService.NavigateToAsync("productdetailpage", new Dictionary<string, object>
             {
-                filtered = filtered.Where(p => string.Equals(p.SubCategoryName, subCategoryName, StringComparison.OrdinalIgnoreCase));
-            }
-
-            Products = new ObservableCollection<Product>(filtered);
-
-            // Load banner / main category info
-            SelectedMainCategory = await _productService.GetMainCategoryAsync(CategoryName);
+                { "ProductId", product.Id }
+            });
         }
 
-        // called by Shell navigation
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        public async Task LoadProductsAsync()
         {
-            if (query.TryGetValue("CategoryName", out var category) && category != null)
-                CategoryName = category.ToString();
+            if (string.IsNullOrWhiteSpace(CategoryName)) return;
 
-            string sub = null;
-            if (query.TryGetValue("SubCategoryName", out var subCategory) && subCategory != null)
-                sub = subCategory.ToString();
+            // Load main category
+            var allMainCategories = await _categoryService.GetAllMainCategoriesAsync();
+            SelectedMainCategory = allMainCategories
+                .FirstOrDefault(mc => string.Equals(mc.Name, CategoryName, System.StringComparison.OrdinalIgnoreCase));
 
-            _ = LoadProductsAsync(sub);
+            if (SelectedMainCategory == null) return;
+
+            // Get all products in this main category
+            var allProducts = await _productService.GetProductsByMainCategoryAsync(SelectedMainCategory.Id);
+
+            // Group by subcategory name
+            var grouped = allProducts
+                .GroupBy(p =>
+                    SelectedMainCategory.SubCategories
+                        .FirstOrDefault(sc => sc.Id == p.SubCategoryId)?.Name ?? "Other")
+                .Select(g => new SubCategoryGroup(g.Key, g))
+                .ToList();
+
+            SubCategoryGroups = new ObservableCollection<SubCategoryGroup>(grouped);
+        }
+
+        public async void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.TryGetValue("CategoryName", out var category) && category is string categoryStr)
+                CategoryName = categoryStr;
+
+            await LoadProductsAsync();
         }
     }
 }

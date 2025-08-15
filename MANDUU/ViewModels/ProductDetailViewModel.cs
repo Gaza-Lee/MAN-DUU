@@ -16,17 +16,10 @@ namespace MANDUU.ViewModels
         private readonly ProductService _productService;
         private bool _isAnimating = false;
 
-        [ObservableProperty]
-        private int _currentImageIndex = 0;
-
-        [ObservableProperty]
-        private string currentImage;
-
-        [ObservableProperty]
-        private Product product;
-
-        [ObservableProperty]
-        private ObservableCollection<Product> suggestedProducts;
+        [ObservableProperty] private int _currentImageIndex = 0;
+        [ObservableProperty] private string currentImage;
+        [ObservableProperty] private Product product;
+        [ObservableProperty] private ObservableCollection<Product> suggestedProducts;
 
         public ProductDetailViewModel(ProductService productService)
         {
@@ -87,7 +80,7 @@ namespace MANDUU.ViewModels
             // Initialize gallery if null
             Product.Gallery ??= new List<string>();
 
-            // Ensure main ImageUrl is always first in gallery
+            // Ensure main ImageUrl is first
             if (!Product.Gallery.Contains(Product.ImageUrl))
                 Product.Gallery.Insert(0, Product.ImageUrl);
 
@@ -96,10 +89,9 @@ namespace MANDUU.ViewModels
             CurrentImage = Product.Gallery.FirstOrDefault();
 
             // Load suggested products from same subcategory
-            var products = await _productService.GetProductsAsync();
-            var suggestions = products
-                .Where(p => p.SubCategoryName == Product.SubCategoryName && p.Id != Product.Id)
-                .ToList();
+            var suggestions = (await _productService.GetProductsBySubCategoryAsync(Product.SubCategoryId))
+                              .Where(p => p.Id != Product.Id)
+                              .ToList();
 
             SuggestedProducts.Clear();
             foreach (var p in suggestions)

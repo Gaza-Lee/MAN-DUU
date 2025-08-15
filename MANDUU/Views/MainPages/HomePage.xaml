@@ -107,35 +107,41 @@
                            ItemSpacing="10"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Category">
+                    <DataTemplate x:DataType="models:MainCategory">
                         <Border StrokeShape="RoundRectangle 10"
-                    StrokeThickness="0"
-                    WidthRequest="80">
+                                StrokeThickness="0"
+                                WidthRequest="80">
                             <Grid>
+                                <!-- Orange overlay -->
                                 <BoxView Color="#ff7b1c" 
-                                         Opacity="0.4"
-                                         ZIndex="-1"/>
-                                <Grid RowDefinitions="*, auto"
-                          Margin="5">
-                                    <Image Source="{Binding Image}"
-                               HorizontalOptions="Center"/>
-                                    <Border Grid.Row="1" 
-                                StrokeShape="RoundRectangle 10"
-                                Background="White"
-                                StrokeThickness="0.1">
+                                         Opacity="0.2"/>
+
+                                <VerticalStackLayout VerticalOptions="Center"
+                                                     Margin="5"
+                                                     Spacing="2">
+                                    <Image Source="{Binding Icon}"
+                                           Aspect="AspectFill"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           HeightRequest="40"/>
+                                    <Border Grid.Row="1"
+                                            VerticalOptions="End"
+                                            StrokeShape="RoundRectangle 10"
+                                            Background="White"
+                                            StrokeThickness="0.1"
+                                            Margin="0,0,0,5">
                                         <Border.Shadow>
                                             <Shadow Brush="#000"
-                                        Offset="5,5"
-                                        Opacity="0.3"/>
+                                                    Offset="5,5"
+                                                    Opacity="0.3"/>
                                         </Border.Shadow>
                                         <Label Text="{Binding Name}"
                                                Margin="6,3"
                                                FontSize="10"
                                                HorizontalTextAlignment="Center"/>
                                     </Border>
-                                </Grid>
+                                </VerticalStackLayout>
                             </Grid>
-
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -152,25 +158,28 @@
             </Border>
 
             <CollectionView  x:Name="BestSalesCollectionView"
+                             Margin="0,10"
                             ItemsSource="{Binding BestSellingProducts}"
                             SelectionMode="Single"
-                            SelectionChangedCommand="{Binding SelectedProductCommand}"
+                            SelectionChangedCommand="{Binding SelectedProductCommand, Mode=TwoWay}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference BestSalesCollectionView}}">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Product">
-                        <Border StrokeShape="RoundRectangle 10"
-                                StrokeThickness="0.2"
-                                Stroke="#000"
+                        <Border StrokeShape="RoundRectangle 5"
+                                StrokeThickness="0.5"
+                                Background="#fff"
                                 WidthRequest="120"
-                                HeightRequest="150">
+                                HeightRequest="150"
+                                Margin="5">
                             <Grid RowDefinitions="*,auto">
-                                <Grid Grid.Row="0">
-                                    <Image Source="{Binding ImageUrl}"
-                                           Aspect="AspectFill"/>
-                                </Grid>
+                                <Image Source="{Binding ImageUrl}" Aspect="AspectFill"/>
+                                <VerticalStackLayout Grid.Row="1" Padding="5">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="1"/>
+                                    <Label Text="{Binding FormattedPrice}" />
+                                </VerticalStackLayout>
                             </Grid>
                         </Border>
                     </DataTemplate>
