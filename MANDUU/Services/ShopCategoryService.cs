@@ -1,37 +1,66 @@
-﻿using System;
+﻿using MANDUU.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using MANDUU.Models;
 
 namespace MANDUU.Services
 {
     public class ShopCategoryService
     {
-        private readonly List<ShopCategory> _categories;
+        private List<ShopCategory> _shopCategories = new();
 
         public ShopCategoryService()
         {
-            _categories = new List<ShopCategory>
-        {
-            new ShopCategory { Id = 1, Name = "Fashion", Description = "Clothes, shoes, and accessories.", BannerImage = "fashion_banner.jpg", Icon = "fashion_icon.png", SortOrder = 1 },
-            new ShopCategory { Id = 2, Name = "Electronics", Description = "Phones, laptops, and gadgets.", BannerImage = "electronics_banner.jpg", Icon = "electronics_icon.png", SortOrder = 2 },
-            new ShopCategory { Id = 3, Name = "Food", Description = "Groceries, restaurants, and snacks.", BannerImage = "food_banner.jpg", Icon = "food_icon.png", SortOrder = 3 }
-        };
+            InitializeShopCategories();
         }
 
-        public Task<List<ShopCategory>> GetAllCategoriesAsync()
+        private void InitializeShopCategories()
         {
-            var ordered = _categories.OrderBy(c => c.SortOrder).ToList();
-            return Task.FromResult(ordered);
+            _shopCategories = new List<ShopCategory>
+            {
+                new ShopCategory
+                {
+                    Id = 1,
+                    Name = "Electronics",
+                    Description = "Shops selling electronic devices",
+                    Icon = "electronics.png",
+                    BannerImage = "electronics_banner.png"
+                },
+                new ShopCategory
+                {
+                    Id = 2,
+                    Name = "Fashion",
+                    Description = "Clothing and accessories shops",
+                    Icon = "fashion.png",
+                    BannerImage = "fashion_banner.png"
+                },
+                new ShopCategory
+                {
+                    Id = 3,
+                    Name = "Beauty",
+                    Description = "Beauty and cosmetics shops",
+                    Icon = "beauty.png",
+                    BannerImage = "beauty_banner.png"
+                },
+                new ShopCategory
+                {
+                    Id = 4,
+                    Name = "Food & Grocery",
+                    Description = "Food and grocery shops",
+                    Icon = "grocery.png",
+                    BannerImage = "grocery_banner.png"
+                }
+            };
         }
 
-        public Task<ShopCategory?> GetCategoryByIdAsync(int id)
+        public async Task<IEnumerable<ShopCategory>> GetAllShopCategoriesAsync()
         {
-            var category = _categories.FirstOrDefault(c => c.Id == id);
-            return Task.FromResult(category);
+            return await Task.FromResult(_shopCategories);
+        }
+
+        public async Task<ShopCategory> GetShopCategoryByIdAsync(int id)
+        {
+            return await Task.FromResult(_shopCategories.FirstOrDefault(sc => sc.Id == id));
         }
     }
-
 }

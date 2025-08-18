@@ -4,13 +4,13 @@
              xmlns:models="clr-namespace:MANDUU.Models"
              x:Class="MANDUU.Views.MainPages.SubPages.CategoryPage"
              x:Name="CategoryPageRoot"
-             Title="{Binding CategoryName}">
+             Title="{Binding SelectedMainCategory.Name}">
 
     <Grid RowDefinitions="Auto,*">
+        <!-- Banner -->
         <Border Grid.Row="0" Margin="5,0,5,10" StrokeShape="RoundRectangle 5" HeightRequest="70">
             <Grid>
-                <Image Source="{Binding SelectedMainCategory.BannerImageUrl}" Aspect="AspectFill"/>
-                <BoxView Color="#000" Opacity="0.2"/>
+                <Image Source="{Binding SelectedMainCategory.BannerImage}" Aspect="AspectFill"/>
             </Grid>
         </Border>
 
@@ -20,7 +20,7 @@
                 <!-- Subcategory Sections -->
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding SubCategoryGroups}">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="vm:SubCategoryGroup">
                             <VerticalStackLayout Spacing="10">
 
                                 <!-- Subcategory Title -->
@@ -31,12 +31,13 @@
                                            Style="{x:StaticResource CatTitleText}"/>
                                 </Border>
 
+                                <!-- Products in Subcategory -->
                                 <CollectionView ItemsSource="{Binding Products}"
-                                        x:Name="ProductCollectionView"
-                                        SelectionMode="Single"
-                                        SelectionChangedCommand="{Binding Source={x:Reference CategoryPageRoot}, Path=BindingContext.GoToProductDetailCommand}"
-                                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference ProductCollectionView}}"
-                                        HeightRequest="180">
+                                                x:Name="ProductCollectionView"
+                                                SelectionMode="Single"
+                                                SelectionChangedCommand="{Binding Source={x:Reference CategoryPageRoot}, Path=BindingContext.GoToProductDetailCommand}"
+                                                SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference ProductCollectionView}}"
+                                                HeightRequest="180">
                                     <CollectionView.ItemsLayout>
                                         <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                                     </CollectionView.ItemsLayout>
@@ -60,7 +61,6 @@
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
-
                             </VerticalStackLayout>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>

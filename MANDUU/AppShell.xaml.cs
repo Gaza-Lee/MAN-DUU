@@ -2,6 +2,7 @@
 using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
 using MANDUU.Views.MainPages.SubPages;
+using MANDUU.Views.ShopPages;
 
 namespace MANDUU
 {
@@ -22,6 +23,7 @@ namespace MANDUU
             Routing.RegisterRoute("NewPasswordPage", typeof(NewPasswordPage));
             Routing.RegisterRoute("productdetailpage", typeof(ProductDetailsPage));
             Routing.RegisterRoute("categorypage", typeof(CategoryPage));
+            Routing.RegisterRoute("shopprofilepage", typeof(ShopProfilePage));
         }
     }
 }

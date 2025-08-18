@@ -24,11 +24,15 @@ namespace MANDUU.ViewModels
         [ObservableProperty]
         private MainCategory selectedCategory;
 
-        // All products loaded for filtering, searching, etc.
+        [ObservableProperty]
+        private Shop selectedShop;
+
+        // Load all products for the home page to be filtered 
         public List<Product> AllProducts { get; private set; } = new();
         #endregion
 
         #region Services
+        private readonly ShopService _shopService;
         private readonly ProductCategoryService _categoryService;
         private readonly ProductService _productService;
         private readonly INavigationService _navigationService;
@@ -36,17 +40,18 @@ namespace MANDUU.ViewModels
 
         #region Commands
         [RelayCommand]
-        private async Task SelectedCategoryAsync(MainCategory category)
+        private async Task SelectedCategoryAsync(MainCategory selectedCategory)
         {
-            if (category == null) return;
+            if (selectedCategory == null) return;
 
             await _navigationService.NavigateToAsync("categorypage", new Dictionary<string, object>
             {
-                { "CategoryId", category.Id }
+                { "CategoryId", selectedCategory.Id }
             });
 
-            SelectedCategory = null; // Reset selection for UI
+            SelectedCategory = null;
         }
+
 
         [RelayCommand]
         private async Task SelectedProductAsync(Product product)
@@ -58,17 +63,33 @@ namespace MANDUU.ViewModels
                 { "ProductId", product.Id }
             });
         }
+
+        [RelayCommand]
+        private async Task SelectShopAsync(Shop shop)
+        {
+            if (shop == null) return;
+
+            await _navigationService.NavigateToAsync("s", new Dictionary<string, object>
+            {
+                { "ShopId", shop.Id },
+                { "ShopName", shop.Name }
+            });
+
+            SelectedShop = null;
+        }
         #endregion
 
         #region Constructor
         public HomePageViewModel(
             ProductCategoryService categoryService,
             ProductService productService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            ShopService shopService)
         {
             _categoryService = categoryService;
             _productService = productService;
             _navigationService = navigationService;
+            _shopService = shopService;
         }
         #endregion
 

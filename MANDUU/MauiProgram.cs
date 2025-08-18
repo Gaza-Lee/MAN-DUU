@@ -8,6 +8,7 @@ using MANDUU.Views.MainPages.SubPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 using Sharpnado.Tabs;
+using MANDUU.Views.ShopPages;
 
 namespace MANDUU
 {
@@ -69,6 +70,7 @@ namespace MANDUU
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient <ProductDetailsPage>();
             builder.Services.AddTransient<CategoryPage>();
+            builder.Services.AddTransient<ShopProfilePage>();
 
             return builder;
         }

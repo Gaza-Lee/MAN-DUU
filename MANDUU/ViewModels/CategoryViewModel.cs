@@ -30,15 +30,17 @@ namespace MANDUU.ViewModels
         private readonly ProductCategoryService _categoryService;
         private readonly INavigationService _navigationService;
 
-        [ObservableProperty] private string categoryName;
+        [ObservableProperty] private int categoryId;
         [ObservableProperty] private MainCategory selectedMainCategory;
         [ObservableProperty] private ObservableCollection<SubCategoryGroup> subCategoryGroups = new();
 
         public CategoryViewModel(
             ProductService productService,
+            ProductCategoryService categoryService,
             INavigationService navigationService)
         {
             _productService = productService;
+            _categoryService = categoryService;
             _navigationService = navigationService;
         }
 
@@ -48,26 +50,23 @@ namespace MANDUU.ViewModels
             if (product == null) return;
 
             await _navigationService.NavigateToAsync("productdetailpage", new Dictionary<string, object>
-            {
-                { "ProductId", product.Id }
-            });
+        {
+            { "ProductId", product.Id }
+        });
         }
 
         public async Task LoadProductsAsync()
         {
-            if (string.IsNullOrWhiteSpace(CategoryName)) return;
+            if (CategoryId <= 0) return;
 
-            // Load main category
-            var allMainCategories = await _categoryService.GetAllMainCategoriesAsync();
-            SelectedMainCategory = allMainCategories
-                .FirstOrDefault(mc => string.Equals(mc.Name, CategoryName, System.StringComparison.OrdinalIgnoreCase));
-
+            // Load the selected category
+            SelectedMainCategory = await _categoryService.GetMainCategoryByIdAsync(CategoryId);
             if (SelectedMainCategory == null) return;
 
-            // Get all products in this main category
-            var allProducts = await _productService.GetProductsByMainCategoryAsync(SelectedMainCategory.Id);
+            // Get all products in this category
+            var allProducts = await _productService.GetProductsByMainCategoryAsync(CategoryId);
 
-            // Group by subcategory name
+            // Group products by subcategory
             var grouped = allProducts
                 .GroupBy(p =>
                     SelectedMainCategory.SubCategories
@@ -80,8 +79,8 @@ namespace MANDUU.ViewModels
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.TryGetValue("CategoryName", out var category) && category is string categoryStr)
-                CategoryName = categoryStr;
+            if (query.TryGetValue("CategoryId", out var catId) && catId is int id)
+                CategoryId = id;
 
             await LoadProductsAsync();
         }

@@ -27,7 +27,7 @@ namespace MANDUU.Services
                     Id = fashionId,
                     Name = "Fashion",
                     Icon = "fashion.png",
-                    BannerImage = "fashion_banner.png",
+                    BannerImage = "fashionbanner.png",
                     CategoryType = CategoryType.Product
                 };
                 fashion.SubCategories.Add(new SubCategory { Id = NextId(), Name = "Clothing", MainCategoryId = fashionId });
@@ -43,7 +43,7 @@ namespace MANDUU.Services
                     Id = groceryId,
                     Name = "Grocery",
                     Icon = "grocery.png",
-                    BannerImage = "grocery_banner.png",
+                    BannerImage = "grocerybanner.png",
                     CategoryType = CategoryType.Product
                 };
                 grocery.SubCategories.Add(new SubCategory { Id = NextId(), Name = "Fruits & Vegetables", MainCategoryId = groceryId });
@@ -57,7 +57,7 @@ namespace MANDUU.Services
                     Id = beautyId,
                     Name = "Beauty",
                     Icon = "beauty.png",
-                    BannerImage = "beauty_banner.png",
+                    BannerImage = "beautybanner.png",
                     CategoryType = CategoryType.Product
                 };
                 beauty.SubCategories.Add(new SubCategory { Id = NextId(), Name = "Makeup", MainCategoryId = beautyId });
@@ -77,7 +77,7 @@ namespace MANDUU.Services
                     Id = foodId,
                     Name = "Food",
                     Icon = "food.png",
-                    BannerImage = "food_banner.png",
+                    BannerImage = "foodbanner.png",
                     CategoryType = CategoryType.Product
                 };
                 food.SubCategories.Add(new SubCategory { Id = NextId(), Name = "Local Foods", MainCategoryId = foodId });
@@ -94,7 +94,7 @@ namespace MANDUU.Services
                     Id = electronicsId,
                     Name = "Electronics",
                     Icon = "electronics.png",
-                    BannerImage = "electronics_banner.png",
+                    BannerImage = "electronicsbanner.png",
                     CategoryType = CategoryType.Product
                 };
                 electronics.SubCategories.Add(new SubCategory { Id = NextId(), Name = "Mobile Phones", MainCategoryId = electronicsId });

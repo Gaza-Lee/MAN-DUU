@@ -23,7 +23,7 @@ namespace MANDUU.Models
             public MainCategory? MainCategory { get; set; }
 
             public int SubCategoryId { get; set; }
-            public SubCategory? SubCategory { get; set; }
+            public SubCategory SubCategory { get; set; }
 
             // Shop that owns the product
             public int ShopId { get; set; }
