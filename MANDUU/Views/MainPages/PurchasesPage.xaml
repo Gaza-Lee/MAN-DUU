@@ -21,7 +21,7 @@
                 </Label.GestureRecognizers>
             </Label>
 
-            <Label Text="Electronic Printing"
+            <Label Text="Purchases"
                Grid.Column="1"
                FontSize="20"
                HorizontalOptions="Center"

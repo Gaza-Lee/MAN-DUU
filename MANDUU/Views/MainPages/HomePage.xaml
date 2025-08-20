@@ -109,11 +109,9 @@
                     <DataTemplate x:DataType="models:MainCategory">
                         <Border StrokeShape="RoundRectangle 10"
                                 StrokeThickness="0"
-                                WidthRequest="80">
+                                WidthRequest="80"
+                                BackgroundColor="#FFAF80">
                             <Grid>
-                                <!-- Orange overlay -->
-                                <BoxView Color="#ff7b1c" 
-                                         Opacity="0.2"/>
 
                                 <VerticalStackLayout VerticalOptions="Center"
                                                      Margin="5"

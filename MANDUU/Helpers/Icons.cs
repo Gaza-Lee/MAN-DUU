@@ -39,5 +39,14 @@ namespace MANDUU.Helpers
 
         public static string locationIcon = "\ue0c8";
 
+        public static string phoneIcon = "\ue0cd";
+
+        public static string ratingIcon = "\ue838";
+
+        public static string emailIcon = "\uea5e";
+
+        public static string favoriteIcon = "\uf884";
+
+        public static string mapIcon = "\ue55b";
     }
 }

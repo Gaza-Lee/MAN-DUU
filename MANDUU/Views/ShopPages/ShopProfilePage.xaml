@@ -2,11 +2,204 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MANDUU.Views.ShopPages.ShopProfilePage"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
+             xmlns:models="clr-namespace:MANDUU.Models"
              Title="{Binding Shop.Name}">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <Grid RowDefinitions="auto, auto, auto, auto, *" RowSpacing="10">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#33ED12D7" Offset="0.0"/>
+                    <GradientStop Color="#3346333E" Offset="0.32"/>
+                    <GradientStop Color="#33E65609" Offset="0.65"/>
+                    <GradientStop Color="#33ACEE90" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            
+            <!--Main Row 1-->
+            <!--Cover Image, Profile and Name-->
+            <Grid Row="0" RowDefinitions="*,auto,auto" ColumnDefinitions="auto,auto">
+                <Image Source="{Binding Shop.ShopProfileImage}"
+                       Aspect="AspectFit"
+                       HeightRequest="300"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Start"
+                       Grid.RowSpan="2"
+                       Grid.ColumnSpan="2"/>
+
+                <Border Grid.Row="1"
+                        Grid.Column="1"
+                        Stroke="{StaticResource Primary}"
+                        StrokeShape="RoundRectangle 100"
+                        HorizontalOptions="End"
+                        Margin="0,2,5,-40"
+                        StrokeThickness="2">
+                    <Image Source="{Binding Shop.ShopProfileImage}"
+                           HeightRequest="100"
+                           WidthRequest="100"
+                           Aspect="Fill"/>
+                </Border>
+
+                <Label Text="{Binding Shop.Name}"
+                       Grid.Row="2"
+                       FontSize="30"/>
+            </Grid>
+            
+            <!--Main Row 2-->
+            <!--Contact and location Details-->
+            <Grid Row="1" ColumnDefinitions="auto,auto,auto"
+                  HorizontalOptions="Center">
+                <HorizontalStackLayout Spacing="10">
+                    <Border HorizontalOptions="Center"
+                            Background="#4B4B4BCC" Padding="5,0"
+                            StrokeShape="RoundRectangle 2">
+                        <HorizontalStackLayout>
+                            <Label Text="{x:Static icons:Icons.ratingIcon}"
+                                   FontFamily="MaterialIcon"
+                                   Margin="0,2,2,0"/>
+                            <Label Text="2.5k"
+                                   FontSize="16"
+                                   FontFamily="Finlandica"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <BoxView Color="#000"
+                             WidthRequest="2"
+                             HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10" Grid.Column="1" Margin="10,0,0,0">
+                    <Border HorizontalOptions="Center"
+                            Background="#4B4B4BCC" Padding="5,0"
+                            StrokeShape="RoundRectangle 2">
+                        <HorizontalStackLayout>
+                            <Label Text="{x:Static icons:Icons.favoriteIcon}"
+                                   FontFamily="MaterialIcon"
+                                   Margin="0,2,2,0"/>
+                            <Label Text="2.5k"
+                                   FontSize="16"
+                                   FontFamily="Finlandica"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <BoxView Color="#000"
+                             WidthRequest="2"
+                             HorizontalOptions="End"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10" Grid.Column="2" Margin="10,0,0,0">
+                    <Border HorizontalOptions="Center"
+                            Background="#4B4B4BCC" Padding="5,0"
+                            StrokeShape="RoundRectangle 2">
+                        <HorizontalStackLayout>
+                            <Label Text="{x:Static icons:Icons.phoneIcon}"
+                                   FontFamily="MaterialIcon"
+                                   Margin="0,2,2,0"/>
+                            <Label Text="{Binding Shop.PhoneNumber}"
+                                   FontSize="16"
+                                   FontFamily="Finlandica"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+            </Grid>
+            
+            <!--Main row 3-->
+            <Grid Row="2" ColumnDefinitions="auto,auto,auto"
+                    HorizontalOptions="Center" ColumnSpacing="5">
+                <HorizontalStackLayout>
+                    <Border HorizontalOptions="Center"
+                            Background="#4B4B4BCC" Padding="5,0"
+                            StrokeShape="RoundRectangle 2">
+                        <HorizontalStackLayout>
+                            <Label Text="{x:Static icons:Icons.locationIcon}"
+                       FontFamily="MaterialIcon"
+                       Margin="0,2,2,0"/>
+                            <Label Text="{Binding Shop.ShortLocation}"
+                                   FontSize="16"
+                                   FontFamily="Finlandica"/>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Grid.Column="1" >
+                    <Border HorizontalOptions="Center"
+                            Background="#FF9549" Padding="5,0"
+                            StrokeShape="RoundRectangle 2"
+                            StrokeThickness="2"
+                            Stroke="#fff">
+                        <Border.Shadow>
+                            <Shadow Brush="Gray"
+                                    Offset="5,5"
+                                    Opacity="0.5"/>
+                        </Border.Shadow>
+                        <HorizontalStackLayout>
+                            <Label Text="{x:Static icons:Icons.mapIcon}"
+                                   FontFamily="MaterialIcon"
+                                   Margin="0,2,2,0"
+                                   FontSize="20"
+                                   TextColor="#fff"/>
+                            <Label Text="Locate On Map"
+                                   FontSize="16"
+                                   FontFamily="Finlandica"
+                                   TextColor="#fff"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10" Grid.Column="2">
+                    <Border HorizontalOptions="Center"
+                            Background="#4B4B4BCC" Padding="5,0"
+                            StrokeShape="RoundRectangle 2">
+                        <HorizontalStackLayout Padding="5,0">
+                            <Label Text="{x:Static icons:Icons.pickerIcon}"
+                                   FontFamily="MaterialIcon"
+                                   Margin="0,2,2,0"
+                                   FontSize="16"/>
+                            <Label Text="Edit"
+                                   FontSize="16"
+                                   FontFamily="Finlandica"
+                                   FontAttributes="Bold"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+            </Grid>
+            
+            <!--Main Row 4-->
+            <VerticalStackLayout Grid.Row="3" Margin="5,0">
+                <Label Text="About"/>
+                <Border StrokeThickness="0"
+                        StrokeShape="RoundRectangle 5"
+                        Background="#4B4B4BCC"
+                        Margin="20,5"
+                        Padding="5">
+                    <Label Text="{Binding Shop.Description}"
+                           FontFamily="Finlandica"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <!--Products Row (Last Row)-->
+            <VerticalStackLayout Grid.Row="4">
+                <Border HorizontalOptions="Start"
+                        StrokeThickness="0">
+                    <VerticalStackLayout>
+                        <Label Text="Products"/>
+                        <BoxView Color="#000" CornerRadius="5"
+                                 WidthRequest="20"
+                                 HorizontalOptions="End"
+                                 HeightRequest="2"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <CollectionView ItemsSource="{Binding ShopProduct}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Product">
+                            <Image Source="{Binding ImageUrl}"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>

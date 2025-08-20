@@ -12,6 +12,7 @@
         <toolkit:StatusBarBehavior StatusBarColor ="{StaticResource Primary}"/>
     </Shell.Behaviors>
 
+    <!--<ShellContent ContentTemplate="{DataTemplate views:LandingPage}"/>-->
     <!--Tabbed Pages-->
     <TabBar>
         <ShellContent 
