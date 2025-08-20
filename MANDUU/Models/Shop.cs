@@ -33,12 +33,19 @@ namespace MANDUU.Models
 
         // List of additional categories the shop belongs to
         public List<ShopCategory> AdditionalCategories { get; set; } = new();
+        public List<int> AdditionalCategoryIds { get; set; } = new List<int>();
 
         public CategoryType CategoryType { get; set; } = CategoryType.Shop;
 
         public List<int> Products { get; set; } = new List<int>();
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+
+        public bool CanSellInCategory(int categoryId)
+        {
+            return MainCategoryId == categoryId || AdditionalCategoryIds.Contains(categoryId);
+        }
     }
 
 }

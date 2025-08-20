@@ -88,6 +88,8 @@ namespace MANDUU
             builder.Services.AddSingleton<HomePageViewModel>();
             builder.Services.AddTransient<ProductDetailViewModel>();
             builder.Services.AddTransient<CategoryViewModel>();
+            builder.Services.AddTransient<ShopCategoryViewModel>();
+            builder.Services.AddTransient<ShopProfileViewModel>();
 
             return builder;
         }

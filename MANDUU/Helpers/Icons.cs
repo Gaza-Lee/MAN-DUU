@@ -37,5 +37,7 @@ namespace MANDUU.Helpers
 
         public static string moveRight = "\ue5e1";
 
+        public static string locationIcon = "\ue0c8";
+
     }
 }

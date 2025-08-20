@@ -107,7 +107,7 @@
 	  <MauiXaml Update="Views\MainPages\PurchasesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MainPages\ShopsPage.xaml">
+	  <MauiXaml Update="Views\MainPages\ShopCategoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MainPages\SubPages\CategoryPage.xaml">

@@ -28,8 +28,11 @@ namespace MANDUU.Models
             // Shop that owns the product
             public int ShopId { get; set; }
             public Shop? Shop { get; set; }
+            public string ShopName { get; set; }
+            public string ShopLocation { get; set; }
 
 
-            public string FormattedPrice => $"₵{Price:N2}";
+
+        public string FormattedPrice => $"₵{Price:N2}";
     }
 }

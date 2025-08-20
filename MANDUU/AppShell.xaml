@@ -46,7 +46,7 @@
 
         <ShellContent 
                 Title="Shops"
-                ContentTemplate="{DataTemplate mainPages:ShopsPage}"
+                ContentTemplate="{DataTemplate mainPages:ShopCategoryPage}"
                 Route="ShopsPage">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="MaterialIcon"

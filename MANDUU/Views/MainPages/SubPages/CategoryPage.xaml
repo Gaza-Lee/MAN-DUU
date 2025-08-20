@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MANDUU.ViewModels"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
              xmlns:models="clr-namespace:MANDUU.Models"
              x:Class="MANDUU.Views.MainPages.SubPages.CategoryPage"
              x:Name="CategoryPageRoot"
@@ -15,13 +16,13 @@
         </Border>
 
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="15" Padding="0">
+            <VerticalStackLayout Padding="0">
 
                 <!-- Subcategory Sections -->
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding SubCategoryGroups}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="vm:SubCategoryGroup">
-                            <VerticalStackLayout Spacing="10">
+                            <VerticalStackLayout>
 
                                 <!-- Subcategory Title -->
                                 <Border StrokeThickness="0"
@@ -39,7 +40,7 @@
                                                 SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference ProductCollectionView}}"
                                                 HeightRequest="180">
                                     <CollectionView.ItemsLayout>
-                                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                                        <LinearItemsLayout Orientation="Horizontal"/>
                                     </CollectionView.ItemsLayout>
 
                                     <CollectionView.ItemTemplate>
@@ -47,14 +48,19 @@
                                             <Border StrokeShape="RoundRectangle 5"
                                                     StrokeThickness="0.5"
                                                     Background="#fff"
-                                                    WidthRequest="120"
+                                                    WidthRequest="125"
                                                     HeightRequest="150"
                                                     Margin="5">
                                                 <Grid RowDefinitions="*,auto">
                                                     <Image Source="{Binding ImageUrl}" Aspect="AspectFill"/>
                                                     <VerticalStackLayout Grid.Row="1" Padding="5">
                                                         <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="1"/>
-                                                        <Label Text="{Binding FormattedPrice}" />
+                                                        <HorizontalStackLayout>
+                                                            <Label Text="{x:Static icons:Icons.locationIcon}" FontFamily="MaterialIcon" Margin="0,2,0,0"/>
+                                                            <Label Text="{Binding ShopLocation}"
+                                                                    FontFamily="Finlandica"/>
+                                                        </HorizontalStackLayout>
+                                                        <Label Text="{Binding FormattedPrice}" TextColor="{StaticResource Primary}" FontAttributes="Bold"/>
                                                     </VerticalStackLayout>
                                                 </Grid>
                                             </Border>

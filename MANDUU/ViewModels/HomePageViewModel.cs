@@ -27,6 +27,9 @@ namespace MANDUU.ViewModels
         [ObservableProperty]
         private Shop selectedShop;
 
+        [ObservableProperty]
+        private ObservableCollection<Shop> _recommendedShops = new();
+
         // Load all products for the home page to be filtered 
         public List<Product> AllProducts { get; private set; } = new();
         #endregion
@@ -65,11 +68,11 @@ namespace MANDUU.ViewModels
         }
 
         [RelayCommand]
-        private async Task SelectShopAsync(Shop shop)
+        private async Task SelectedShopAsync(Shop shop)
         {
             if (shop == null) return;
 
-            await _navigationService.NavigateToAsync("s", new Dictionary<string, object>
+            await _navigationService.NavigateToAsync("shopprofilepage", new Dictionary<string, object>
             {
                 { "ShopId", shop.Id },
                 { "ShopName", shop.Name }
@@ -100,6 +103,7 @@ namespace MANDUU.ViewModels
             await LoadMainCategoriesAsync();
             await LoadBestSellingProductsAsync();
             await LoadAllProductsAsync();
+            await LoadRecommendedShopsAsync();
         }
 
         private async Task LoadOffersAsync()
@@ -128,6 +132,15 @@ namespace MANDUU.ViewModels
         private async Task LoadAllProductsAsync()
         {
             AllProducts = (await _productService.GetProductsAsync()).ToList();
+        }
+        private async Task LoadRecommendedShopsAsync()
+        {
+            RecommendedShops.Clear();
+            var shops = await _shopService.GetRecommendedShopsAsync(4);
+            foreach (var shop in shops)
+            {
+                RecommendedShops.Add(shop);
+            }
         }
         #endregion
 

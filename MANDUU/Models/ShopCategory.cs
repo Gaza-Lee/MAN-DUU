@@ -12,10 +12,10 @@ namespace MANDUU.Models
         public string Name { get; set; }
         public string? Description { get; set; }
         public string? BannerImage { get; set; }
-        public string? Icon { get; set; }
+        public string Icon { get; set; }
         public int SortOrder { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public List<Shop> Shops { get; set; } = new();
+        public List<Shop> Shops { get; set; } = new();        
     }
 
 
