@@ -14,14 +14,27 @@ namespace MANDUU.ViewModels
     {
         private readonly ShopService _shopService;
         private readonly ProductService _productService;
+        private readonly INavigationService _navigationService;
 
         [ObservableProperty] private Shop shop;
         [ObservableProperty] private ObservableCollection<Product> shopProducts = new();
 
-        public ShopProfileViewModel(ShopService shopService, ProductService productService)
+        public ShopProfileViewModel(ShopService shopService, ProductService productService, INavigationService navigationService)
         {
             _shopService = shopService;
             _productService = productService;
+            _navigationService = navigationService;
+        }
+
+        [RelayCommand]
+        private async Task SelectedProductAsync(Product product)
+        {
+            if (product == null) return;
+
+            await _navigationService.NavigateToAsync("productdetailpage", new Dictionary<string, object>
+            {
+                { "ProductId", product.Id }
+            });
         }
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)

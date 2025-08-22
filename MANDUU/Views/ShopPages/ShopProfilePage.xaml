@@ -22,6 +22,7 @@
                 <Image Source="{Binding Shop.ShopProfileImage}"
                        Aspect="AspectFit"
                        HeightRequest="300"
+                       WidthRequest="420"
                        HorizontalOptions="Fill"
                        VerticalOptions="Start"
                        Grid.RowSpan="2"
@@ -33,7 +34,7 @@
                         StrokeShape="RoundRectangle 100"
                         HorizontalOptions="End"
                         Margin="0,2,5,-40"
-                        StrokeThickness="2">
+                        StrokeThickness="3">
                     <Image Source="{Binding Shop.ShopProfileImage}"
                            HeightRequest="100"
                            WidthRequest="100"
@@ -42,13 +43,15 @@
 
                 <Label Text="{Binding Shop.Name}"
                        Grid.Row="2"
-                       FontSize="30"/>
+                       FontSize="30"
+                       Margin="5,0"/>
             </Grid>
             
             <!--Main Row 2-->
             <!--Contact and location Details-->
             <Grid Row="1" ColumnDefinitions="auto,auto,auto"
-                  HorizontalOptions="Center">
+                  HorizontalOptions="Center"
+                  Margin="0,15,0,5">
                 <HorizontalStackLayout Spacing="10">
                     <Border HorizontalOptions="Center"
                             Background="#4B4B4BCC" Padding="5,0"
@@ -164,24 +167,25 @@
             </Grid>
             
             <!--Main Row 4-->
-            <VerticalStackLayout Grid.Row="3" Margin="5,0">
+            <VerticalStackLayout Grid.Row="3" Margin="10,5">
                 <Label Text="About"/>
                 <Border StrokeThickness="0"
                         StrokeShape="RoundRectangle 5"
                         Background="#4B4B4BCC"
-                        Margin="20,5"
+                        Margin="10,5"
                         Padding="5">
                     <Label Text="{Binding Shop.Description}"
-                           FontFamily="Finlandica"/>
+                           FontFamily="Finlandica"
+                           MinimumHeightRequest="100"/>
                 </Border>
             </VerticalStackLayout>
 
             <!--Products Row (Last Row)-->
-            <VerticalStackLayout Grid.Row="4">
+            <VerticalStackLayout Grid.Row="4" Margin="10">
                 <Border HorizontalOptions="Start"
                         StrokeThickness="0">
                     <VerticalStackLayout>
-                        <Label Text="Products"/>
+                        <Label Text="Products" FontSize="20"/>
                         <BoxView Color="#000" CornerRadius="5"
                                  WidthRequest="20"
                                  HorizontalOptions="End"
@@ -189,13 +193,36 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <CollectionView ItemsSource="{Binding ShopProduct}">
+                <CollectionView ItemsSource="{Binding ShopProducts}"
+                                x:Name="ProductCollectionView"
+                                SelectionMode="Single"
+                                SelectionChangedCommand="{Binding SelectedProductCommand, Mode=TwoWay}"
+                                SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference ProductCollectionView}}">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                        <GridItemsLayout Orientation="Vertical" Span="3"/>
                     </CollectionView.ItemsLayout>
+
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Product">
-                            <Image Source="{Binding ImageUrl}"/>
+                            <Border StrokeShape="RoundRectangle 5"
+                                    StrokeThickness="0.5"
+                                    Background="#fff"
+                                    WidthRequest="125"
+                                    HeightRequest="150"
+                                    Margin="5">
+                                <Grid RowDefinitions="*,auto">
+                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill"/>
+                                    <VerticalStackLayout Grid.Row="1" Padding="5">
+                                        <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="1"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{x:Static icons:Icons.locationIcon}" FontFamily="MaterialIcon" Margin="0,2,0,0"/>
+                                            <Label Text="{Binding ShopLocation}"
+                                    FontFamily="Finlandica"/>
+                                        </HorizontalStackLayout>
+                                        <Label Text="{Binding FormattedPrice}" TextColor="{StaticResource Primary}" FontAttributes="Bold"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

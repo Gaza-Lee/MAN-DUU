@@ -45,8 +45,10 @@ namespace MANDUU.Helpers
 
         public static string emailIcon = "\uea5e";
 
-        public static string favoriteIcon = "\uf884";
+        public static string favoriteIcon = "\uf60a";
 
         public static string mapIcon = "\ue55b";
+
+        public static string tickIcon = "\ue5ca";
     }
 }
