@@ -54,6 +54,7 @@ namespace MANDUU
             builder.Services.AddSingleton<ProductService>();
             builder.Services.AddSingleton<ProductCategoryService>();
             builder.Services.AddSingleton<ShopService>();
+            builder.Services.AddSingleton<PrintingStationService>();
             return builder;
         }
 

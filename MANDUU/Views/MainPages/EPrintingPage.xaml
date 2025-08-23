@@ -2,7 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icons="clr-namespace:MANDUU.Helpers"
+             xmlns:models="clr-namespace:MANDUU.Models"
+             xmlns:converters="clr-namespace:MANDUU.Converters"
+             x:Name="EPrintingPageRoot"
              x:Class="MANDUU.Views.MainPages.EPrintingPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ActiveStatusColorConvertor x:Key="ActiveStatusColorConvertor"/>
+            <converters:SelectionToColorConverter x:Key="SelectionToColorConverter"/>
+            <converters:SelectionToBackgroundConverter x:Key="SelectionToBackgroundConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <Shell.TitleView>
         <Grid ColumnDefinitions="*, Auto, *"
               Padding="0,0,5,0"
@@ -16,7 +28,7 @@
                    VerticalOptions="Center"
                    FontSize="30">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Profile}"/>
+                    <TapGestureRecognizer Command="{Binding ProfileCommand}"/>
                 </Label.GestureRecognizers>
             </Label>
 
@@ -27,7 +39,7 @@
                    VerticalOptions="Center"/>
 
             <Label Grid.Column="2" 
-                   Text="{x:Static icons:Icons.searchIcon}"
+                   Text="{x:Static icons:Icons.cartIcon}"
                    HorizontalOptions="End"
                    FontFamily="MaterialIcon"
                    VerticalOptions="Center"
@@ -35,140 +47,160 @@
             </Label>
         </Grid>
     </Shell.TitleView>
-    <Grid RowDefinitions="0.1*,0.1*,0.1*,0.1*,0.1*,0.1*"
-          Margin="5">
-        <!--Row 1-->
-        <Border StrokeThickness="0"
-                StrokeShape="RoundRectangle 5"
+
+    <Grid RowDefinitions="auto,*" RowSpacing="10">
+        <VerticalStackLayout Grid.Row="0" Spacing="5">
+            <Border HorizontalOptions="Center"
+                VerticalOptions="Center"
                 Background="#f7f7f7"
-                Grid.Row="0"
-                HorizontalOptions="Center"
-                VerticalOptions="Center">
-            <Border.Shadow>
-                <Shadow Brush="Gray" Offset="5,5" Opacity="0.3"/>
-            </Border.Shadow>
-            <HorizontalStackLayout Margin="10,5">
-                <Label Text="{x:Static icons:Icons.documentIcon}"
-                       FontFamily="MaterialIcon"
-                       FontSize="70"/>
-                <Border Background="{StaticResource Primary}"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 5"
-                        VerticalOptions="Center"
-                        Padding="5">
-                    <HorizontalStackLayout Spacing="5" Padding="5,0,10,0">
-                        <Label Text="{x:Static icons:Icons.pickerIcon}"
-                               FontFamily="MaterialIcon"
-                               FontSize="25"
-                               TextColor="#fff"/>
-                        <Label Text="Select Document"
-                               FontSize="20"
-                               VerticalTextAlignment="Center"
-                               TextColor="#fff"/>
-                    </HorizontalStackLayout>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer  Command="{Binding SelectDocumentCommand}"/>
-                    </Border.GestureRecognizers>
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="0"
+                Padding="10,5">
+                <Border.Shadow>
+                    <Shadow Offset="5,5"
+                        Opacity="0.5"
+                        Brush="Gray"/>
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectDocumentCommand}"/>
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="5">
+                    <Label Text="{x:Static icons:Icons.documentIcon}"
+                           FontFamily="MaterialIcon"
+                           FontSize="60"/>
+                    <Border Background="{StaticResource Primary}"
+                            VerticalOptions="Center"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 5">
+                        <HorizontalStackLayout Spacing="5" Margin="5,0,10,0">
+                            <Label Text="{x:Static icons:Icons.UploadIcon}"
+                                   FontFamily="MaterialIcon"
+                                   FontSize="30"
+                                   TextColor="#fff"/>
+                            <Label Text="Upload Document"
+                                   VerticalTextAlignment="Center"
+                                   TextColor="#fff"
+                                   FontSize="20"
+                                   FontFamily="Finlandica"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+            </Border>
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
+                <Border BackgroundColor="Transparent"
+                        Stroke="Red"
+                        StrokeShape="RoundRectangle 100">
+                    <Label Text="i" FontSize="20" Padding="10,0"
+                           TextColor="Red"/>
                 </Border>
+                <Label Text="Select Printing station and upload document"
+                       FontFamily="Finlandica"
+                       VerticalTextAlignment="Center"
+                       TextColor="Red"/>
             </HorizontalStackLayout>
-        </Border>
-        
-        <!--Row 2-->
-        <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="5">
-            <Label Text="Number of pages"/>
-            <Border HorizontalOptions="Start" VerticalOptions="Center"
-                    Stroke="LightGray"
-                    StrokeShape="RoundRectangle 10">
-                <Entry WidthRequest="350"
-                       Keyboard="Numeric"
-                       MaxLength="5"
-                       Text="{Binding NumberOfPages}"/>
-            </Border>
-        </VerticalStackLayout>
-        
-        <!--Row 3-->
-        <VerticalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="5">
-            <Label Text="Number of Copies"/>
-            <Border HorizontalOptions="Start" VerticalOptions="Center"
-            Stroke="LightGray"
-            StrokeShape="RoundRectangle 10">
-                <Entry WidthRequest="350"
-                       Keyboard="Numeric"
-                       MaxLength="3"
-                       Text="{Binding NumberOfCopies}"/>
-            </Border>
         </VerticalStackLayout>
 
-        <!--Row 4-->
-        <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="45">
-            <VerticalStackLayout HorizontalOptions="Start">
-                <Label Text="Print Type"/>
-                <Border HorizontalOptions="Start" VerticalOptions="Center"
-                        Stroke="LightGray"
-                        StrokeShape="RoundRectangle 10">
-                    <Picker WidthRequest="150"
-                            ItemsSource="{Binding PrintTypes}"
-                            SelectedItem="{Binding SelectedPrintType}"/>
-                </Border>
-            </VerticalStackLayout>
-            <VerticalStackLayout HorizontalOptions="End">
-                <Label Text="Paper Size"/>
-                <Border HorizontalOptions="Start" VerticalOptions="Center"
-                        Stroke="LightGray"
-                        StrokeShape="RoundRectangle 10">
-                    <Picker WidthRequest="150"
-                            ItemsSource="{Binding PaperSizes}"
-                            SelectedItem="{Binding SelectedPaperSize, Mode=TwoWay}"/>
-                </Border>
-            </VerticalStackLayout>
-        </HorizontalStackLayout>
-        
-        <!--Row 5-->
-        <VerticalStackLayout Grid.Row="4" HorizontalOptions="Center" Spacing="5">
-        <Label Text="Page Setting"/>
-        <Border HorizontalOptions="Start" VerticalOptions="Center"
-                    Stroke="LightGray"
-                    StrokeShape="RoundRectangle 10">
-            <Picker WidthRequest="330"
-                       ItemsSource="{Binding PageSettings}"
-                    SelectedItem="{Binding SelectedPageSetting}"
-                    Margin="10,0"/>
-        </Border>
-        </VerticalStackLayout>
-        
-        <!--Row 6-->
-        <HorizontalStackLayout Grid.Row="5" HorizontalOptions="Center" Spacing="100" VerticalOptions="Center">
-            <VerticalStackLayout HorizontalOptions="Start" Spacing="10">
-                <Label Text="Estimated Price"/>
-                <Label Text="{Binding EstimatedPrice}"
-                       TextColor="{x:StaticResource Primary}"/>
-            </VerticalStackLayout>
-            <VerticalStackLayout HorizontalOptions="End" VerticalOptions="Center">
-                <Border HorizontalOptions="Start" VerticalOptions="Center"
-                        StrokeThickness="0"
+        <Grid Grid.Row="1" Margin="10" RowSpacing="10" RowDefinitions="auto,auto,*">
+            <Label Text="Available Printing Stations"
+                   FontSize="Title"
+                   HorizontalOptions="Center" Grid.Row="0"/>
+            <HorizontalStackLayout Margin="20,0" Grid.Row="1">
+                <Border Stroke="Gray"
+                        HorizontalOptions="Start"
                         StrokeShape="RoundRectangle 5"
-                        BackgroundColor="{StaticResource Primary}"
-                        Padding="10,5">
-                    <Border.Shadow>
-                        <Shadow Brush="Gray"
-                                Offset="5,5"
-                                Opacity="0.5"/>
-                    </Border.Shadow>
-                    <HorizontalStackLayout Spacing="5">
-                        <Label Text="{x:Static icons:Icons.tickIcon}"
+                        Padding="5,0">
+                    <HorizontalStackLayout>
+                        <Label Text="{x:Static icons:Icons.searchIcon}"
+                               FontSize="20"
                                FontFamily="MaterialIcon"
-                               HorizontalOptions="Center"
-                               FontSize="24"
-                               TextColor="#fff"
-                               VerticalTextAlignment="Center"/>
-                        <Label Text="Place Order"
-                               TextColor="#fff"
-                               FontSize="20"/>
+                               VerticalOptions="Center"/>
+                        <Entry VerticalOptions="Center"
+                               VerticalTextAlignment="Center"
+                               MinimumWidthRequest="120"
+                               Text="{Binding SearchText}"/>
                     </HorizontalStackLayout>
                 </Border>
-            </VerticalStackLayout>
-        </HorizontalStackLayout>
-    </Grid>
+                <!-- Active Filter Toggle -->
+                <CheckBox IsChecked="{Binding IsActive}"
+                          VerticalOptions="Center"/>
+                <Label Text="Active Only"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
 
-        
+            <CollectionView ItemsSource="{Binding DisplayStations}" Grid.Row="2">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:PrintingStation">
+                        <Border 
+                                Stroke="{Binding Id, Converter={StaticResource SelectionToColorConverter}, 
+                                        ConverterParameter={Binding BindingContext.SelectedStation.Id, Source={x:Reference EPrintingPageRoot}}}"
+                                StrokeThickness="2"
+                                Background="{Binding Id, Converter={StaticResource SelectionToBackgroundConverter}, 
+                                            ConverterParameter={Binding BindingContext.SelectedStation.Id, Source={x:Reference EPrintingPageRoot}}}"
+                                StrokeShape="RoundRectangle 10"
+                                Padding="10"
+                                Margin="0,5">
+
+                            <Grid ColumnSpacing="20" ColumnDefinitions="auto,*,auto">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding BindingContext.SelectStationCommand, Source={x:Reference EPrintingPageRoot}}"
+                                        CommandParameter="{Binding .}"/>
+                                </Grid.GestureRecognizers>
+
+                                <Border StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 100"
+                                        Background="{StaticResource Primary}"
+                                        Padding="5"
+                                        Grid.Column="0">
+                                    <Label Text="{x:Static icons:Icons.ePrintIcon}"
+                                           FontFamily="MaterialIcon"
+                                           FontSize="60"
+                                           TextColor="#fff"/>
+                                </Border>
+
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="{Binding Name}"/>
+                                    <Grid ColumnDefinitions="* ,auto">
+                                        <HorizontalStackLayout HorizontalOptions="Start" Grid.Column="0">
+                                            <Label Text="{x:Static icons:Icons.locationIcon}"
+                                                   FontFamily="MaterialIcon"
+                                                   FontSize="20"/>
+                                            <Label Text="{Binding ShortLocation}"
+                                                   TextColor="Gray"/>
+                                        </HorizontalStackLayout>
+
+                                        <Border StrokeShape="RoundRectangle 5"
+                                                Padding="5,0"
+                                                StrokeThickness="0"
+                                                Background="{StaticResource Primary}"
+                                                HorizontalOptions="End"
+                                                Grid.Column="1">
+                                            <Label Text="Locate on Map"
+                                                   TextColor="#fff"
+                                                   FontFamily="Finlandica"/>
+                                        </Border>
+                                    </Grid>
+                                    <Label Text="{Binding PhoneNumber}"
+                                           TextColor="{StaticResource Primary}"/>
+                                </VerticalStackLayout>
+
+                                <!--Active status-->
+                                <Border StrokeShape="RoundRectangle 100"
+                                        Background="{Binding Status, Converter={StaticResource ActiveStatusColorConvertor}}"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"
+                                        StrokeThickness="0"
+                                        WidthRequest="16"
+                                        HeightRequest="16"
+                                        Grid.Column="2"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
 </ContentPage>

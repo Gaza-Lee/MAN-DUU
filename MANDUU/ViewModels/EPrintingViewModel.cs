@@ -1,66 +1,47 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MANDUU.Models;
+using MANDUU.Services;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace MANDUU.ViewModels
 {
     public partial class EPrintingViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private string selectedDocument;
+        private readonly PrintingStationService _printingStationService;
+        private readonly INavigationService _navigationService;
 
         [ObservableProperty]
-        private int numberOfPages;
+        private ObservableCollection<PrintingStation> _allStations = new();
 
         [ObservableProperty]
-        private int numberOfCopies;
+        private ObservableCollection<PrintingStation> _displayStations = new();
 
         [ObservableProperty]
-        private string selectedPrintType;
+        private bool _isActive;
 
         [ObservableProperty]
-        private string selectedPaperSize;
+        private string _selectedDocument;
 
         [ObservableProperty]
-        private decimal estimatedPrice;
+        private PrintingStation _selectedStation;
 
         [ObservableProperty]
-        private string selectedPageSetting;
+        private string _searchText;
 
-        public ObservableCollection<string> PrintTypes { get; }
-        public ObservableCollection<string> PaperSizes { get; }
-        public ObservableCollection<string> PageSettings { get; }
+        [ObservableProperty]
+        private bool _isDocumentSelected;
 
-        public EPrintingViewModel()
+        [ObservableProperty]
+        private bool _isStationSelected;
+
+        public EPrintingViewModel(PrintingStationService printingStationService, INavigationService navigationService)
         {
-            PrintTypes = new ObservableCollection<string>
-            {
-                "Coloured",
-                "Black and White"
-            };
-
-            PaperSizes = new ObservableCollection<string>
-            {
-                "A4",
-                "A3",
-                "Letter",
-                "Legal"
-            };
-
-            PageSettings = new ObservableCollection<string>
-            {
-                "Front Only",
-                "Front and Back"
-            };
-
-            // Defaults
-            SelectedPrintType = PrintTypes[0];
-            SelectedPaperSize = PaperSizes[0];
-            SelectedPageSetting = PageSettings[0];
-            NumberOfPages = 1;
-            NumberOfCopies = 1;
-
-            CalculatePrice();
+            _printingStationService = printingStationService;
+            _navigationService = navigationService;
+            LoadStations();
+            PropertyChanged += OnPropertyChanged;
         }
 
         [RelayCommand]
@@ -70,9 +51,9 @@ namespace MANDUU.ViewModels
             {
                 var customFileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
                 {
-                    { DevicePlatform.iOS, new[] { "com.adobe.pdf", "org.openxmlformats.wordprocessingml.document", "public.text" } }, // iOS UTTypes
-                    { DevicePlatform.Android, new[] { "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/plain" } }, // MIME types
-                    { DevicePlatform.WinUI, new[] { ".pdf", ".doc", ".docx", ".txt" } }, // Extensions
+                    { DevicePlatform.iOS, new[] { "com.adobe.pdf", "org.openxmlformats.wordprocessingml.document", "public.text" } },
+                    { DevicePlatform.Android, new[] { "application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/plain" } },
+                    { DevicePlatform.WinUI, new[] { ".pdf", ".doc", ".docx", ".txt" } },
                     { DevicePlatform.MacCatalyst, new[] { "com.adobe.pdf", "org.openxmlformats.wordprocessingml.document", "public.text" } }
                 });
 
@@ -84,83 +65,129 @@ namespace MANDUU.ViewModels
 
                 if (result != null)
                 {
-                    // Use FullPath on Windows/Mac, FileName otherwise
                     SelectedDocument = result.FullPath ?? result.FileName;
+                    IsDocumentSelected = true;
+
+                    // Auto-navigate if both document and station are selected
+                    if (IsStationSelected && IsDocumentSelected)
+                    {
+                        await NavigateToPrintingDetailsAsync();
+                    }
                 }
             }
             catch (Exception)
             {
-                // User cancelled or error occurred – safe to ignore or log
                 SelectedDocument = string.Empty;
+                IsDocumentSelected = false;
             }
         }
 
-        partial void OnNumberOfPagesChanged(int value) => CalculatePrice();
-        partial void OnNumberOfCopiesChanged(int value) => CalculatePrice();
-        partial void OnSelectedPrintTypeChanged(string value) => CalculatePrice();
-        partial void OnSelectedPaperSizeChanged(string value) => CalculatePrice();
-        partial void OnSelectedPageSettingChanged(string value) => CalculatePrice();
-        public bool HasSelectedDocument => !string.IsNullOrEmpty(SelectedDocument);
-
-        partial void OnSelectedDocumentChanged(string value)
+        [RelayCommand]
+        private async Task SelectStationAsync(PrintingStation station)
         {
-            OnPropertyChanged(nameof(HasSelectedDocument));
+            // Toggle selection - if same station is clicked again, deselect it
+            if (SelectedStation?.Id == station?.Id)
+            {
+                SelectedStation = null;
+                IsStationSelected = false;
+            }
+            else
+            {
+                SelectedStation = station;
+                IsStationSelected = station != null;
+            }
+
+            // Auto-navigate if both document and station are selected
+            if (IsStationSelected && IsDocumentSelected)
+            {
+                await NavigateToPrintingDetailsAsync();
+            }
         }
 
-        private void CalculatePrice()
+        [RelayCommand]
+        private async Task NavigateToPrintingDetailsAsync()
         {
-            if (NumberOfCopies <= 0 || NumberOfPages <= 0)
+            if (SelectedStation == null || string.IsNullOrEmpty(SelectedDocument))
             {
-                EstimatedPrice = 0;
+                // Show error message or validation
                 return;
             }
 
-            // how many sheets based on page setting
-            int sheets = SelectedPageSetting == "Front and Back"
-                ? (int)System.Math.Ceiling(NumberOfPages / 2.0)
-                : NumberOfPages;
-
-            // price per sheet depends on combination
-            decimal pricePerSheet = GetPricePerSheet();
-
-            // final calculation
-            EstimatedPrice = sheets * NumberOfCopies * pricePerSheet;
+            // Navigate to printing details page using navigation service
+            await _navigationService.NavigateToAsync("//printingdetailpage",
+                new Dictionary<string, object>
+                {
+                    { "SelectedStation", SelectedStation },
+                    { "SelectedDocument", SelectedDocument }
+                });
         }
 
-        private decimal GetPricePerSheet()
+        [RelayCommand]
+        private void FilterStations()
         {
-            switch (SelectedPaperSize)
+            UpdateDisplayStations();
+        }
+
+        [RelayCommand]
+        private void ClearSearch()
+        {
+            SearchText = string.Empty;
+            UpdateDisplayStations();
+        }
+
+        [RelayCommand]
+        private async Task ProfileAsync()
+        {
+            // Navigate to profile page using navigation service
+            await _navigationService.NavigateToAsync("//profilepage");
+        }
+
+        private void LoadStations()
+        {
+            var stations = _printingStationService.GetAllStations();
+            AllStations = new ObservableCollection<PrintingStation>(stations);
+            UpdateDisplayStations();
+        }
+
+        private void UpdateDisplayStations()
+        {
+            IEnumerable<PrintingStation> filteredStations = AllStations;
+
+            if (IsActive)
             {
-                case "A4":
-                    if (SelectedPrintType == "Black and White" && SelectedPageSetting == "Front Only") return 0.5m;
-                    if (SelectedPrintType == "Black and White" && SelectedPageSetting == "Front and Back") return 1.0m;
-                    if (SelectedPrintType == "Coloured" && SelectedPageSetting == "Front Only") return 2.0m;
-                    if (SelectedPrintType == "Coloured" && SelectedPageSetting == "Front and Back") return 4.0m;
-                    break;
-
-                case "A3":
-                    if (SelectedPrintType == "Black and White" && SelectedPageSetting == "Front Only") return 0.8m;
-                    if (SelectedPrintType == "Black and White" && SelectedPageSetting == "Front and Back") return 1.6m;
-                    if (SelectedPrintType == "Coloured" && SelectedPageSetting == "Front Only") return 8.0m;
-                    if (SelectedPrintType == "Coloured" && SelectedPageSetting == "Front and Back") return 16.0m;
-                    break;
-
-                case "Letter":
-                    if (SelectedPrintType == "Black and White" && SelectedPageSetting == "Front Only") return 0.6m;
-                    if (SelectedPrintType == "Black and White" && SelectedPageSetting == "Front and Back") return 1.2m;
-                    if (SelectedPrintType == "Coloured" && SelectedPageSetting == "Front Only") return 6.0m;
-                    if (SelectedPrintType == "Coloured" && SelectedPageSetting == "Front and Back") return 12.0m;
-                    break;
-
-                case "Legal":
-                    if (SelectedPrintType == "Black and White" && SelectedPageSetting == "Front Only") return 0.7m;
-                    if (SelectedPrintType == "Black and White" && SelectedPageSetting == "Front and Back") return 1.4m;
-                    if (SelectedPrintType == "Coloured" && SelectedPageSetting == "Front Only") return 7.0m;
-                    if (SelectedPrintType == "Coloured" && SelectedPageSetting == "Front and Back") return 14.0m;
-                    break;
+                filteredStations = filteredStations.Where(s => s.Status == PrintingStationStatus.Active);
             }
 
-            return 0.5m;
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                filteredStations = filteredStations.Where(s =>
+                    s.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    s.ShortLocation.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    s.LongLocation.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+            }
+
+            var sortedStations = filteredStations
+                .OrderByDescending(s => s.Status)
+                .ThenBy(s => s.Name)
+                .ToList();
+
+            DisplayStations = new ObservableCollection<PrintingStation>(sortedStations);
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(IsActive) || e.PropertyName == nameof(SearchText))
+            {
+                UpdateDisplayStations();
+            }
+            else if (e.PropertyName == nameof(SelectedStation))
+            {
+                IsStationSelected = SelectedStation != null;
+            }
+            else if (e.PropertyName == nameof(SelectedDocument))
+            {
+                IsDocumentSelected = !string.IsNullOrEmpty(SelectedDocument);
+            }
         }
     }
 }
