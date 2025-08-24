@@ -65,10 +65,10 @@ namespace MANDUU.ViewModels
 
                 if (result != null)
                 {
-                    SelectedDocument = result.FullPath ?? result.FileName;
+                    SelectedDocument = result.FileName;
                     IsDocumentSelected = true;
 
-                    // Auto-navigate if both document and station are selected
+
                     if (IsStationSelected && IsDocumentSelected)
                     {
                         await NavigateToPrintingDetailsAsync();
@@ -114,7 +114,7 @@ namespace MANDUU.ViewModels
             }
 
             // Navigate to printing details page using navigation service
-            await _navigationService.NavigateToAsync("//printingdetailpage",
+            await _navigationService.NavigateToAsync("printingdetailspage",
                 new Dictionary<string, object>
                 {
                     { "SelectedStation", SelectedStation },
@@ -139,7 +139,7 @@ namespace MANDUU.ViewModels
         private async Task ProfileAsync()
         {
             // Navigate to profile page using navigation service
-            await _navigationService.NavigateToAsync("//profilepage");
+            await _navigationService.NavigateToAsync("userprofilepage");
         }
 
         private void LoadStations()

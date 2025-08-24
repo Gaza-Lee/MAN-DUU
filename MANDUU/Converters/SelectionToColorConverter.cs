@@ -1,38 +1,47 @@
 ﻿using System.Globalization;
+using Microsoft.Maui.Controls;
 
 namespace MANDUU.Converters
 {
-    public class SelectionToColorConverter : IValueConverter
+    public class StationSelectionToColorConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int stationId && parameter is int selectedStationId)
+            if (values.Length < 2)
+                return Colors.Transparent;
+
+            if (values[0] is int stationId && values[1] is int selectedStationId)
             {
-                return stationId == selectedStationId ? Color.FromArgb("#2196F3") : Colors.Transparent;
+                return stationId == selectedStationId
+                    ? Color.FromArgb("#2196F3")
+                    : Colors.Transparent;
             }
+
             return Colors.Transparent;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
     }
 
-    public class SelectionToBackgroundConverter : IValueConverter
+    public class StationSelectionToBackgroundConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int stationId && parameter is int selectedStationId)
+            if (values.Length < 2)
+                return Colors.Transparent;
+
+            if (values[0] is int stationId && values[1] is int selectedStationId)
             {
-                return stationId == selectedStationId ? Color.FromArgb("#E3F2FD") : Colors.Transparent;
+                return stationId == selectedStationId
+                    ? Color.FromArgb("#E3F2FD")
+                    : Colors.Transparent;
             }
+
             return Colors.Transparent;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
     }
 }

@@ -92,6 +92,7 @@ namespace MANDUU
             builder.Services.AddTransient<ShopCategoryViewModel>();
             builder.Services.AddTransient<ShopProfileViewModel>();
             builder.Services.AddTransient<EPrintingViewModel>();
+            builder.Services.AddTransient<PrintingDetailsViewModel>();
 
             return builder;
         }

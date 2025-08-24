@@ -10,8 +10,8 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ActiveStatusColorConvertor x:Key="ActiveStatusColorConvertor"/>
-            <converters:SelectionToColorConverter x:Key="SelectionToColorConverter"/>
-            <converters:SelectionToBackgroundConverter x:Key="SelectionToBackgroundConverter"/>
+            <converters:StationSelectionToColorConverter x:Key="StationSelectionToColorConverter"/>
+            <converters:StationSelectionToBackgroundConverter x:Key="StationSelectionToBackgroundConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -78,10 +78,38 @@
                                    FontSize="30"
                                    TextColor="#fff"/>
                             <Label Text="Upload Document"
+                                   x:Name="UploadLabel"
                                    VerticalTextAlignment="Center"
                                    TextColor="#fff"
                                    FontSize="20"
-                                   FontFamily="Finlandica"/>
+                                   FontFamily="Finlandica">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding IsDocumentSelected}"
+                                                 Value="True">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label x:Name="DocumentLabel"
+                                   Text="{Binding SelectedDocument}"
+                                   VerticalTextAlignment="Center"
+                                   TextColor="#fff"
+                                   FontSize="16"
+                                   FontFamily="Finlandica"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="1"
+                                   IsVisible="False">
+                                <Label.Triggers>
+                                    <!-- Show only when a document is selected -->
+                                    <DataTrigger TargetType="Label"
+                                     Binding="{Binding IsDocumentSelected}"
+                                     Value="True">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                         </HorizontalStackLayout>
                     </Border>
                 </HorizontalStackLayout>
@@ -133,15 +161,23 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:PrintingStation">
-                        <Border 
-                                Stroke="{Binding Id, Converter={StaticResource SelectionToColorConverter}, 
-                                        ConverterParameter={Binding BindingContext.SelectedStation.Id, Source={x:Reference EPrintingPageRoot}}}"
-                                StrokeThickness="2"
-                                Background="{Binding Id, Converter={StaticResource SelectionToBackgroundConverter}, 
-                                            ConverterParameter={Binding BindingContext.SelectedStation.Id, Source={x:Reference EPrintingPageRoot}}}"
+                        <Border StrokeThickness="2"
                                 StrokeShape="RoundRectangle 10"
                                 Padding="10"
                                 Margin="0,5">
+                            <Border.Stroke>
+                                <MultiBinding Converter="{StaticResource StationSelectionToColorConverter}">
+                                    <Binding Path="Id"/>
+                                    <Binding Path="BindingContext.SelectedStation.Id" Source="{x:Reference EPrintingPageRoot}"/>
+                                </MultiBinding>
+                            </Border.Stroke>
+                            
+                            <Border.Background>
+                                <MultiBinding Converter="{StaticResource StationSelectionToBackgroundConverter}">
+                                    <Binding Path="Id"/>
+                                    <Binding Path="BindingContext.SelectedStation.Id" Source="{x:Reference EPrintingPageRoot}"/>
+                                </MultiBinding>
+                            </Border.Background>
 
                             <Grid ColumnSpacing="20" ColumnDefinitions="auto,*,auto">
                                 <Grid.GestureRecognizers>

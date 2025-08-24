@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MANDUU.Views.MainPages.SubPages.PrintingDetailsPage"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
+             xmlns:models="clr-namespace:MANDUU.Models"
+             Title="Printing Details">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="EntryPlaceHolder">
+                <Setter Property="FontFamily" Value="Finlandica"/>
+                <Setter Property="FontSize" Value="16"/> 
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid RowDefinitions="auto,*">
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Grid.Row="0">
+            <Border HorizontalOptions="Center"
+                Padding="10,5"
+                StrokeShape="RoundRectangle 10"
+                Background="#f7f7f7"
+                StrokeThickness="0">
+                <Border.Shadow>
+                    <Shadow Brush="Gray"
+                        Offset="5,5"
+                        Opacity="0.4"/>
+                </Border.Shadow>
+                <Label Text="{x:Static icons:Icons.documentIcon}"
+                       FontFamily="MaterialIcon"
+                       FontSize="70"/>
+            </Border>
+
+            <Grid RowDefinitions="*,auto">
+                <Label Text="{Binding SelectedDocument, StringFormat='Uploaded file:{0}'}"
+                   FontFamily="Finlandica"
+                   FontSize="16"
+                   VerticalOptions="Center"
+                   Grid.Row="0"
+                   TextColor="Gray"/>
+                <!--Remove Document-->
+                <Border Background="Red"
+                        VerticalOptions="End"
+                        Padding="5,0" Grid.Row="1"
+                        StrokeShape="RoundRectangle 5"
+                        StrokeThickness="0" HorizontalOptions="Start">
+                    <Border.Shadow>
+                        <Shadow Brush="Gray"
+                                Offset="5,5"
+                                Opacity="0.4"/>
+                    </Border.Shadow>
+                    
+                    <HorizontalStackLayout>
+                        <Label Text="{x:Static icons:Icons.removeIcon}"
+                           FontFamily="MaterialIcon"
+                           Margin="0,2,0,0"
+                           FontSize="22"
+                           TextColor="#fff"/>
+                        <Label Text="Remove Document"
+                           TextColor="#fff"
+                           FontSize="20"
+                           FontFamily="Finlandica"
+                           Margin="0,0,3,0"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+        </HorizontalStackLayout>
+
+        <Grid Grid.Row="1" Margin="20,50,20,0"
+              RowDefinitions="auto,auto,auto,auto,auto,auto" RowSpacing="40">
+            <VerticalStackLayout Grid.Row="0">
+                <Label Text="Number of pages in Document"
+                       Style="{StaticResource EntryPlaceHolder}"/>
+                <Border Stroke="Gray"
+                        StrokeShape="RoundRectangle 10">
+                    <Entry Text="{Binding NumberOfPages}"
+                           Margin="5,0"
+                           TextColor="Gray"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1">
+                <Label Text="Number of Copies"
+                       Style="{StaticResource EntryPlaceHolder}"/>
+                <Border Stroke="Gray"
+                        StrokeShape="RoundRectangle 10">
+                    <Entry Text="{Binding NumberOfCopies}"
+                           Margin="5,0"
+                           TextColor="Gray"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Grid.Row="2">
+                <VerticalStackLayout HorizontalOptions="Start" Grid.Column="0">
+                    <Label Text="Print Type"
+                        Style="{StaticResource EntryPlaceHolder}"/>
+                    <Border Stroke="Gray"
+                            StrokeShape="RoundRectangle 10">
+                        <Picker ItemsSource="{Binding PrintTypes}"
+                                SelectedItem="{Binding SelectedPrintType}"
+                                Margin="5,0"
+                                TextColor="Gray"
+                                MinimumWidthRequest="160"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout HorizontalOptions="End" Grid.Column="1">
+                    <Label Text="Paper Size"
+                            Style="{StaticResource EntryPlaceHolder}"/>
+                    <Border Stroke="Gray"
+                            StrokeShape="RoundRectangle 10">
+                        <Picker ItemsSource="{Binding PaperSizes}"
+                                SelectedItem="{Binding SelectedPaperSize}"
+                                Margin="5,0"
+                                TextColor="Gray"
+                                 MinimumWidthRequest="160"/>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Grid ColumnDefinitions="*, *" Grid.Row="3">
+                <VerticalStackLayout HorizontalOptions="Start" Grid.Column="0">
+                    <Label Text="Page Settings"
+                            Style="{StaticResource EntryPlaceHolder}"/>
+                    <Border Stroke="Gray"
+                            StrokeShape="RoundRectangle 10">
+                        <Picker ItemsSource="{Binding PageSettings}"
+                                SelectedItem="{Binding SelectedPageSetting}"
+                                Margin="5,0"
+                                TextColor="Gray"
+                                MinimumWidthRequest="160"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout HorizontalOptions="End" Grid.Column="1">
+                    <Label Text="Selectected Print Station"
+                            Style="{StaticResource EntryPlaceHolder}"/>
+                    <Border StrokeThickness="0"
+                            BackgroundColor="{StaticResource Primary}"
+                            StrokeShape="RoundRectangle 10">
+                        <Grid ColumnDefinitions="auto,*">
+                            <Label Text="{x:Static icons:Icons.ePrintIcon}"
+                                   FontFamily="MaterialIcon"
+                                   FontSize="30"
+                                   TextColor="#fff"
+                                   Grid.Column="0"
+                                   Margin="0,5,0,0"/>
+                            <Picker Grid.Column="1"
+                                    ItemsSource="{Binding PrintStations}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedPrintingStation, Mode=TwoWay}"
+                                    TextColor="#fff"
+                                    Background="Transparent"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+            <Label Text="{Binding EstimatedPriceDisplay}" Grid.Row="4"
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource Primary}"
+                   FontSize="24"/>
+            <Button  Grid.Row="5"
+                     Text="Place Order"
+                     HorizontalOptions="Center"/>
+        </Grid>
+    </Grid>
+</ContentPage>
