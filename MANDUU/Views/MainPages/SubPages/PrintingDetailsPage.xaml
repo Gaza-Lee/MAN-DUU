@@ -160,9 +160,23 @@
                    HorizontalOptions="Center"
                    TextColor="{StaticResource Primary}"
                    FontSize="24"/>
-            <Button  Grid.Row="5"
-                     Text="Place Order"
-                     HorizontalOptions="Center"/>
+            <Border Grid.Row="5" HorizontalOptions="Center"
+                    BackgroundColor="{StaticResource Primary}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="5,5,10,5"
+                    VerticalOptions="End">
+                <HorizontalStackLayout >
+                    <Label Text="{x:Static icons:Icons.tickIcon}"
+                           FontFamily="MaterialIcon"
+                           FontSize="30"
+                           TextColor="#fff"
+                           FontAttributes="Bold"/>
+                    <Label Text="Place Order"
+                           FontSize="20"
+                           TextColor="#fff"/>
+                </HorizontalStackLayout>
+            </Border>
         </Grid>
     </Grid>
 </ContentPage>

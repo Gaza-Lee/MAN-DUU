@@ -72,6 +72,7 @@ namespace MANDUU
             builder.Services.AddTransient <ProductDetailsPage>();
             builder.Services.AddTransient<CategoryPage>();
             builder.Services.AddTransient<ShopProfilePage>();
+            builder.Services.AddTransient<MyShopPage>();
 
             return builder;
         }

@@ -8,6 +8,7 @@ namespace MANDUU.Models
 {
     public class User
     {
+        
         public int Id { get; set; }
 
         // Basic Info
@@ -18,10 +19,10 @@ namespace MANDUU.Models
         public string PhoneNumber { get; set; }
 
         // Seller Info
-        public bool IsSeller { get; set; } = false;
+        public bool IsSeller { get; set; } = false;// By default every user is a buyer and can become a seller later
 
         // Authentication
-        public string Password { get; set; }// By default every user is a buyer and can become a seller later
+        public string HashPassword { get; set; }
 
         // Profile
         public string? ProfilePicture { get; set; }

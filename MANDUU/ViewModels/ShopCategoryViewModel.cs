@@ -26,6 +26,12 @@ namespace MANDUU.ViewModels
         }
 
         [RelayCommand]
+        private async Task GoToMyShopAsync()
+        {
+            await _navigationService.NavigateToAsync("myshoppage");
+        }
+
+        [RelayCommand]
         private async Task SelectedShopAsync(Shop shop)
         {
             if (shop == null) return;

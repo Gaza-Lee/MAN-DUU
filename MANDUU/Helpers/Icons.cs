@@ -58,5 +58,7 @@ namespace MANDUU.Helpers
         public static string deleteIcon = "\ue872";
 
         public static string infoIcon = "\uf59b";
+
+        public static string plusIcon = "\uf3dd";
     }
 }
