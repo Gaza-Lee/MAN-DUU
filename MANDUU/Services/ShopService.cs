@@ -61,6 +61,8 @@ namespace MANDUU.Services
                 {
                     Id = 3,
                     Name = "FashionFix",
+                    OwnerId = 1,
+                    OwnerName = "User One",
                     Description = "Trendy fashion items, accessories, and lifestyle products",
                     Logo = "fashionfix_logo.png",
                     CoverImage = "fashionfix_cover.jpg",
@@ -78,6 +80,8 @@ namespace MANDUU.Services
                 {
                     Id = 4,
                     Name = "Emart Laptops",
+                    OwnerId = 1,
+                    OwnerName = "User One",
                     Description = "Latest tech gadgets, electronics, and computing devices",
                     Logo = "emart_laptops_logo.png",
                     CoverImage = "emart_laptops_cover.jpg",
@@ -95,6 +99,8 @@ namespace MANDUU.Services
                 {
                     Id = 5,
                     Name = "FreshMart Groceries",
+                    OwnerId = 2,
+                    OwnerName = "User Two",
                     Description = "Fresh groceries, organic produce, and daily essentials",
                     Logo = "freshmart_logo.png",
                     CoverImage = "freshmart_cover.jpg",
@@ -112,6 +118,8 @@ namespace MANDUU.Services
                 {
                     Id = 6,
                     Name = "TechGadgets Hub",
+                    OwnerId = 2,
+                    OwnerName = "User Two",
                     Description = "Cutting-edge technology and innovative gadgets",
                     Logo = "techgadgets_logo.png",
                     CoverImage = "techgadgets_cover.jpg",
@@ -205,7 +213,7 @@ namespace MANDUU.Services
             return await Task.FromResult(categories.Distinct());
         }
 
-        public async Task<IEnumerable<Shop>> GetShopsByOwnerAsync(string ownerId)
+        public async Task<IEnumerable<Shop>> GetShopsByOwnerAsync(int ownerId)
         {
             return await Task.FromResult(_shops
                 .Where(s => s.OwnerId == ownerId)

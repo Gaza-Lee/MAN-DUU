@@ -25,6 +25,38 @@
                 VerticalOptions="Center"
                 Margin="0,0,0,100"/>
 
+        <Border VerticalOptions="Start"
+                HorizontalOptions="End"
+                Padding="20,5,10,5"
+                StrokeShape="RoundRectangle 100"
+                Margin="5"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Offset="5,5"
+                        Opacity="0.5"
+                        Brush="Gray"/>
+            </Border.Shadow>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="1,1">
+                    <GradientStop Color="#33e6f2ff" Offset="0.1" />
+                    <GradientStop Color="#33f0f8ff" Offset="0.9" />
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SkipCommand}"/>
+            </Border.GestureRecognizers>
+            <HorizontalStackLayout Spacing="-5">
+                <Label Text="Skip"
+                       FontSize="20"/>
+                <Label Text="{Static icons:Icons.getStartedIcon}"
+                       FontFamily="MaterialIcon"
+                       FontSize="30"
+                       VerticalTextAlignment="Center"/>
+            </HorizontalStackLayout>
+        </Border>
+
         <Button BackgroundColor="#FF7B1C"
                HorizontalOptions="Center"
                VerticalOptions="Center"

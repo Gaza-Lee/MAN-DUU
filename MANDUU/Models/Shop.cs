@@ -13,8 +13,11 @@ namespace MANDUU.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public string OwnerId { get; set; }
+        // Owner Info
+        public int OwnerId { get; set; }
+        public string OwnerName { get; set; }
         public string? UniqueShopPin { get; set; }
+
 
         public string? Email { get; set; }
         public string PhoneNumber { get; set; }

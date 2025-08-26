@@ -5,16 +5,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:MANDUU.Views"
     xmlns:mainPages="clr-namespace:MANDUU.Views.MainPages"
+    xmlns:authPages="clr-namespace:MANDUU.Views.AuthenticationPages"
     xmlns:Icon ="clr-namespace:MANDUU.Helpers"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="MANDUU">
+    Title="MANDUU"
+    x:Name="AppShellRoot">
+
     <Shell.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor ="{StaticResource Primary}"/>
     </Shell.Behaviors>
 
-    <!--<ShellContent ContentTemplate="{DataTemplate views:LandingPage}"/>-->
+    <!-- Landing Page as initial route -->
+    <ShellContent 
+        Title="Welcome"
+        ContentTemplate="{DataTemplate views:LandingPage}"
+        Route="landing"/>
+
     <!--Tabbed Pages-->
-    <TabBar>
+    <TabBar Route="main">
         <ShellContent 
             Title="Home"
             ContentTemplate="{DataTemplate mainPages:HomePage}"
@@ -28,7 +36,7 @@
         <ShellContent 
             Title="Purchases"
             ContentTemplate="{DataTemplate mainPages:PurchasesPage}"
-            Route="PurchasesPage">
+            Route="purchases">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="MaterialIcon"
                                  Glyph="{x:Static Icon:Icons.PurchasesIcon}"/>
@@ -55,4 +63,10 @@
             </ShellContent.Icon>
         </ShellContent>
     </TabBar>
+
+    <!-- Account Creation Page -->
+    <ShellContent 
+        Title="Create Account"
+        ContentTemplate="{DataTemplate authPages:CreateAccountOrSignInPage}"
+        Route="createaccountorsigninpage"/>
 </Shell>

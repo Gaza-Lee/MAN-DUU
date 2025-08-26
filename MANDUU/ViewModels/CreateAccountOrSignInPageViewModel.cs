@@ -21,12 +21,12 @@ namespace MANDUU.ViewModels
 
         public async Task OnSignIn()
         {
-            await Shell.Current.GoToAsync("SignInPage");
+            await Shell.Current.GoToAsync("signinpage");
         }
 
         public async Task OnCreateAccount()
         {
-            await Shell.Current.GoToAsync("CreateAccountPage");
+            await Shell.Current.GoToAsync("createaccountpage");
         }
 
     }

@@ -12,15 +12,15 @@ namespace MANDUU
         {
             InitializeComponent();
 
-            Routing.RegisterRoute("CreateAccountOrSignInPage", typeof(CreateAccountOrSignInPage));
-            Routing.RegisterRoute("LandingPage", typeof(LandingPage));
-            Routing.RegisterRoute("SignInPage", typeof(SignInPage));
-            Routing.RegisterRoute("CreateAccountPage", typeof(CreateAccountPage));
-            Routing.RegisterRoute("HomePage", typeof(HomePage));
-            Routing.RegisterRoute("VerificationPage", typeof(VerificationPage));
-            Routing.RegisterRoute("ResetPasswordPage", typeof(ResetPasswordPage));
-            Routing.RegisterRoute("ResetPswVerificationPage", typeof(ResetPswVerificationPage));
-            Routing.RegisterRoute("NewPasswordPage", typeof(NewPasswordPage));
+            Routing.RegisterRoute("createaccountorsigninpage", typeof(CreateAccountOrSignInPage));
+            Routing.RegisterRoute("landingpage", typeof(LandingPage));
+            Routing.RegisterRoute("signinpage", typeof(SignInPage));
+            Routing.RegisterRoute("createaccountpage", typeof(CreateAccountPage));
+            Routing.RegisterRoute("homepage", typeof(HomePage));
+            Routing.RegisterRoute("verificationpage", typeof(VerificationPage));
+            Routing.RegisterRoute("resetpasswordpage", typeof(ResetPasswordPage));
+            Routing.RegisterRoute("resetpswverificationpage", typeof(ResetPswVerificationPage));
+            Routing.RegisterRoute("newpasswordpage", typeof(NewPasswordPage));
             Routing.RegisterRoute("productdetailpage", typeof(ProductDetailsPage));
             Routing.RegisterRoute("categorypage", typeof(CategoryPage));
             Routing.RegisterRoute("shopprofilepage", typeof(ShopProfilePage));

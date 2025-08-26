@@ -8,9 +8,28 @@ namespace MANDUU.Services
 {
     public class NavigationService : INavigationService
     {
-        public Task InitializeAsync()
+        private readonly IUserService _userService;
+
+        public NavigationService(IUserService userService)
         {
-            return Task.CompletedTask;
+            _userService = userService;
+        }
+        public async Task InitializeAsync()
+        {
+            //check authentication status
+            bool isAuthenticated = await _userService.IsUserAuthenticatedAsync();
+
+            if (isAuthenticated)
+            {
+                //Navigate to main page
+                await NavigateToAsync("//main/home");
+            }
+            else
+            {
+                //Navigate to landing page (Landing page as default)
+                await NavigateToAsync("//landing");
+
+            }
         } 
 
         public async Task NavigateToAsync(string route, IDictionary<string, object> parameters = null)
@@ -29,5 +48,6 @@ namespace MANDUU.Services
         {
             return Shell.Current.GoToAsync("..", true);
         }
+
     }
 }

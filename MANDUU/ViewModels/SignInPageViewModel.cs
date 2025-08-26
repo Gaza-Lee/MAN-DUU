@@ -1,4 +1,5 @@
 ﻿using MANDUU.RegexValidation;
+using MANDUU.Services;
 using MANDUU.ViewModels.Base;
 using Microsoft.Extensions.Options;
 using System;
@@ -12,7 +13,10 @@ namespace MANDUU.ViewModels
 {
     public class SignInPageViewModel : BaseViewModel
     {
-        
+        private readonly IUserService _userService;
+        private readonly INavigationService _navigationService;
+
+
         private string _emailORPhone;
         private string _password;
 
@@ -20,10 +24,13 @@ namespace MANDUU.ViewModels
         public ICommand ForgetPasswordCommand { get; }
 
 
-        public SignInPageViewModel()
+        public SignInPageViewModel(IUserService userService,INavigationService navigationService)
         {
+            _navigationService = navigationService;
+            _userService = userService;
             ProceedCommand = new Command(async () => await OnProceed());
             ForgetPasswordCommand = new Command(async () => await OnForgetPassword());
+            
         }
 
         #region Properties
@@ -80,6 +87,21 @@ namespace MANDUU.ViewModels
                 return false;
         }
 
+        private string ExtractEmailFromInput(string input)
+        {
+            // If input is already a valid email, return it
+            if (InputValidation.IsValidEmail(input))
+                return input;
+
+            // If input is a phone number, try to find the user and get their email
+            if (InputValidation.IsValidPhoneNumber(input))
+            {
+                return input; // Let UserService handle phone numbers
+            }
+
+            return input; // Fallback
+        }
+
         private async Task OnProceed()
         {
             try
@@ -107,8 +129,23 @@ namespace MANDUU.ViewModels
                     return;
                 }
 
-                await Task.Delay(2000);
-                await Shell.Current.GoToAsync("VerificationPage");
+                var loginSuccessful = await _userService.LoginAsync(EmailOrPhone,Password);
+
+                if (loginSuccessful)
+                {
+                    ShowToast("Welcome Back!");
+                    await Task.Delay(2000);
+
+                    await _navigationService.NavigateToAsync("//main/home");
+                }
+                else
+                {
+                    ShowToast("Invalid login credentials");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowToast($"An error occurred: {ex.Message}");
             }
             finally
             {
@@ -119,8 +156,19 @@ namespace MANDUU.ViewModels
 
         private async Task OnForgetPassword()
         {
-            IsBusy = false;
-            await Shell.Current.GoToAsync("ResetPasswordPage");
+            try
+            {
+                IsBusy = true;
+                await _navigationService.NavigateToAsync("//resetpasswordpage");
+            }
+            catch (Exception ex)
+            {
+                ShowToast($"Navigation failed: {ex.Message}");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
         #endregion
     }

@@ -1,9 +1,23 @@
-namespace MANDUU.Views.ShopPages;
+using MANDUU.ViewModels;
+using Microsoft.Maui.Controls;
 
-public partial class MyShopPage : ContentPage
+namespace MANDUU.Views.ShopPages
 {
-	public MyShopPage()
-	{
-		InitializeComponent();
-	}
+    public partial class MyShopPage : ContentPage
+    {
+        private readonly MyShopViewModel _myShopViewModel;
+
+        public MyShopPage(MyShopViewModel viewModel)
+        {
+            InitializeComponent();
+            _myShopViewModel = viewModel;
+            BindingContext = _myShopViewModel;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await _myShopViewModel.InitializeAsync();
+        }
+    }
 }

@@ -55,6 +55,7 @@ namespace MANDUU
             builder.Services.AddSingleton<ProductCategoryService>();
             builder.Services.AddSingleton<ShopService>();
             builder.Services.AddSingleton<PrintingStationService>();
+            builder.Services.AddSingleton<IUserService, UserService>();
             return builder;
         }
 
@@ -94,6 +95,7 @@ namespace MANDUU
             builder.Services.AddTransient<ShopProfileViewModel>();
             builder.Services.AddTransient<EPrintingViewModel>();
             builder.Services.AddTransient<PrintingDetailsViewModel>();
+            builder.Services.AddTransient<MyShopViewModel>();
 
             return builder;
         }

@@ -3,9 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using MANDUU.Models;
 using MANDUU.Services;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace MANDUU.ViewModels
 {
@@ -43,7 +40,7 @@ namespace MANDUU.ViewModels
             });
         }
 
-        
+
         public async Task InitializeAsync()
         {
             ShopCategories.Clear();
