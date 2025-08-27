@@ -2,7 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icon="clr-namespace:MANDUU.Helpers"
-             x:Class="MANDUU.Views.MainPages.SubPages.ProductDetailsPage"
+             xmlns:models="clr-namespace:MANDUU.Models"
+             xmlns:vm="clr-namespace:MANDUU.ViewModels"
+             x:Class="MANDUU.Views.MainPages.SubPages.ProductDetailsPage"             
+             Shell.TabBarIsVisible="False"
              Title="{Binding Product.Name}">
 
     <ContentPage.Resources>
@@ -18,56 +21,242 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView HorizontalOptions="Center">
-        <HorizontalStackLayout VerticalOptions="Start"
-                                HorizontalOptions="Center"
-                                Spacing="2">
+    <Grid RowDefinitions="*, auto" Margin="5">
+        <ScrollView HorizontalOptions="Center">
+            <Grid RowDefinitions="*, auto,auto,auto" RowSpacing="20">
+                <HorizontalStackLayout VerticalOptions="Start"
+                                        HorizontalOptions="Center"
+                                        Spacing="2"
+                                       Grid.Row="0">
 
-            <!-- Previous Button -->
-            <Border HorizontalOptions="Start"
+                    <!-- Previous Button -->
+                    <Border HorizontalOptions="Start"
                     VerticalOptions="Center"
                     StrokeShape="RoundRectangle 12"
                     Padding="10,5,0,5"
                     Background="#757575"
                     Opacity="0.4">
-                <Label Text="{x:Static icon:Icons.moveLeft}"
+                        <Label Text="{x:Static icon:Icons.moveLeft}"
                        Style="{x:StaticResource ChangeImageButton}"/>
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding PreviousImageCommand}"
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PreviousImageCommand}"
                                           CommandParameter="{x:Reference ProductImage}"/>
-                </Border.GestureRecognizers>
-            </Border>
+                        </Border.GestureRecognizers>
+                    </Border>
 
-            <!-- Image -->
-            <VerticalStackLayout>
-                <Border StrokeThickness="0"
-                        WidthRequest="320"
+                    <!-- Image -->
+                    <VerticalStackLayout>
+                        <Border StrokeThickness="0"
+                        WidthRequest="300"
                         HeightRequest="300"
                         BackgroundColor="Transparent"
                         HorizontalOptions="Center"
                         StrokeShape="RoundRectangle 15">
-                    <Image x:Name="ProductImage"
+                            <Image x:Name="ProductImage"
                            Source="{Binding CurrentImage}"
                            Aspect="AspectFill"
                            HorizontalOptions="Center">
-                    </Image>
-                </Border>
-
-            </VerticalStackLayout>
-            <!-- Next Button -->
-            <Border HorizontalOptions="End"
+                            </Image>
+                        </Border>
+                    </VerticalStackLayout>
+                    
+                    <!-- Next Button -->
+                    <Border HorizontalOptions="End"
                     VerticalOptions="Center"
                     StrokeShape="RoundRectangle 12"
                     Padding="5"
                     Background="#757575"
                     Opacity="0.4">
-                <Label Text="{x:Static icon:Icons.moveRight}"
+                        <Label Text="{x:Static icon:Icons.moveRight}"
                        Style="{x:StaticResource ChangeImageButton}"/>
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NextImageCommand}"
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NextImageCommand}"
                                           CommandParameter="{x:Reference ProductImage}"/>
-                </Border.GestureRecognizers>
-            </Border>
-        </HorizontalStackLayout>
-    </ScrollView>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <VerticalStackLayout Grid.Row="1" Margin="10,0">
+                    <Label Text="{Binding Product.Name}"
+                           FontSize="20"/>
+                    <Border Margin="10"
+                            Padding="10,5" 
+                            StrokeThickness="0"
+                            Background="#fff"
+                            StrokeShape="RoundRectangle 10">
+                        <Border.Shadow>
+                            <Shadow Opacity="0.2"
+                                    Brush="Gray"
+                                    Offset="5,5"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout>
+                            <Label Text="Description"
+                                    FontSize="Subtitle"/>
+                            <Label Text="{Binding Product.Description}"
+                                   FontFamily="Finlandica"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+                
+                
+                 <!--Shop-->
+                <Border Grid.Row="2" Padding="10,5"
+                        BackgroundColor="#33d9d9d9"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 10">
+                    <Border.Shadow>
+                        <Shadow Opacity="0.2"
+                                Brush="Gray"
+                                Offset="5,5"/>
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="auto,*,auto" ColumnSpacing="30">
+                        <Label Text="{x:Static icon:Icons.shopIcon}"
+                               FontFamily="MaterialIcon"
+                               FontSize="30"
+                               Grid.Column="0"
+                               Opacity="0.6"
+                               VerticalTextAlignment="Center"/>
+                        <VerticalStackLayout Grid.Column="1">
+                            <HorizontalStackLayout Spacing="5">
+                                <Label Text="{Binding Shop.Name}"/>
+                                <Border Opacity="0.5"
+                                        BackgroundColor="{StaticResource Primary}"
+                                        StrokeShape="RoundRectangle 5"
+                                        StrokeThickness="0"
+                                        Padding="2,2,7,2">
+                                    <Border.Shadow>
+                                        <Shadow Brush="Gray"
+                                                Opacity="0.2"
+                                                Offset="5,5"/>
+                                    </Border.Shadow>
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label Text="{x:Static icon:Icons.ratingIcon}"
+                                               FontFamily="MaterialIcon"
+                                               FontSize="16"
+                                               TextColor="Gold"/>
+                                        <Label Text="4.4"
+                                               FontFamily="Finlandica"/>
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Margin="5,0">
+                                <Label Text="{x:Static icon:Icons.locationIcon}"
+                                       FontFamily="MaterialIcon"
+                                       FontSize="16"
+                                       TextColor="{StaticResource Primary}"
+                                       Margin="0,2,0,0"/>
+                                <Label Text="{Binding Shop.ShortLocation}"
+                                       FontFamily="Finlandica"
+                                       FontSize="16"
+                                       TextColor="{StaticResource Primary}"/>
+                            </HorizontalStackLayout>
+
+                            <Border BackgroundColor="{StaticResource Primary}"
+                                    StrokeShape="RoundRectangle 5"
+                                    StrokeThickness="0"
+                                    Padding="10,5"
+                                    HorizontalOptions="Start">
+                                <Border.Shadow>
+                                    <Shadow Brush="Gray"
+                                            Opacity="0.2"
+                                            Offset="5,5"/>
+                                </Border.Shadow>
+                                <Label Text="Visit Shop"
+                                       TextColor="#fff"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <Border Background="Green"
+                                Grid.Column="2"
+                                HorizontalOptions="End"
+                                WidthRequest="60"
+                                HeightRequest="60"
+                                StrokeShape="RoundRectangle 100"
+                                StrokeThickness="0">
+                            <Border.Shadow>
+                                <Shadow Brush="Gray"
+                                        Offset="5,5"
+                                        Opacity="0.2"/>
+                            </Border.Shadow>
+                            <Label Text="{}"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <VerticalStackLayout Grid.Row="3">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 5"
+                            Style="{x:StaticResource catTitleBorder}">
+                        <Label Text="Similar Products"
+                               Style="{x:StaticResource CatTitleText}"/>
+                    </Border>
+
+                    <CollectionView  x:Name="SuggestedProductCollectionView"
+                                     EmptyView="No similar Products"
+                                    ItemsSource="{Binding SuggestedProducts}"
+                                    SelectionMode="Single"
+                                    SelectionChangedCommand="{Binding SelectSuggestedProductCommand, Mode=TwoWay}"
+                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference SuggestedProductCollectionView}}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="3"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Product">
+                                <Border StrokeShape="RoundRectangle 5"
+                                        StrokeThickness="0.5"
+                                        Background="#fff"
+                                        WidthRequest="120"
+                                        HeightRequest="150"
+                                        Margin="5">
+                                    <Grid RowDefinitions="*,auto">
+                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFill"/>
+                                        <VerticalStackLayout Grid.Row="1" Padding="5">
+                                            <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="1"/>
+                                            <HorizontalStackLayout>
+                                                <Label Text="{x:Static icon:Icons.locationIcon}" FontFamily="MaterialIcon" Margin="0,2,0,0"/>
+                                                <Label Text="{Binding ShopLocation}"
+                                   FontFamily="Finlandica"/>
+                                            </HorizontalStackLayout>
+                                            <Label Text="{Binding FormattedPrice}" TextColor="{StaticResource Primary}" FontAttributes="Bold"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+
+        <Border Grid.Row="1" Padding="10,5"
+                Background="#33d9d9d9"
+                StrokeShape="RoundRectangle 20"
+                StrokeThickness="0"
+                Margin="10,5">
+            <Grid Grid.Row="1" VerticalOptions="End" ColumnDefinitions="auto,*">
+                <Label Grid.Column="0"
+                       Text="{Binding Product.FormattedPrice}"
+                       TextColor="{StaticResource Primary}"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="20"/>
+                <Border Grid.Column="1"
+                        HorizontalOptions="End"
+                        BackgroundColor="{StaticResource Primary}"
+                        StrokeShape="RoundRectangle 100"
+                        Padding="15,5"
+                        StrokeThickness="0">
+                    <HorizontalStackLayout>
+                        <Label Text="{x:Static icon:Icons.cartIcon}"
+                               FontFamily="MaterialIcon"
+                               TextColor="#fff"
+                               FontSize="24"/>
+                        <Label Text="Add to Cart"
+                               TextColor="#fff"
+                               FontSize="16"
+                               VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
 </ContentPage>

@@ -4,6 +4,7 @@
              x:Class="MANDUU.Views.ShopPages.ShopProfilePage"
              xmlns:icons="clr-namespace:MANDUU.Helpers"
              xmlns:models="clr-namespace:MANDUU.Models"
+             Shell.TabBarIsVisible="False"
              Title="{Binding Shop.Name}">
     <ScrollView>
         <Grid RowDefinitions="auto, auto, auto, auto, *" RowSpacing="10">
@@ -186,8 +187,8 @@
                         StrokeThickness="0">
                     <VerticalStackLayout>
                         <Label Text="Products" FontSize="20"/>
-                        <BoxView Color="#000" CornerRadius="5"
-                                 WidthRequest="20"
+                        <BoxView Color="{StaticResource Primary}" CornerRadius="5"
+                                 WidthRequest="30"
                                  HorizontalOptions="End"
                                  HeightRequest="2"/>
                     </VerticalStackLayout>

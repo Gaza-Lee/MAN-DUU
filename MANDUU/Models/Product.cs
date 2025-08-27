@@ -33,6 +33,6 @@ namespace MANDUU.Models
 
 
 
-        public string FormattedPrice => $"₵{Price:N2}";
+        public string FormattedPrice => $"₵{Price:N2}";       
     }
 }

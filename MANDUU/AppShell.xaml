@@ -69,4 +69,5 @@
         Title="Create Account"
         ContentTemplate="{DataTemplate authPages:CreateAccountOrSignInPage}"
         Route="createaccountorsigninpage"/>
+
 </Shell>

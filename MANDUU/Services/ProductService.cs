@@ -356,7 +356,7 @@ namespace MANDUU.Services
                 ShopId = GetShopId("TechGadgets Hub")
             });
 
-            // ✅ POPULATE SHOP INFORMATION FOR ALL PRODUCTS
+            // POPULATE SHOP INFORMATION FOR ALL PRODUCTS
             foreach (var product in _products)
             {
                 var shop = allShops.FirstOrDefault(s => s.Id == product.ShopId);
@@ -364,6 +364,16 @@ namespace MANDUU.Services
                 {
                     product.ShopName = shop.Name;
                     product.ShopLocation = shop.ShortLocation;
+                }
+
+                // Ensure Gallery is never null
+                product.Gallery ??= new List<string>();
+
+                // Ensure main image is always in the gallery
+                if (!string.IsNullOrEmpty(product.ImageUrl) &&
+                    !product.Gallery.Contains(product.ImageUrl))
+                {
+                    product.Gallery.Insert(0, product.ImageUrl);
                 }
             }
         }
@@ -540,7 +550,7 @@ namespace MANDUU.Services
                 .ToList());
         }
 
-        // --- NEW: Get products by shop location ---
+        // Get products by shop location ---
         public async Task<IEnumerable<Product>> GetProductsByShopLocationAsync(string location)
         {
             return await Task.FromResult(_products
@@ -548,7 +558,7 @@ namespace MANDUU.Services
                 .ToList());
         }
 
-        // --- NEW: Get products by shop name ---
+        // Get products by shop name ---
         public async Task<IEnumerable<Product>> GetProductsByShopNameAsync(string shopName)
         {
             return await Task.FromResult(_products

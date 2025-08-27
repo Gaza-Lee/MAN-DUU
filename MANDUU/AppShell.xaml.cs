@@ -27,6 +27,8 @@ namespace MANDUU
             Routing.RegisterRoute("printingdetailspage", typeof(PrintingDetailsPage));
             Routing.RegisterRoute("userprofilepage", typeof(UserProfilePage));
             Routing.RegisterRoute("myshoppage", typeof(MyShopPage));
+            Routing.RegisterRoute("createshoppage", typeof(CreateShopPage));
+            Routing.RegisterRoute("dashboardpage", typeof(DashboardPage));
         }
     }
 }

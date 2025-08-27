@@ -71,7 +71,7 @@ namespace MANDUU.ViewModels
             }
             catch (Exception ex)
             {
-                // Handle error (you could show a toast message)
+                // Handle error
                 System.Diagnostics.Debug.WriteLine($"Error loading shops: {ex.Message}");
                 HasShops = false;
             }
@@ -85,7 +85,7 @@ namespace MANDUU.ViewModels
         private async Task CreateNewShopAsync()
         {
             // Navigate to create shop page
-            await Shell.Current.GoToAsync("//createshoppage");
+            await Shell.Current.GoToAsync("createshoppage");
         }
 
 
@@ -105,7 +105,7 @@ namespace MANDUU.ViewModels
         private async Task GoToDashboardAsync(Shop shop)
         {
             // Navigate to dashboard page
-            await _navigationService.NavigateToAsync("//dashboardpage", new Dictionary<string, object>
+            await _navigationService.NavigateToAsync("dashboardpage", new Dictionary<string, object>
             {
                 {"ShopId", shop.Id },
                 {"ShopName", shop.Name   }

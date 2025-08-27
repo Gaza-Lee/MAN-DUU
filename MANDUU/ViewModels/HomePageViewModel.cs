@@ -42,6 +42,13 @@ namespace MANDUU.ViewModels
         #endregion
 
         #region Commands
+
+        [RelayCommand]
+        private async Task ProfileAsync()
+        {
+            await _navigationService.NavigateToAsync("userprofilepage");
+        }
+
         [RelayCommand]
         private async Task SelectedCategoryAsync(MainCategory selectedCategory)
         {

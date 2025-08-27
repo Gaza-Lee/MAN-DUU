@@ -1,29 +1,52 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MANDUU.Animations;
 using MANDUU.Models;
 using MANDUU.Services;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Linq;
-using MANDUU.Animations;
 using Microsoft.Maui.Controls;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using static MANDUU.Models.Product;
 
 namespace MANDUU.ViewModels
 {
     public partial class ProductDetailViewModel : ObservableObject, IQueryAttributable
     {
+        private readonly INavigationService _navigationService;
+        private readonly ShopService _shopService;
         private readonly ProductService _productService;
         private bool _isAnimating = false;
 
-        [ObservableProperty] private int _currentImageIndex = 0;
-        [ObservableProperty] private string currentImage;
-        [ObservableProperty] private Product product;
-        [ObservableProperty] private ObservableCollection<Product> suggestedProducts;
+        [ObservableProperty]
+        private int _currentImageIndex = 0;
 
-        public ProductDetailViewModel(ProductService productService)
+        [ObservableProperty]
+        private string currentImage;
+
+        [ObservableProperty]
+        private Product product;
+
+        [ObservableProperty]
+        private Shop shop;
+
+        [ObservableProperty]
+        private ObservableCollection<Product> suggestedProducts;
+
+        public bool IsCurrentImage(string imageUrl)
+               => string.Equals(CurrentImage, imageUrl, StringComparison.OrdinalIgnoreCase);
+
+
+
+
+        public ProductDetailViewModel(ProductService productService,
+            INavigationService navigationService,
+            ShopService shopService)
         {
             _productService = productService;
+            _navigationService = navigationService;
+            _shopService = shopService;
             SuggestedProducts = new ObservableCollection<Product>();
         }
 
@@ -74,28 +97,95 @@ namespace MANDUU.ViewModels
         {
             Product = await _productService.GetProductByIdAsync(productId);
 
-            if (Product == null || string.IsNullOrWhiteSpace(Product.ImageUrl))
+            if (Product == null)
                 return;
 
-            // Initialize gallery if null
+            // Load the shop that the product belongs to
+            if (Product.ShopId > 0)
+            {
+                Shop = await _shopService.GetShopByIdAsync(Product.ShopId);
+            }
+
+            // Ensure gallery is not null
             Product.Gallery ??= new List<string>();
 
-            // Ensure main ImageUrl is first
-            if (!Product.Gallery.Contains(Product.ImageUrl))
-                Product.Gallery.Insert(0, Product.ImageUrl);
+            // If no gallery images but we have a main image, use it
+            if (Product.Gallery.Count == 0 && !string.IsNullOrEmpty(Product.ImageUrl))
+            {
+                Product.Gallery.Add(Product.ImageUrl);
+            }
 
             // Start at first image
             _currentImageIndex = 0;
             CurrentImage = Product.Gallery.FirstOrDefault();
 
             // Load suggested products from same subcategory
-            var suggestions = (await _productService.GetProductsBySubCategoryAsync(Product.SubCategoryId))
-                              .Where(p => p.Id != Product.Id)
-                              .ToList();
+            await LoadSuggestedProductsAsync();
+        }
 
-            SuggestedProducts.Clear();
-            foreach (var p in suggestions)
-                SuggestedProducts.Add(p);
+
+
+        [RelayCommand]
+        private void SelectImage(string imageUrl)
+        {
+            if (Product?.Gallery == null) return;
+
+            var index = Product.Gallery.IndexOf(imageUrl);
+            if (index >= 0)
+            {
+                _currentImageIndex = index;
+                CurrentImage = imageUrl;
+            }
+        }
+
+
+        private async Task LoadSuggestedProductsAsync()
+        {
+            if (Product == null) return;
+
+            try
+            {
+                var allProductsInCategory = await _productService.GetProductsBySubCategoryAsync(Product.SubCategoryId);
+
+                var suggestions = allProductsInCategory
+                                  .Where(p => p.Id != Product.Id)
+                                  .Take(6)
+                                  .ToList();
+
+                SuggestedProducts.Clear();
+                foreach (var p in suggestions)
+                {
+                    SuggestedProducts.Add(p);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle error or log it
+                SuggestedProducts.Clear();
+            }
+        }
+
+        [RelayCommand]
+        private async Task NavigateToShopAsync()
+        {
+            if (Shop == null) return;
+
+            await _navigationService.NavigateToAsync("shopprofilepage", new Dictionary<string, object>
+            {
+                { "ShopId", Shop.Id },
+                { "ShopName", Shop.Name }
+            });
+        }
+
+        [RelayCommand]
+        private async Task SelectSuggestedProductAsync(Product product)
+        {
+            if (product == null) return;
+
+            await _navigationService.NavigateToAsync("productdetailpage", new Dictionary<string, object>
+            {
+                { "ProductId", product.Id }
+            });
         }
     }
 }

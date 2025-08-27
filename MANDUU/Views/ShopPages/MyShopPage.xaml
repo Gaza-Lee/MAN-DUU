@@ -55,6 +55,12 @@
                                                     Opacity="0.5"
                                                     Brush="Gray"/>
                                         </Border.Shadow>
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.GoToDashboardCommand, Source={x:Reference ShopCollectionView}}" 
+                                                                  CommandParameter="{Binding .}"/>
+
+                                        </Border.GestureRecognizers>
                                         <HorizontalStackLayout >
                                             <Label Text="Dashboard"
                                                    VerticalOptions="Center"
@@ -88,6 +94,14 @@
                     Padding="10,5"
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 5">
+                <Border.Shadow>
+                    <Shadow Offset="5,5"
+                            Brush="Gray"
+                            Opacity="0.5"/>
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CreateNewShopCommand}"/>
+                </Border.GestureRecognizers>
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                     <Border StrokeShape="RoundRectangle 100"
                             Stroke="#fff"

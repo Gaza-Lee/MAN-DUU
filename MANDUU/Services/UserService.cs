@@ -33,6 +33,7 @@ namespace MANDUU.Services
                     HashPassword = "Password1!",
                     FirstName = "User",
                     LastName = "One",
+                    ProfilePicture = "profile_picture.jpg",
                     Shops = allShops.Where(s => s.Id == 3 || s.Id == 4).ToList() // FashionFix (id:3) and Emart (id:4)
                 },
                 new User
