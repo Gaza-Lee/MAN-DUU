@@ -2,11 +2,171 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MANDUU.Views.MainPages.SubPages.CartPage"
+             xmlns:models="clr-namespace:MANDUU.Models"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
              Title="Cart"
              Shell.TabBarIsVisible="False">
-    <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding CartItems}">
-            
+    <Grid RowDefinitions="*,auto">
+        <CollectionView ItemsSource="{Binding CartItems}"
+                        Margin="10"
+                        HorizontalOptions="Center">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate  x:DataType="models:CartItem">
+                    <Border StrokeShape="RoundRectangle 8"
+                            BackgroundColor="#fff"
+                            Padding="10">
+                        <Border.Shadow>
+                            <Shadow Brush="Gray"
+                                    Offset="5,5"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="auto,*,auto" ColumnSpacing="15">
+                            <Border WidthRequest="120"
+                                    HeightRequest="160"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 10" 
+                                    BackgroundColor="#fff"
+                                    Grid.Column="0">
+                                <Border.Shadow>
+                                    <Shadow  Brush="Gray"
+                                             Opacity="0.2"/>
+                                </Border.Shadow>
+                                <Image Source="{Binding Product.ImageUrl}"
+                                       Aspect="AspectFill"/>
+                            </Border>
+                            <Grid RowDefinitions="auto,auto,auto,auto,*,auto" Grid.Column="1">
+                                <Label Text="{Binding Product.Name}"
+                                       FontSize="16"
+                                       Grid.Row="0"/>
+                                <Label Text="{Binding Product.Description}"
+                                       Grid.Row="1"
+                                       Margin="5,0"
+                                       FontSize="Caption"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2"
+                                       FontFamily="Finlandica"/>
+                                <HorizontalStackLayout Grid.Row="2" Margin="10,5">
+                                    <Label Text="{x:Static icons:Icons.shopIcon}"
+                                           FontFamily="MaterialIcon"
+                                           FontSize="18"/>
+                                    <Label Text="{Binding Product.Shop.Name}"/>
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding Product.FormattedPrice}" Grid.Row="3"
+                                       Margin="20,0"
+                                       TextColor="{StaticResource Primary}"
+                                       CharacterSpacing="1"
+                                       Opacity="0.7"/>
+                                <Label Text="{Binding TotalPrice, StringFormat='Total: {0}'}" Grid.Row="4"
+                                       FontSize="20"
+                                       CharacterSpacing="1"
+                                       TextColor="{StaticResource Primary}"/>
+                                <Border Grid.Row="5"
+                                        HorizontalOptions="Start"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="#33d9d9d9"
+                                        WidthRequest="100">
+                                    <Grid ColumnDefinitions="auto,*,auto"
+                                          Margin="3">
+                                        <Border StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 100"
+                                                BackgroundColor="#fff"
+                                                HorizontalOptions="Start"
+                                                Grid.Column="0"
+                                                HeightRequest="20"
+                                                WidthRequest="20">
+                                            <Border.Shadow>
+                                                <Shadow Brush="Gray"
+                                                        Offset="5,5"
+                                                        Opacity="0.5"/>
+                                            </Border.Shadow>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DecreaseQuantityCommand}"
+                                                        CommandParameter="{Binding}"/>
+                                            </Border.GestureRecognizers>
+                                            <Label Text="-"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Center"/>
+                                        </Border>
+
+                                        <Label Text="{Binding Quantity}" Grid.Column="1"
+                                               HorizontalTextAlignment="Center"
+                                               HorizontalOptions="Center"
+                                               VerticalTextAlignment="Center"
+                                               VerticalOptions="Center"/>
+
+                                        <Border StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 100"
+                                                BackgroundColor="{StaticResource Primary}"
+                                                HorizontalOptions="Start"
+                                                Grid.Column="2"
+                                                HeightRequest="20"
+                                                WidthRequest="20">
+                                            <Border.Shadow>
+                                                <Shadow Brush="Gray"
+                                                        Offset="5,5"
+                                                        Opacity="0.5"/>
+                                            </Border.Shadow>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IncreaseQuantityCommand}"
+                                                        CommandParameter="{Binding}"/>
+                                            </Border.GestureRecognizers>
+                                            <Label Text="+"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Center"
+                                                   TextColor="#fff"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+        <Grid RowDefinitions="auto,*" ColumnDefinitions="auto, *"
+              Grid.Row="1" Padding="10"
+              BackgroundColor="#33d9d9d9"
+              RowSpacing="10">
+            <Label Text="Overall Total:" Grid.Row="0" Grid.Column="0"
+                   FontSize="20"
+                   VerticalOptions="Center"
+                   VerticalTextAlignment="Center"/>
+            <Label Text="{Binding FormattedCartTotal}"
+                   CharacterSpacing="1"
+                   TextColor="{StaticResource Primary}"
+                   Grid.Column="1"
+                   Grid.Row="0"
+                   HorizontalOptions="End"
+                   FontSize="24"/>
+
+            <Border Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Center"
+                    BackgroundColor="{StaticResource Primary}"
+                    Padding="10,5"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 100">
+                <HorizontalStackLayout Spacing="5">
+                    <Label  Text="Proceed to checkout"
+                            TextColor="#fff"
+                            FontSize="24"
+                            VerticalTextAlignment="Center"/>
+                    <Label Text="{x:Static icons:Icons.getStartedIcon}"
+                           FontFamily="MaterialIcon"
+                           TextColor="#fff"
+                           FontSize="35"
+                           VerticalTextAlignment="Center"/>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
 </ContentPage>
