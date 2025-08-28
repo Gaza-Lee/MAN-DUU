@@ -7,10 +7,15 @@ public partial class HomePage : ContentPage
 {
 
 	private readonly HomePageViewModel _homePageViewModel;
-	public HomePage(ProductCategoryService categoryService, ProductService productService, INavigationService navigationService, ShopService shopService)
+	public HomePage(ProductCategoryService categoryService,
+            ProductService productService,
+            INavigationService navigationService,
+            ShopService shopService,
+            CartService cartService,
+            FavoritesService favoritesService)
 	{
 		InitializeComponent();
-		_homePageViewModel = new HomePageViewModel(categoryService, productService, navigationService, shopService);
+		_homePageViewModel = new HomePageViewModel(categoryService, productService, navigationService, shopService, cartService, favoritesService);
 		BindingContext = _homePageViewModel;
 	}
 

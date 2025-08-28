@@ -29,6 +29,10 @@ namespace MANDUU
             Routing.RegisterRoute("myshoppage", typeof(MyShopPage));
             Routing.RegisterRoute("createshoppage", typeof(CreateShopPage));
             Routing.RegisterRoute("dashboardpage", typeof(DashboardPage));
+            Routing.RegisterRoute("cartpage", typeof(CartPage));
+            Routing.RegisterRoute("settingspage", typeof(SettingsPage));
+            Routing.RegisterRoute("faqpage", typeof(FAQPage));
+            Routing.RegisterRoute("favoritespage", typeof(FavoritesPage));
         }
     }
 }

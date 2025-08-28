@@ -84,8 +84,11 @@
                 <Border.Shadow>
                     <Shadow Brush="Gray"
                             Offset="5,5"
-                            Opacity="0.5"/>
+                            Opacity="0.3"/>
                 </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToFavoritesCommand, Mode=TwoWay}"/>
+                </Border.GestureRecognizers>
                 <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
                     <Label Grid.Column="0"
                            Text="{x:Static icons:Icons.favoriteIcon}"
@@ -112,15 +115,47 @@
                 <Border.Shadow>
                     <Shadow Brush="Gray"
                             Offset="5,5"
-                            Opacity="0.5"/>
+                            Opacity="0.3"/>
                 </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToFAQCommand, Mode=TwoWay}"/>
+                </Border.GestureRecognizers>
                 <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
                     <Label Grid.Column="0"
-                           Text="{x:Static icons:Icons.favoriteIcon}"
+                           Text="{x:Static icons:Icons.FAQIcon}"
                            FontFamily="MaterialIcon"
-                           TextColor="Red"
                            FontSize="30"/>
-                    <Label Text="FAVORITES"
+                    <Label Text="FAQ"
+                           Grid.Column="1"
+                           FontSize="20"/>
+                    <Label Text="{x:Static icons:Icons.getStartedIcon}"
+                           Grid.Column="2"
+                           FontFamily="MaterialIcon"
+                           FontSize="30"
+                           VerticalOptions="Center"
+                           HorizontalOptions="End"
+                           TextColor="Gray"/>
+                </Grid>
+            </Border>
+            <Border BackgroundColor="#fff"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="10,5"
+                    StrokeThickness="0"
+                    Grid.Row="2">
+                <Border.Shadow>
+                    <Shadow Brush="Gray"
+                            Offset="5,5"
+                            Opacity="0.3"/>
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToSettingsCommand, Mode=TwoWay}"/>
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
+                    <Label Grid.Column="0"
+                           Text="{x:Static icons:Icons.settingsIcon}"
+                           FontFamily="MaterialIcon"
+                           FontSize="30"/>
+                    <Label Text="SETTINGS"
                            Grid.Column="1"
                            FontSize="20"/>
                     <Label Text="{x:Static icons:Icons.getStartedIcon}"

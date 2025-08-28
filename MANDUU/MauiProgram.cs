@@ -56,6 +56,9 @@ namespace MANDUU
             builder.Services.AddSingleton<ShopService>();
             builder.Services.AddSingleton<PrintingStationService>();
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<CartService>();
+            builder.Services.AddSingleton<FavoritesService>();
+
             return builder;
         }
 
@@ -76,6 +79,10 @@ namespace MANDUU
             builder.Services.AddTransient<MyShopPage>();
             builder.Services.AddTransient<CreateShopPage>();
             builder.Services.AddTransient<DashboardPage>();
+            builder.Services.AddTransient<SettingsPage>();
+            builder.Services.AddTransient<CartPage>();
+            builder.Services.AddTransient<FavoritesPage>();
+            builder.Services.AddTransient<FAQPage>();
 
             return builder;
         }
@@ -98,6 +105,7 @@ namespace MANDUU
             builder.Services.AddTransient<EPrintingViewModel>();
             builder.Services.AddTransient<PrintingDetailsViewModel>();
             builder.Services.AddTransient<MyShopViewModel>();
+            builder.Services.AddTransient<CartPageViewModel>();
 
             return builder;
         }

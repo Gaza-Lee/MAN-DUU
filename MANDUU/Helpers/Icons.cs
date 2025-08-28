@@ -60,5 +60,11 @@ namespace MANDUU.Helpers
         public static string infoIcon = "\uf59b";
 
         public static string plusIcon = "\uf3dd";
+
+        public static string settingsIcon = "\ue8b8";
+
+        public static string FAQIcon = "\uf1c0";
+
+        public static string logoutIcon = "\ue9ba";
     }
 }

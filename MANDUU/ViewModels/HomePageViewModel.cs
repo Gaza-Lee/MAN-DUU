@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MANDUU.Models;
 using MANDUU.Services;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +31,9 @@ namespace MANDUU.ViewModels
         [ObservableProperty]
         private ObservableCollection<Shop> _recommendedShops = new();
 
+        [ObservableProperty]
+        private bool hasCartItems;
+
         // Load all products for the home page to be filtered 
         public List<Product> AllProducts { get; private set; } = new();
         #endregion
@@ -39,6 +43,8 @@ namespace MANDUU.ViewModels
         private readonly ProductCategoryService _categoryService;
         private readonly ProductService _productService;
         private readonly INavigationService _navigationService;
+        private CartService _cartService;
+        private FavoritesService _favoritesService;
         #endregion
 
         #region Commands
@@ -87,6 +93,12 @@ namespace MANDUU.ViewModels
 
             SelectedShop = null;
         }
+
+        [RelayCommand]
+        private async Task GoToCartAsync()
+        {
+            await _navigationService.NavigateToAsync("cartpage");
+        }
         #endregion
 
         #region Constructor
@@ -94,12 +106,18 @@ namespace MANDUU.ViewModels
             ProductCategoryService categoryService,
             ProductService productService,
             INavigationService navigationService,
-            ShopService shopService)
+            ShopService shopService,
+            CartService cartService,
+            FavoritesService favoritesService)
         {
             _categoryService = categoryService;
             _productService = productService;
             _navigationService = navigationService;
             _shopService = shopService;
+            _cartService = cartService;
+            _favoritesService = favoritesService;
+
+            _cartService.CartUpdated += OnCartUpdated;
         }
         #endregion
 
@@ -148,6 +166,53 @@ namespace MANDUU.ViewModels
             {
                 RecommendedShops.Add(shop);
             }
+        }
+
+
+        private void OnCartUpdated(object sender, EventArgs e)
+        {
+            HasCartItems = _cartService.HasItems();
+        }
+
+        [RelayCommand]
+        private async Task ToggleProductFavoriteAsync(Product product)
+        {
+            if (product == null) return;
+
+            await _favoritesService.AddProductToFavoritesAsync(product);
+
+
+            var toast = Toast.Make("Product added to favorites", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            await toast.Show();
+        }
+
+        [RelayCommand]
+        private async Task ToggleShopFavoriteAsync(Shop shop)
+        {
+            if (shop == null) return;
+
+            await _favoritesService.AddShopToFavoritesAsync(shop);
+
+            var toast = Toast.Make("Shop added to favorites", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            await toast.Show();
+        }
+
+        [RelayCommand]
+        private async Task AddToCartAsync(Product product)
+        {
+            if (product == null) return;
+
+            await _cartService.AddToCartAsync(product);
+
+
+            var toast = Toast.Make("Product added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            await toast.Show();
+        }
+
+        // Dispose method to unsubscribe from events
+        public void Dispose()
+        {
+            _cartService.CartUpdated -= OnCartUpdated;
         }
         #endregion
 
