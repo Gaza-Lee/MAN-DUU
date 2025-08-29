@@ -182,7 +182,8 @@ namespace MANDUU.ViewModels
             await _favoritesService.AddProductToFavoritesAsync(product);
 
 
-            var toast = Toast.Make("Product added to favorites", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            var toast = 
+                Toast.Make($"{product.Name} added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short);
             await toast.Show();
         }
 
@@ -193,7 +194,7 @@ namespace MANDUU.ViewModels
 
             await _favoritesService.AddShopToFavoritesAsync(shop);
 
-            var toast = Toast.Make("Shop added to favorites", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            var toast = Toast.Make($"{shop.Name}added to favorites", CommunityToolkit.Maui.Core.ToastDuration.Short);
             await toast.Show();
         }
 
@@ -205,7 +206,7 @@ namespace MANDUU.ViewModels
             await _cartService.AddToCartAsync(product);
 
 
-            var toast = Toast.Make("Product added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            var toast = Toast.Make($"{product.Name} added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short);
             await toast.Show();
         }
 

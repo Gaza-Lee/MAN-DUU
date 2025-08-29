@@ -177,7 +177,12 @@
                                         Offset="5,5"
                                         Opacity="0.2"/>
                             </Border.Shadow>
-                            <Label Text="{}"/>
+                            <Label Text="{x:Static icon:Icons.phoneIcon}"
+                                   FontFamily="MaterialIcon"
+                                   FontSize="35"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   TextColor="#fff"/>
                         </Border>
                     </Grid>
                 </Border>
@@ -245,6 +250,10 @@
                         StrokeShape="RoundRectangle 100"
                         Padding="15,5"
                         StrokeThickness="0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddToCartCommand}"
+                                              CommandParameter="{Binding Product}"/>
+                    </Border.GestureRecognizers>
                     <HorizontalStackLayout>
                         <Label Text="{x:Static icon:Icons.cartIcon}"
                                FontFamily="MaterialIcon"

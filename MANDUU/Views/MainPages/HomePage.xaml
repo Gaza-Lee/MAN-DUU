@@ -199,14 +199,15 @@
                                 Margin="5">
                                     <Grid RowDefinitions="*,auto">
                                         <Grid Grid.Row="0">
-                                            <BoxView Color="#000" Opacity="0.2"/>
+                                            <BoxView BackgroundColor="#000" Opacity="0.1"
+                                                     ZIndex="1"/>
                                             <Label Text="{x:Static icons:Icons.favoriteIcon}"
                                                    FontFamily="MaterialIcon"
-                                                   FontSize="45"
+                                                   FontSize="30"
                                                    TextColor="#fff"
                                                    VerticalOptions="Start"
                                                    HorizontalOptions="End"
-                                                   ZIndex="1">
+                                                   ZIndex="2">
                                                 <Label.GestureRecognizers>
                                                     <TapGestureRecognizer 
                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleProductFavoriteCommand}"
@@ -225,8 +226,9 @@
                                                FontFamily="Finlandica"/>
                                             </HorizontalStackLayout>
                                             <Label Text="{Binding FormattedPrice}" TextColor="{StaticResource Primary}" FontAttributes="Bold"
-                                           Grid.Row="3"
-                                           FontSize="16"/>
+                                                   Grid.Row="3"
+                                                   FontSize="16"/>
+                                            
                                             <!--Add to Cart-->
                                             <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"
                                                     HorizontalOptions="Center"
@@ -283,14 +285,15 @@
                                         Margin="5">
                                     <Grid RowDefinitions="*,auto">
                                         <Grid>
-                                            <BoxView Color="#000" Opacity="0.2"/>
+                                            <BoxView BackgroundColor="#000" Opacity="0.1"
+                                                     ZIndex="1"/>
                                             <Label Text="{x:Static icons:Icons.favoriteIcon}"
                                                    FontFamily="MaterialIcon"
-                                                   FontSize="45"
+                                                   FontSize="30"
                                                    TextColor="#fff"
                                                    VerticalOptions="Start"
                                                    HorizontalOptions="End"
-                                                   ZIndex="1">
+                                                   ZIndex="2">
                                                 <Label.GestureRecognizers>
                                                     <TapGestureRecognizer 
                                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleShopFavoriteCommand}"

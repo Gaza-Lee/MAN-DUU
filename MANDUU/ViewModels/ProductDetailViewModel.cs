@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MANDUU.Animations;
 using MANDUU.Models;
@@ -17,6 +18,7 @@ namespace MANDUU.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ShopService _shopService;
         private readonly ProductService _productService;
+        private readonly CartService _cartService;
         private bool _isAnimating = false;
 
         [ObservableProperty]
@@ -42,9 +44,11 @@ namespace MANDUU.ViewModels
 
         public ProductDetailViewModel(ProductService productService,
             INavigationService navigationService,
-            ShopService shopService)
+            ShopService shopService,
+            CartService cartService)
         {
             _productService = productService;
+            _cartService = cartService;
             _navigationService = navigationService;
             _shopService = shopService;
             SuggestedProducts = new ObservableCollection<Product>();
@@ -56,6 +60,18 @@ namespace MANDUU.ViewModels
             {
                 await LoadProductAsync(productId);
             }
+        }
+
+        [RelayCommand]
+        private async Task AddToCartAsync(Product product)
+        {
+            if (product == null) return;
+
+            await _cartService.AddToCartAsync(product);
+
+
+            var toast = Toast.Make($"{Product.Name} added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            await toast.Show();
         }
 
         [RelayCommand]

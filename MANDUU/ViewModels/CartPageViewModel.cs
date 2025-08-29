@@ -20,8 +20,6 @@ namespace MANDUU.ViewModels
         [ObservableProperty]
         private decimal cartTotal;
 
-        public string FormattedCartTotal => $"₵{CartTotal:N2}";
-
         [ObservableProperty]
         private int cartItemCount;
 

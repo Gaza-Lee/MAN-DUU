@@ -66,5 +66,8 @@ namespace MANDUU.Helpers
         public static string FAQIcon = "\uf1c0";
 
         public static string logoutIcon = "\ue9ba";
+
+        public static string analyticsIcon = "\ue6e1";
+
     }
 }
