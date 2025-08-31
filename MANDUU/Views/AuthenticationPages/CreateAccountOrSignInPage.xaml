@@ -4,7 +4,8 @@
              xmlns:animations="clr-namespace:MANDUU.Animations"
              x:Class="MANDUU.Views.AuthenticationPages.CreateAccountOrSignInPage"
              Shell.NavBarIsVisible="False"
-             Title="CreateAccountOrSignInPage">
+             Title="CreateAccountOrSignInPage"
+             Shell.TabBarIsVisible="False">
     <Grid HorizontalOptions="FillAndExpand"
           VerticalOptions="FillAndExpand">
         <GraphicsView Style="{x:StaticResource topwave}"

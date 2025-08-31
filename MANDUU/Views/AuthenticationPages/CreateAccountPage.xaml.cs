@@ -6,9 +6,9 @@ namespace MANDUU.Views.AuthenticationPages;
 
 public partial class CreateAccountPage : ContentPage
 {
-	public CreateAccountPage(CreateAccountPageViewModel _createAccountViewModel)
+	public CreateAccountPage(CreateAccountPageViewModel createAccountViewModel)
 	{
 		InitializeComponent();
-		BindingContext = _createAccountViewModel;
+		BindingContext = createAccountViewModel;
     }
 }

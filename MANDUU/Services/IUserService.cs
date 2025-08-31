@@ -17,5 +17,6 @@ namespace MANDUU.Services
         Task<List<Shop>> GetShopsByUserAsync(int userId);
         Task<bool> DoesUserOwnShopAsync(int userId, int shopId);
         Task<bool> AddShopToUserAsync(int userId, Shop shop);
+        Task<bool> RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string password);
     }
 }

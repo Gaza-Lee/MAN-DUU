@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using MANDUU.RegexValidation;
+using MANDUU.Services;
 using MANDUU.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,10 @@ using System.Windows.Input;
 
 namespace MANDUU.ViewModels
 {
-    public class CreateAccountPageViewModel : BaseViewModel
+    public partial class CreateAccountPageViewModel : BaseViewModel
     {
+        private readonly IUserService _userService;
+        private readonly INavigationService _navigationService;
         #region Variables
         private string _firstName { get; set; }
         private string _lastName { get; set; }
@@ -22,16 +25,19 @@ namespace MANDUU.ViewModels
         private string _confirmPassword { get; set; }
 
         #endregion
-        
+
 
         public ICommand ProceedCommand { get; set; }
 
-        public CreateAccountPageViewModel()
+        public CreateAccountPageViewModel(IUserService userService, INavigationService navigationService)
         {
-            ProceedCommand = new Command(async() => await OnProceed());
+            _navigationService = navigationService;
+            _userService = userService;
+            ProceedCommand = new Command(async () => await OnProceed());
         }
 
         #region Properties
+
         public string FirstName
         {
             get => _firstName;
@@ -71,7 +77,7 @@ namespace MANDUU.ViewModels
             get => _phoneNumber;
             set
             {
-                if(_phoneNumber != value)
+                if (_phoneNumber != value)
                 {
                     _phoneNumber = value;
                     if (!InputValidation.IsValidPhoneNumber(_phoneNumber))
@@ -88,7 +94,7 @@ namespace MANDUU.ViewModels
             get => _email;
             set
             {
-                if(_email != value)
+                if (_email != value)
                 {
                     _email = value;
                     if (!InputValidation.IsValidEmail(_email))
@@ -104,7 +110,7 @@ namespace MANDUU.ViewModels
             get => _password;
             set
             {
-                if(_password != value)
+                if (_password != value)
                 {
                     _password = value;
                     if (!InputValidation.IsValidPassword(_password))
@@ -120,7 +126,7 @@ namespace MANDUU.ViewModels
             get => _confirmPassword;
             set
             {
-                if(_confirmPassword != value)
+                if (_confirmPassword != value)
                 {
                     _confirmPassword = value;
                     OnPropertyChanged(nameof(ConfirmPassword));
@@ -140,59 +146,84 @@ namespace MANDUU.ViewModels
         {
             IsBusy = true;
 
-            if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) ||
-                string.IsNullOrWhiteSpace(PhoneNumber) || string.IsNullOrWhiteSpace(Email) ||
-                string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(_confirmPassword))
+            try
             {
-                ShowToast("All fields are required");
-                IsBusy = false;
-                return;
-            }
+                //Validation checks
+                if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) ||
+                    string.IsNullOrWhiteSpace(PhoneNumber) || string.IsNullOrWhiteSpace(Email) ||
+                    string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword))
+                {
+                    ShowToast("Please fill in all fields.");
+                    return;
+                }
 
-            
-            if (!InputValidation.IsValidName(FirstName))
-            {
-                ShowToast("Invalid first name");
-                IsBusy = false;
-                return;
-            }
-            if (!InputValidation.IsValidName(LastName))
-            {
-                ShowToast("Invalid last name");
-                IsBusy = false;
-                return;
-            }
-            if (!InputValidation.IsValidPhoneNumber(PhoneNumber))
-            {
-                ShowToast("Invalid phone number");
-                IsBusy = false;
-                return;
-            }
-            if (!InputValidation.IsValidEmail(Email))
-            {
-                ShowToast("Invalid email address");
-                IsBusy = false;
-                return;
-            }
-            if (!InputValidation.IsValidPassword(Password))
-            {
-                ShowToast("weak password");
-                IsBusy = false;
-                return;
-            }
+                if (!InputValidation.IsValidName(FirstName))
+                {
+                    ShowToast("Invalid first name");
+                    return;
+                }
+                if (!InputValidation.IsValidName(LastName))
+                {
+                    ShowToast("Invalid last name");
+                    return;
+                }
+                if (!InputValidation.IsValidPhoneNumber(PhoneNumber))
+                {
+                    ShowToast("Invalid phone number");
+                    return;
+                }
+                if (!InputValidation.IsValidEmail(Email))
+                {
+                    ShowToast("Invalid email address");
+                    return;
+                }
+                if (!InputValidation.IsValidPassword(Password))
+                {
+                    ShowToast("Weak password");
+                    return;
+                }
+                if (!IsPasswordMatch())
+                {
+                    ShowToast("Passwords do not match");
+                    return;
+                }
 
-            if (!IsPasswordMatch())
-            {
-                ShowToast("Passwords do not match");
-                IsBusy = false;
-                return;
+                // Register the user
+                var registrationSuccess = await _userService.RegisterAsync(
+                    FirstName,
+                    LastName,
+                    Email,
+                    PhoneNumber,
+                    Password
+                );
+
+                if (registrationSuccess)
+                {
+                    ShowToast("Account created successfully!");
+
+                    /*Navigate to Verification Page to verify email or phone number
+                    but due to not using real backend services, we will navigate to HomePage directly*/
+
+                    //await _navigationService.NavigateToAsync("verificationpage");
+
+                    await _navigationService.NavigateToAsync("//main/home");
+                }
+                else
+                {
+                    ShowToast("Registration failed. Email or phone number may already be in use.");
+                }
             }
-
-            await Shell.Current.GoToAsync("VerificationPage");
-
-            IsBusy = false;
+            catch (Exception ex)
+            {
+                ShowToast($"An error occurred: {ex.Message}");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
-        #endregion
     }
+
+    #endregion
 }

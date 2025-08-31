@@ -87,20 +87,7 @@ namespace MANDUU.ViewModels
                 return false;
         }
 
-        private string ExtractEmailFromInput(string input)
-        {
-            // If input is already a valid email, return it
-            if (InputValidation.IsValidEmail(input))
-                return input;
-
-            // If input is a phone number, try to find the user and get their email
-            if (InputValidation.IsValidPhoneNumber(input))
-            {
-                return input; // Let UserService handle phone numbers
-            }
-
-            return input; // Fallback
-        }
+        
 
         private async Task OnProceed()
         {

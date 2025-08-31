@@ -174,19 +174,36 @@
                     WidthRequest="180"
                     HorizontalOptions="Center"
                     VerticalOptions="Start"/>
-            
+
             <Border StrokeThickness="0"
                     StrokeShape="RoundRectangle 5"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     BackgroundColor="Red"
                     Padding="10,5"
-                    Grid.Row="1">
-                <HorizontalStackLayout>
+                    Grid.Row="1" WidthRequest="250">
+                <Border.Shadow>
+                    <Shadow Opacity="0.5"
+                            Brush="Gray"/>
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="{x:Static icons:Icons.logoutIcon}" 
+                           FontFamily="MaterialIcon"
+                           FontSize="30"
+                           VerticalOptions="Center"
+                           VerticalTextAlignment="Center"
+                           TextColor="#fff"
+                           Rotation="180"
+                           />
                     <Label Text="LOGOUT"
                            FontSize="16"
                            TextColor="#fff"
-                           FontFamily="Findlandica"/>
+                           FontFamily="Findlandica"
+                           VerticalOptions="Center"
+                           VerticalTextAlignment="Center" />
                 </HorizontalStackLayout>
             </Border>
         </Grid>

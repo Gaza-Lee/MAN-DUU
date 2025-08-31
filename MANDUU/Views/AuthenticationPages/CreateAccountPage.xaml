@@ -7,7 +7,8 @@
              xmlns:droid="clr-namespace:CommunityToolkit.Maui.PlatformConfiguration.AndroidSpecific;assembly=CommunityToolkit.Maui"
              droid:NavigationBar.Color="#FF7B1C"
              Shell.BackgroundColor="#FF7B1C"
-             Title="Sign Up">
+             Title="Sign Up"
+             Shell.TabBarIsVisible="False">
     <Grid RowDefinitions="0.25*, 0.6*, 0.2*">
         <GraphicsView Drawable="{x:Static animations:TopOrangePanel.Instance}"
                       VerticalOptions="Start"/>

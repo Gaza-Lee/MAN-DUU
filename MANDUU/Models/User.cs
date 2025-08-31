@@ -23,6 +23,7 @@ namespace MANDUU.Models
 
         // Authentication
         public string HashPassword { get; set; }
+        public bool IsVerified { get; set; }
 
         // Profile
         public string? ProfilePicture { get; set; }
@@ -33,5 +34,7 @@ namespace MANDUU.Models
 
         // Shops owned by the user
         public List<Shop> Shops { get; set; } = new List<Shop>();
+
+        public DateTime? VerificationDate { get; set; }
     }
 }

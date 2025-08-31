@@ -97,27 +97,83 @@ namespace MANDUU.Services
             return false;
         }
 
+
+        public async Task<bool> RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string password)
+        {
+            await Task.Delay(100); // Simulate async operation
+
+            // Check if email already exists
+            if (_users.Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)))
+            {
+                return false; // Email already registered
+            }
+
+            // Check if phone number already exists
+            var cleanPhone = phoneNumber; // Keep the format as provided
+            if (_users.Any(u => u.PhoneNumber != null && u.PhoneNumber.Equals(cleanPhone, StringComparison.OrdinalIgnoreCase)))
+            {
+                return false; // Phone number already registered
+            }
+
+            // Create new user
+            var newUser = new User
+            {
+                Id = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1, // Add user to the end of the list
+                Email = email,
+                PhoneNumber = phoneNumber,
+                HashPassword = password, // Should be hashed in Production
+                FirstName = firstName,
+                LastName = lastName,
+                ProfilePicture = null, // Can be set later
+                Shops = new List<Shop>() // New user starts with no shops
+            };
+
+            // Add user to the list of users
+            _users.Add(newUser);
+
+            //automatically log in the user after registration
+            Preferences.Default.Set("CurrentUserId", newUser.Id);
+
+            return true;
+        }
+
+        //check if email or phone exists
+        public async Task<bool> IsEmailExistsAsync(string email)
+        {
+            await Task.Delay(10);
+            return _users.Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public async Task<bool> IsPhoneExistsAsync(string phoneNumber)
+        {
+            await Task.Delay(10);
+            var cleanPhone = new string(phoneNumber.Where(char.IsDigit).ToArray());
+            return _users.Any(u => u.PhoneNumber != null &&
+                new string(u.PhoneNumber.Where(char.IsDigit).ToArray()) == cleanPhone);
+        }
+
+        // Logout
         public async Task<bool> LogoutAsync()
         {
             Preferences.Default.Remove("CurrentUserId");
             return true;
         }
 
-        // Additional method to get shops by user
+        // Shops belonging to current User
         public async Task<List<Shop>> GetShopsByUserAsync(int userId)
         {
             var user = _users.FirstOrDefault(u => u.Id == userId);
             return user?.Shops ?? new List<Shop>();
         }
 
-        // Method to check if user owns a specific shop
+        //if user owns a specific shop
         public async Task<bool> DoesUserOwnShopAsync(int userId, int shopId)
         {
             var user = _users.FirstOrDefault(u => u.Id == userId);
             return user?.Shops.Any(s => s.Id == shopId) ?? false;
         }
 
-        // Method to add a shop to user's ownership
+        //Add shop to user's ownership
         public async Task<bool> AddShopToUserAsync(int userId, Shop shop)
         {
             var user = _users.FirstOrDefault(u => u.Id == userId);

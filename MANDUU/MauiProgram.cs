@@ -5,10 +5,11 @@ using MANDUU.Views;
 using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
 using MANDUU.Views.MainPages.SubPages;
+using MANDUU.Views.ShopPages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 using Sharpnado.Tabs;
-using MANDUU.Views.ShopPages;
 
 namespace MANDUU
 {
@@ -28,7 +29,8 @@ namespace MANDUU
                     fonts.AddFont("Finlandica-Regular.ttf", "Finlandica");
                 });
 
-            // Customize Entry handler to remove underline on Android
+            
+            // Entry handler to remove underline on Android
             EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
             {
 #if ANDROID || WINDOWS

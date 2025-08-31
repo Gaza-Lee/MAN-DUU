@@ -53,5 +53,30 @@ namespace MANDUU.ViewModels
         {
             await _navigationService.NavigateToAsync("favoritespage");
         }
+
+        [RelayCommand]
+        private async Task LogoutAsync()
+        {
+            bool confirmLogout = await Application.Current.MainPage.DisplayAlert(
+                "Confirm Logout",
+                "Are you sure you want to log out?",
+                "Yes",
+                "No");
+
+            if (confirmLogout)
+            {
+                var success = await _userService.LogoutAsync();
+                if (success)
+                {
+                    await _navigationService.NavigateToAsync("createaccountorsigninpage");
+
+                    //Success message
+                    await Application.Current.MainPage.DisplayAlert(
+                        "Logged Out",
+                        "You have been successfully logged out.",
+                        "OK");
+                }
+            }
+        }
     }
 }
