@@ -3,15 +3,24 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MANDUU.Models;
 using MANDUU.Services;
+using MANDUU.ViewModels.Base;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MANDUU.ViewModels
 {
-    public partial class HomePageViewModel : ObservableObject
+    public partial class HomePageViewModel : BaseViewModel
     {
+        #region Services
+        private readonly ShopService _shopService;
+        private readonly ProductCategoryService _categoryService;
+        private readonly ProductService _productService;
+        private readonly CartService _cartService;
+        private readonly FavoritesService _favoritesService;
+        #endregion
+
         #region Observable Properties
         [ObservableProperty]
         private ObservableCollection<MainCategory> mainCategories = new();
@@ -29,38 +38,44 @@ namespace MANDUU.ViewModels
         private Shop selectedShop;
 
         [ObservableProperty]
-        private ObservableCollection<Shop> _recommendedShops = new();
+        private ObservableCollection<Shop> recommendedShops = new();
 
         [ObservableProperty]
         private bool hasCartItems;
-
-        // Load all products for the home page to be filtered 
-        public List<Product> AllProducts { get; private set; } = new();
         #endregion
 
-        #region Services
-        private readonly ShopService _shopService;
-        private readonly ProductCategoryService _categoryService;
-        private readonly ProductService _productService;
-        private readonly INavigationService _navigationService;
-        private CartService _cartService;
-        private FavoritesService _favoritesService;
+        #region Constructor
+        public HomePageViewModel(
+            ProductCategoryService categoryService,
+            ProductService productService,
+            INavigationService navigationService,
+            ShopService shopService,
+            CartService cartService,
+            FavoritesService favoritesService) : base(navigationService)
+        {
+            _categoryService = categoryService;
+            _productService = productService;
+            _shopService = shopService;
+            _cartService = cartService;
+            _favoritesService = favoritesService;
+            _cartService.CartUpdated += OnCartUpdated;
+        }
         #endregion
 
         #region Commands
 
         [RelayCommand]
-        private async Task ProfileAsync()
+        private async Task GoToProfileAsync()
         {
-            await _navigationService.NavigateToAsync("userprofilepage");
+            await NavigationService.NavigateToAsync("userprofilepage");
         }
 
         [RelayCommand]
-        private async Task SelectedCategoryAsync(MainCategory selectedCategory)
+        private async Task GoToSelectedCategoryAsync(MainCategory selectedCategory)
         {
             if (selectedCategory == null) return;
 
-            await _navigationService.NavigateToAsync("categorypage", new Dictionary<string, object>
+            await NavigationService.NavigateToAsync("categorypage", new Dictionary<string, object>
             {
                 { "CategoryId", selectedCategory.Id }
             });
@@ -68,24 +83,23 @@ namespace MANDUU.ViewModels
             SelectedCategory = null;
         }
 
-
         [RelayCommand]
-        private async Task SelectedProductAsync(Product product)
+        private async Task GoToSelectedProductDetailsAsync(Product product)
         {
             if (product == null) return;
 
-            await _navigationService.NavigateToAsync("productdetailpage", new Dictionary<string, object>
+            await NavigationService.NavigateToAsync("productdetailpage", new Dictionary<string, object>
             {
                 { "ProductId", product.Id }
             });
         }
 
         [RelayCommand]
-        private async Task SelectedShopAsync(Shop shop)
+        private async Task GoToSelectedShopProfileAsync(Shop shop)
         {
             if (shop == null) return;
 
-            await _navigationService.NavigateToAsync("shopprofilepage", new Dictionary<string, object>
+            await NavigationService.NavigateToAsync("shopprofilepage", new Dictionary<string, object>
             {
                 { "ShopId", shop.Id },
                 { "ShopName", shop.Name }
@@ -97,81 +111,7 @@ namespace MANDUU.ViewModels
         [RelayCommand]
         private async Task GoToCartAsync()
         {
-            await _navigationService.NavigateToAsync("cartpage");
-        }
-        #endregion
-
-        #region Constructor
-        public HomePageViewModel(
-            ProductCategoryService categoryService,
-            ProductService productService,
-            INavigationService navigationService,
-            ShopService shopService,
-            CartService cartService,
-            FavoritesService favoritesService)
-        {
-            _categoryService = categoryService;
-            _productService = productService;
-            _navigationService = navigationService;
-            _shopService = shopService;
-            _cartService = cartService;
-            _favoritesService = favoritesService;
-
-            _cartService.CartUpdated += OnCartUpdated;
-        }
-        #endregion
-
-        #region Initialization
-        public async Task InitializeAsync()
-        {
-            await LoadOffersAsync();
-            await LoadMainCategoriesAsync();
-            await LoadBestSellingProductsAsync();
-            await LoadAllProductsAsync();
-            await LoadRecommendedShopsAsync();
-        }
-
-        private async Task LoadOffersAsync()
-        {
-            offers.Clear();
-            foreach (var offer in Offer.GetOffers())
-                offers.Add(offer);
-        }
-
-        private async Task LoadMainCategoriesAsync()
-        {
-            mainCategories.Clear();
-            var categories = await _categoryService.GetAllMainCategoriesAsync();
-            foreach (var category in categories)
-                mainCategories.Add(category);
-        }
-
-        private async Task LoadBestSellingProductsAsync()
-        {
-            bestSellingProducts.Clear();
-            var products = await _productService.GetBestSellingProductsAsync(10);
-            foreach (var product in products)
-                bestSellingProducts.Add(product);
-        }
-
-        private async Task LoadAllProductsAsync()
-        {
-            AllProducts = (await _productService.GetProductsAsync()).ToList();
-        }
-        private async Task LoadRecommendedShopsAsync()
-        {
-            RecommendedShops.Clear();
-            var shops = await _shopService.GetRecommendedShopsAsync(4);
-            foreach (var shop in shops)
-            {
-                RecommendedShops.Add(shop);
-            }
-        }
-
-
-        private void OnCartUpdated(object sender, EventArgs e)
-        {
-            HasCartItems = _cartService.HasItems();
+            await NavigationService.NavigateToAsync("cartpage");
         }
 
         [RelayCommand]
@@ -180,11 +120,7 @@ namespace MANDUU.ViewModels
             if (product == null) return;
 
             await _favoritesService.AddProductToFavoritesAsync(product);
-
-
-            var toast = 
-                Toast.Make($"{product.Name} added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short);
-            await toast.Show();
+            ShowToast($"{product.Name} added to favorites");
         }
 
         [RelayCommand]
@@ -193,9 +129,7 @@ namespace MANDUU.ViewModels
             if (shop == null) return;
 
             await _favoritesService.AddShopToFavoritesAsync(shop);
-
-            var toast = Toast.Make($"{shop.Name}added to favorites", CommunityToolkit.Maui.Core.ToastDuration.Short);
-            await toast.Show();
+            ShowToast($"{shop.Name} added to favorites");
         }
 
         [RelayCommand]
@@ -204,30 +138,112 @@ namespace MANDUU.ViewModels
             if (product == null) return;
 
             await _cartService.AddToCartAsync(product);
-
-
-            var toast = Toast.Make($"{product.Name} added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short);
-            await toast.Show();
-        }
-
-        // Dispose method to unsubscribe from events
-        public void Dispose()
-        {
-            _cartService.CartUpdated -= OnCartUpdated;
+            ShowToast($"{product.Name} added to Cart");
         }
         #endregion
 
-        #region Helper Methods
-        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(int categoryId)
-            => await _productService.GetProductsByMainCategoryAsync(categoryId);
-
-        public async Task<IEnumerable<Product>> GetProductsByShopAsync(int shopId)
-            => await _productService.GetProductsByShopAsync(shopId);
-
-        public async Task<IEnumerable<Product>> GetProductsByShopAndCategoryAsync(int shopId, int mainCategoryId)
+        #region Initialization
+        public override async Task InitializeAsync()
         {
-            var allProducts = await GetProductsByShopAsync(shopId);
-            return allProducts.Where(p => p.MainCategoryId == mainCategoryId);
+            await base.InitializeAsync();
+
+            await IsBusyFor(async () =>
+            {
+                await LoadOffersAsync();
+                await LoadMainCategoriesAsync();
+                await LoadBestSellingProductsAsync();
+                await LoadRecommendedShopsAsync();
+                UpdateCartStatus();
+            });
+        }
+
+        private async Task LoadOffersAsync()
+        {
+            try
+            {
+                Offers.Clear();
+                var offers = await Task.Run(() => Offer.GetOffers());
+                foreach (var offer in offers)
+                {
+                    Offers.Add(offer);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading offers: {ex.Message}");
+                ShowToast("Failed to load offers");
+            }
+        }
+
+        private async Task LoadMainCategoriesAsync()
+        {
+            try
+            {
+                MainCategories.Clear();
+                var categories = await _categoryService.GetAllMainCategoriesAsync();
+                foreach (var category in categories)
+                {
+                    MainCategories.Add(category);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading categories: {ex.Message}");
+                ShowToast("Failed to load categories");
+            }
+        }
+
+        private async Task LoadBestSellingProductsAsync()
+        {
+            try
+            {
+                BestSellingProducts.Clear();
+                var products = await _productService.GetBestSellingProductsAsync(10);
+                foreach (var product in products)
+                {
+                    BestSellingProducts.Add(product);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading products: {ex.Message}");
+                ShowToast("Failed to load products");
+            }
+        }
+
+        private async Task LoadRecommendedShopsAsync()
+        {
+            try
+            {
+                RecommendedShops.Clear();
+                var shops = await _shopService.GetRecommendedShopsAsync(4);
+                foreach (var shop in shops)
+                {
+                    RecommendedShops.Add(shop);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading shops: {ex.Message}");
+                ShowToast("Failed to load shops");
+            }
+        }
+
+        private void UpdateCartStatus()
+        {
+            HasCartItems = _cartService.HasItems();
+        }
+
+        private void OnCartUpdated(object sender, EventArgs e)
+        {
+            UpdateCartStatus();
+        }
+        #endregion
+
+        #region Cleanup
+        public void Dispose()
+        {
+            _cartService.CartUpdated -= OnCartUpdated;
         }
         #endregion
     }

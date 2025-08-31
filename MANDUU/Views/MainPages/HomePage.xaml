@@ -16,7 +16,7 @@
                VerticalOptions="Center"
                FontSize="30">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ProfileCommand}"/>
+                    <TapGestureRecognizer Command="{Binding GoToProfileCommand}"/>
                 </Label.GestureRecognizers>
             </Label>
 
@@ -122,7 +122,7 @@
                             HorizontalOptions="Center"
                             SelectionMode="Single"
                             x:Name="CategoriesCollectionView"
-                            SelectionChangedCommand="{Binding SelectedCategoryCommand}"
+                            SelectionChangedCommand="{Binding GoToSelectedCategoryCommand}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference CategoriesCollectionView}}">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal"
