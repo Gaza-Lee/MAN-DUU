@@ -1,4 +1,7 @@
-﻿using MANDUU.RegexValidation;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MANDUU.RegexValidation;
+using MANDUU.Services;
 using MANDUU.ViewModels.Base;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -10,87 +13,56 @@ using System.Windows.Input;
 
 namespace MANDUU.ViewModels
 {
-    public class NewPasswordPageViewModel : BaseViewModel
+    public partial class NewPasswordPageViewModel : BaseViewModel
     {
-        #region Variables
+        #region Observable properties
+        [ObservableProperty]
         private string _newPassword;
+
+        [ObservableProperty]
         private string _confirmNewPassword;
         #endregion
 
-        #region Commands
-        public ICommand ProceedCommand { get; }
-        #endregion
-
-        public NewPasswordPageViewModel()
+        public NewPasswordPageViewModel(INavigationService navigationService) :base(navigationService)
         {
-            ProceedCommand = new Command(async () => await OnProceed());
+            
         }
-
-        #region Properties 
-        public string NewPassword
-        {
-            get => _newPassword;
-            set
-            {
-                if (_newPassword != value)
-                {
-                    _newPassword = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public string ConfirmNewPassword
-        {
-            get => _confirmNewPassword;
-            set
-            {
-                if (_confirmNewPassword != value)
-                {
-                    _confirmNewPassword = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-
-        #region Methods
-        public bool IsPasswordMatch()
+          
+               
+        private bool IsPasswordMatch()
         {
             return NewPassword == ConfirmNewPassword;
         }
-        private async Task OnProceed()
+
+        [RelayCommand]
+        private async Task ProceedAsync()
         {
-            IsBusy = true;
-
-            if (string.IsNullOrWhiteSpace(NewPassword)|| string.IsNullOrWhiteSpace(ConfirmNewPassword))
+            await IsBusyFor (async () =>
             {
-                ShowToast("All fields are required");
-                IsBusy = false;
-                return;
-            }
+                // Validation checks
+                if (string.IsNullOrWhiteSpace(NewPassword) ||
+                    string.IsNullOrWhiteSpace(ConfirmNewPassword))
+                {
+                    ShowToast("Fields must not be empty");
+                    return;
+                }
+                if (!InputValidation.IsValidPassword(NewPassword))
+                {
+                    ShowToast("Weak Password");
+                    return;
+                }
+                if (!IsPasswordMatch())
+                {
+                    ShowToast("Passwords do not match");
+                    return;
+                }
 
-            if (!InputValidation.IsValidPassword(NewPassword))
-            {
-                ShowToast("Weak password");
-                IsBusy = false;
-                return;
-            }
-
-            if (!IsPasswordMatch())
-            {
-                ShowToast("Password do not match");
-                IsBusy = false;
-                return;
-            }
-
-            ShowToast("Password Changed successfully");
-
-            await Task.Delay(1000);
-            await Shell.Current.GoToAsync("HomePage");
-            IsBusy = false;
+                // For now just navigate to SignIn Page
+                ShowToast("Password reset successful! Please sign in with your new password.");
+                await Task.Delay(1000);
+                await NavigationService.NavigateToAsync("//signinpage");
+            });
         }
-        #endregion
 
     }
 }

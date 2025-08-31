@@ -1,4 +1,7 @@
-﻿using MANDUU.RegexValidation;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MANDUU.RegexValidation;
+using MANDUU.Services;
 using MANDUU.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -9,56 +12,38 @@ using System.Windows.Input;
 
 namespace MANDUU.ViewModels
 {
-    public class ResetPasswordPageViewModel: BaseViewModel
+    public partial class ResetPasswordPageViewModel: BaseViewModel
     {
-        #region Variables
+        #region Observable properties
+
+        [ObservableProperty]
         private string _email;
         #endregion
 
-        public ICommand ProceedCommand { get; set; }
-
-        public ResetPasswordPageViewModel()
+        public ResetPasswordPageViewModel(INavigationService navigationService): base(navigationService)
         {
-            ProceedCommand = new Command(async () => await OnProceed());
         }
 
-        #region Properties
-        public  string Email
+        
+        [RelayCommand]
+        private async Task ProceedAsync()
         {
-            get => _email;
-            set
+            await IsBusyFor(async () =>
             {
-                if(_email != value)
+                // Validate email
+                if (string.IsNullOrWhiteSpace(Email))
                 {
-                    _email = value;
-                    OnPropertyChanged();
+                    ShowToast("Email must not be empty");
+                    return;
                 }
-            }
+                if (!InputValidation.IsValidEmail(Email))
+                {
+                    ShowToast("Please enter a valid email address.");
+                    return;
+                }
+                // For now just navigate to Verification Page
+                await NavigationService.NavigateToAsync("newpasswordpage");
+            });
         }
-        #endregion
-
-        #region Methods
-        private async Task OnProceed()
-        {
-            IsBusy = true;
-
-            if (string.IsNullOrWhiteSpace(Email))
-            {
-                ShowToast("Field can't be empty");
-                IsBusy = false;
-                return;
-            }
-
-            if (!InputValidation.IsValidEmail(Email))
-            {
-                ShowToast("Invalid email");
-                IsBusy = false;
-                return;
-            }
-
-            await Shell.Current.GoToAsync("ResetPswVerificationPage");
-            IsBusy = false;
-        }
-        #endregion
     }
 }

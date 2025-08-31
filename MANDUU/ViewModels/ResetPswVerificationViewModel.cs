@@ -1,4 +1,6 @@
-﻿using MANDUU.ViewModels.Base;
+﻿using CommunityToolkit.Mvvm.Input;
+using MANDUU.Services;
+using MANDUU.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +10,20 @@ using System.Windows.Input;
 
 namespace MANDUU.ViewModels
 {
-    public class ResetPswVerificationViewModel : BaseViewModel
+    public partial class ResetPswVerificationViewModel : BaseViewModel
     {
-        public ICommand ProceedCommand { get; set; }
-
-        public ResetPswVerificationViewModel()
+        public ResetPswVerificationViewModel(INavigationService navigationService): base (navigationService)
         {
-            ProceedCommand = new Command(async () => await OnProceed());
         }
 
-        private async Task OnProceed()
+        [RelayCommand]
+        private async Task ProceedAsync()
         {
-            await Shell.Current.GoToAsync("NewPasswordPage");
+            await IsBusyFor (async () =>
+            {
+                // Navigate to New Password Page
+                await NavigationService.NavigateToAsync("//newpasswordpage");
+            });
         }
     }
 }

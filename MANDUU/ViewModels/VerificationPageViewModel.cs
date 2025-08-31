@@ -1,4 +1,7 @@
-﻿using MANDUU.ViewModels.Base;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MANDUU.Services;
+using MANDUU.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +13,23 @@ namespace MANDUU.ViewModels
 {
     public partial class VerificationPageViewModel : BaseViewModel
     {
-        private string VerificationCode { get; set; }
+        [ObservableProperty]
+        private string _verificationCode;
         
-        public ICommand ProceedCommand { get; set; }
 
 
-        public VerificationPageViewModel()
+        public VerificationPageViewModel(INavigationService navigationService):base (navigationService)
         {
-            ProceedCommand = new Command(async () => await OnProceed());
         }
 
-        #region Methods
-        private async Task OnProceed()
+        [RelayCommand]
+        private async Task ProceedAsync()
         {
-            IsBusy = true;
-            await Task.Delay(1000);
-            await Shell.Current.GoToAsync("HomePage");
-            IsBusy = false;
+           await IsBusyFor (async () =>
+           {
+               // For now just navigate to home page
+               await NavigationService.NavigateToAsync("//main/home");
+           });
         }
-        #endregion
     }
 }

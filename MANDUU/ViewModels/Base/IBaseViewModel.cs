@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MANDUU.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,15 @@ namespace MANDUU.ViewModels.Base
 {
     public interface IBaseViewModel 
     {
-        bool IsBusy { get; }
+        public INavigationService NavigationService { get; }
+
+        public IAsyncRelayCommand InitializeAsyncCommand { get; }
+
+        public bool IsBusy { get; }
+
+        public bool IsInitialized { get; }
+
         Task InitializeAsync();
+
     }
 }

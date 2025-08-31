@@ -6,30 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MANDUU.Services;
+using CommunityToolkit.Mvvm.Input;
 
 namespace MANDUU.ViewModels
 {
-    public class CreateAccountOrSignInPageViewModel : BaseViewModel
-    {
-        private readonly INavigationService _navigationService;
-        public ICommand SignInCommand {  get; set; }
-        public ICommand CreateAccountCommand { get; set; }
-
-        public CreateAccountOrSignInPageViewModel(INavigationService navigationService)
+    public partial class CreateAccountOrSignInPageViewModel : BaseViewModel
+    {      
+        public CreateAccountOrSignInPageViewModel(INavigationService navigationService): base(navigationService)
         {
-            _navigationService = navigationService;
-            SignInCommand = new Command(async () => await OnSignIn());
-            CreateAccountCommand = new Command(async() => await OnCreateAccount());
         }
 
-        public async Task OnSignIn()
+        [RelayCommand]
+        private async Task SignInAsync()
         {
-            await _navigationService.NavigateToAsync("signinpage");
+            await NavigationService.NavigateToAsync("signinpage");
         }
 
-        public async Task OnCreateAccount()
+
+        [RelayCommand]
+        private async Task OnCreateAccount()
         {
-            await _navigationService.NavigateToAsync("createaccountpage");
+            await NavigationService.NavigateToAsync("createaccountpage");
         }
 
     }

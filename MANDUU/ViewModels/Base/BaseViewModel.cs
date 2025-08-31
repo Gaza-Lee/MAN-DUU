@@ -1,4 +1,7 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MANDUU.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,35 +12,69 @@ using System.Threading.Tasks;
 
 namespace MANDUU.ViewModels.Base
 {
-    public class BaseViewModel : IBaseViewModel, INotifyPropertyChanged
+    public abstract partial class BaseViewModel : ObservableObject, IBaseViewModel
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        private long _isBusy;
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        [ObservableProperty] 
+        private bool _isInitialized;
 
-
-        private bool _isBusy;
-
-        public bool IsBusy
+        public BaseViewModel(INavigationService navigationService)
         {
-            get => _isBusy;
-            set
+            NavigationService = navigationService;
+
+            InitializeAsyncCommand =
+                new AsyncRelayCommand(
+                    async () =>
+                    {
+                        await IsBusyFor(InitializeAsync);
+                        IsInitialized = true;
+                    },
+                    AsyncRelayCommandOptions.FlowExceptionsToTaskScheduler);
+        }
+
+        public bool IsBusy => Interlocked.Read(ref _isBusy) > 0;
+
+        public INavigationService NavigationService { get; }
+
+        public IAsyncRelayCommand InitializeAsyncCommand { get; }
+
+        public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+        }
+
+        public virtual Task InitializeAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        protected async Task IsBusyFor(Func<Task> unitOfWork)
+        {
+            Interlocked.Increment(ref _isBusy);
+            OnPropertyChanged(nameof(IsBusy));
+
+            try
             {
-                if (_isBusy != value)
-                {
-                    _isBusy = value;
-                    OnPropertyChanged();
-                }
+                await unitOfWork();
+            }
+            finally
+            {
+                Interlocked.Decrement(ref _isBusy);
+                OnPropertyChanged(nameof(IsBusy));
             }
         }
 
-        public async void ShowToast(string message)
-        {
-            var toast = Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short);
-            await toast.Show();
-        }
 
-        public virtual Task InitializeAsync() => Task.CompletedTask;
+        public async void ShowToast(string message, CommunityToolkit.Maui.Core.ToastDuration duration = CommunityToolkit.Maui.Core.ToastDuration.Short)
+        {
+            try
+            {
+                await Toast.Make(message, duration).Show();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error showing toast: {ex.Message}");
+            }
+        }
     }
 }
