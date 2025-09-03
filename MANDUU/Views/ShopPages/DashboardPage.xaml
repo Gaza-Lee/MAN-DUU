@@ -138,8 +138,10 @@
                                                MaxLines="1"
                                                WidthRequest="100"
                                                HorizontalOptions="Start"/>
-                                        <Label Text="{Binding DateCreated}"/>
-                                        <Label Text="{Binding TimeCreated}"/>
+                                        <Label Text="{Binding FormattedDate}"
+                                               FontFamily="Finlandica"/>
+                                        <Label Text="{Binding FormattedLastUpdated}"
+                                               FontFamily="Finlandica"/>
                                     </VerticalStackLayout>
 
                                     <Grid Grid.Column="2" RowDefinitions="auto, auto, *">

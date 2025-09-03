@@ -122,7 +122,7 @@
                             HorizontalOptions="Center"
                             SelectionMode="Single"
                             x:Name="CategoriesCollectionView"
-                            SelectionChangedCommand="{Binding GoToSelectedCategoryCommand}"
+                            SelectionChangedCommand="{Binding GoToSelectedMainCategoryCommand}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference CategoriesCollectionView}}">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal"

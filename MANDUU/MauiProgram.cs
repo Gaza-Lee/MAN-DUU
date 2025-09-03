@@ -38,6 +38,14 @@ namespace MANDUU
 #endif
             });
 
+            // Editor handler to remove underline on Android
+            EditorHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
+            {
+#if ANDROID || WINDOWS
+                handler.PlatformView.Background = null;
+#endif
+            });
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MANDUU.ViewModels.Base
 {
-    public abstract partial class BaseViewModel : ObservableObject, IBaseViewModel
+    public abstract partial class BaseViewModel : ObservableObject, IBaseViewModel, IQueryAttributable
     {
         private long _isBusy;
 

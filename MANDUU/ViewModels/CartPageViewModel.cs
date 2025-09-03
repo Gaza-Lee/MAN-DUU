@@ -7,23 +7,26 @@ using System.Threading.Tasks;
 using MANDUU.Services;
 using MANDUU.Models;
 using Microsoft.Maui.Controls;
+using MANDUU.ViewModels.Base;
+using Microsoft.Maui.Controls.Handlers.Compatibility;
 
 namespace MANDUU.ViewModels
 {
-    public partial class CartPageViewModel : ObservableObject
+    public partial class CartPageViewModel : BaseViewModel
     {
         private readonly CartService _cartService;
 
         [ObservableProperty]
-        private ObservableCollection<CartItem> cartItems;
+        private ObservableCollection<CartItem> _cartItems;
 
         [ObservableProperty]
-        private decimal cartTotal;
+        private decimal _cartTotal;
 
         [ObservableProperty]
-        private int cartItemCount;
+        private int _cartItemCount;
 
-        public CartPageViewModel(CartService cartService)
+        public CartPageViewModel(CartService cartService, INavigationService navigationService)
+            : base(navigationService)
         {
             _cartService = cartService;
             _cartService.CartUpdated += OnCartUpdated;

@@ -7,14 +7,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MANDUU.ViewModels.Base;
 
 namespace MANDUU.ViewModels
 {
-    public partial class DashboardViewModel : ObservableObject, IQueryAttributable
+    public partial class DashboardViewModel : BaseViewModel
     {
         private readonly ProductService _productService;
         private readonly ShopService _shopService;
-        private readonly INavigationService _navigationService;
 
 
         [ObservableProperty]
@@ -23,13 +23,12 @@ namespace MANDUU.ViewModels
         [ObservableProperty]
         private Shop _shop;
 
-        public DashboardViewModel(ProductService productService, ShopService shopService, INavigationService navigationService)
+        public DashboardViewModel(ProductService productService, ShopService shopService, INavigationService navigationService) : base(navigationService)
         {
             _productService = productService;
             _shopService = shopService;
-            _navigationService = navigationService;
         }
-        public async void ApplyQueryAttributes(IDictionary<string, object> query)
+        public override async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.TryGetValue("ShopId", out var id) && id is int shopId)
             {

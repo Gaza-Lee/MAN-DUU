@@ -19,16 +19,16 @@
             <VerticalStackLayout Padding="0">
 
                 <!-- Subcategory Sections -->
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding SubCategoryGroups}">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding SubCategories}">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="vm:SubCategoryGroup">
+                        <DataTemplate x:DataType="models:SubCategory">
                             <VerticalStackLayout>
 
                                 <!-- Subcategory Title -->
                                 <Border StrokeThickness="0"
                                         StrokeShape="RoundRectangle 5"
                                         Style="{x:StaticResource catTitleBorder}">
-                                    <Label Text="{Binding SubCategoryName}"
+                                    <Label Text="{Binding Name}"
                                            Style="{x:StaticResource CatTitleText}"/>
                                 </Border>
 

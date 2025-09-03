@@ -19,40 +19,41 @@
             
             <!--Main Row 1-->
             <!--Cover Image, Profile and Name-->
-            <Grid Row="0" RowDefinitions="*,auto,auto" ColumnDefinitions="auto,auto">
-                <Image Source="{Binding Shop.ShopProfileImage}"
-                       Aspect="AspectFit"
-                       HeightRequest="300"
-                       WidthRequest="420"
-                       HorizontalOptions="Fill"
-                       VerticalOptions="Start"
-                       Grid.RowSpan="2"
-                       Grid.ColumnSpan="2"/>
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" HeightRequest="200" VerticalOptions="Start">
 
-                <Border Grid.Row="1"
-                        Grid.Column="1"
-                        Stroke="{StaticResource Primary}"
-                        StrokeShape="RoundRectangle 100"
-                        HorizontalOptions="End"
-                        Margin="0,2,5,-40"
-                        StrokeThickness="3">
+                <!-- Cover Image (Background) -->
+                <Image Source="{Binding Shop.ShopProfileImage}"
+                   Aspect="AspectFill"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"/>
+
+                <!-- Profile Image (Overlay) -->
+                <Border StrokeThickness="2"
+                    Stroke="{StaticResource Primary}"
+                    StrokeShape="RoundRectangle 100"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="0,0,10,-50"
+                    BackgroundColor="White">
                     <Image Source="{Binding Shop.ShopProfileImage}"
-                           HeightRequest="100"
-                           WidthRequest="100"
-                           Aspect="Fill"/>
+                       Aspect="AspectFill"/>
                 </Border>
 
-                <Label Text="{Binding Shop.Name}"
-                       Grid.Row="2"
-                       FontSize="30"
-                       Margin="5,0"/>
+                <Label HorizontalOptions="Start"
+                       VerticalOptions="End"
+                       Text="{Binding Shop.Name}"
+                       FontSize="25"
+                       Margin="10,0,0,-40"/>
             </Grid>
+
             
             <!--Main Row 2-->
             <!--Contact and location Details-->
             <Grid Row="1" ColumnDefinitions="auto,auto,auto"
                   HorizontalOptions="Center"
-                  Margin="0,15,0,5">
+                  Margin="0,60,0,5">
                 <HorizontalStackLayout Spacing="10">
                     <Border HorizontalOptions="Center"
                             Background="#4B4B4BCC" Padding="5,0"

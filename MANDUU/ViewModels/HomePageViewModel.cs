@@ -71,13 +71,13 @@ namespace MANDUU.ViewModels
         }
 
         [RelayCommand]
-        private async Task GoToSelectedCategoryAsync(MainCategory selectedCategory)
+        private async Task GoToSelectedMainCategoryAsync(MainCategory selectedMainCategory)
         {
-            if (selectedCategory == null) return;
+            if (selectedMainCategory == null) return;
 
             await NavigationService.NavigateToAsync("categorypage", new Dictionary<string, object>
             {
-                { "CategoryId", selectedCategory.Id }
+                { "CategoryId", selectedMainCategory.Id }
             });
 
             SelectedCategory = null;

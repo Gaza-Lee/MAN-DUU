@@ -27,7 +27,18 @@ namespace MANDUU.Models
         public string ShopName { get; set; }
         public string ShopLocation { get; set; }
 
+        // Timestamps
+        public DateTime CreatedDate { get; set; }
+        public DateTime LastUpdated { get; set; }
+
+
+
+
         // Computed Properties
+
         public string FormattedPrice => $"₵{Price:N2}";
+
+        public string FormattedDate => CreatedDate.ToString("dd/MM/yyyy");
+        public string FormattedLastUpdated => LastUpdated.ToString("HH:mm");
     }
 }

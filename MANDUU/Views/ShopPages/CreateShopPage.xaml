@@ -2,11 +2,131 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MANDUU.Views.ShopPages.CreateShopPage"
-             Title="CreateShopPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Create Shop"
+             Shell.TabBarIsVisible="False">
+
+    <Grid RowDefinitions="*,auto" ColumnDefinitions="*,auto" RowSpacing="10">
+
+        <!-- Cover Image and Profile Image Container -->
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" HeightRequest="250" VerticalOptions="Start">
+
+            <!-- Cover Image (Background) -->
+            <Image Source="acrylic.png"
+                   Aspect="AspectFill"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"/>
+
+            <!-- Profile Image (Overlay) -->
+            <Border StrokeThickness="2"
+                    Stroke="White"
+                    StrokeShape="RoundRectangle 100"
+                    WidthRequest="100"
+                    HeightRequest="100"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="0,0,10,-50"
+                    BackgroundColor="White">
+                <Image Source="acrylic1.png"
+                       Aspect="AspectFill"/>
+            </Border>
+        </Grid>
+
+        <!--Entry fields-->
+        <Grid RowDefinitions="auto,auto,auto,*, auto,auto" Grid.Row="1" Margin="20,0" RowSpacing="5">
+            <VerticalStackLayout Grid.Row="0">
+                <Label Text="Shop Name"
+                       FontFamily="Finlandica"
+                       Margin="10,0"/>
+                <Border Stroke="Gray"
+                        StrokeThickness="0.5"
+                        StrokeShape="RoundRectangle 15">
+                    <Entry />
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1">
+                <Label Text="Shop Email"
+                       FontFamily="Finlandica"
+                       Margin="10,0"/>
+                <Border Stroke="Gray"
+                        StrokeThickness="0.5"
+                        StrokeShape="RoundRectangle 15">
+                    <Entry />
+                </Border>
+            </VerticalStackLayout>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="20">
+                <VerticalStackLayout Grid.Column="0">
+                    <Label Text="Location"
+                           FontFamily="Finlandica"
+                           Margin="10,0"/>
+                    <Border Stroke="Gray"
+                            StrokeThickness="0.5"
+                            StrokeShape="RoundRectangle 15">
+                        <Entry />
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="Shop Phone Number"
+                           FontFamily="Finlandica"
+                           Margin="10,0"/>
+                    <Border Stroke="Gray"
+                            StrokeThickness="0.5"
+                            StrokeShape="RoundRectangle 15">
+                        <Entry />
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+            
+            <!--Description-->
+            <VerticalStackLayout Grid.Row="3">
+                <Label Text="Description"
+                       FontFamily="Finlandica"
+                       Margin="10,0"/>
+                <Border Stroke="Gray"
+                        StrokeThickness="0.5"
+                        StrokeShape="RoundRectangle 15">
+                    <Editor HeightRequest="100" AutoSize="TextChanges"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="4">
+                <Label Text="Shop Password (Optional)"
+                       FontFamily="Finlandica"
+                       Margin="10,0"/>
+                <Border Stroke="Gray"
+                        StrokeThickness="0.5"
+                        StrokeShape="RoundRectangle 15">
+                    <Entry />
+                </Border>
+            </VerticalStackLayout>
+
+            <Grid Grid.Row="5" ColumnDefinitions="*,*" ColumnSpacing="20">
+                <VerticalStackLayout Grid.Column="0">
+                    <Label Text="Main Category"
+               FontFamily="Finlandica"
+               Margin="10,0"/>
+                    <Border Stroke="Gray"
+                StrokeThickness="0.5"
+                StrokeShape="RoundRectangle 15">
+                        <Entry />
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="Location On Map"
+               FontFamily="Finlandica"
+               Margin="10,0"/>
+                    <Border Stroke="Gray"
+                StrokeThickness="0.5"
+                StrokeShape="RoundRectangle 15">
+                        <Entry />
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
 </ContentPage>

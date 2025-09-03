@@ -9,20 +9,6 @@ using System.Collections.Generic;
 
 namespace MANDUU.ViewModels
 {
-    public class SubCategoryGroup
-    {
-        public string SubCategoryName { get; set; }
-        public ObservableCollection<Product> Products { get; set; }
-
-        public SubCategoryGroup(string name, IEnumerable<Product> products)
-        {
-            SubCategoryName = string.IsNullOrWhiteSpace(name)
-                ? name
-                : char.ToUpper(name[0]) + name.Substring(1);
-
-            Products = new ObservableCollection<Product>(products);
-        }
-    }
 
     public partial class CategoryViewModel : ObservableObject, IQueryAttributable
     {
@@ -32,7 +18,7 @@ namespace MANDUU.ViewModels
 
         [ObservableProperty] private int categoryId;
         [ObservableProperty] private MainCategory selectedMainCategory;
-        [ObservableProperty] private ObservableCollection<SubCategoryGroup> subCategoryGroups = new();
+        [ObservableProperty] private ObservableCollection<SubCategory> subCategories = new();
 
         public CategoryViewModel(
             ProductService productService,
@@ -67,14 +53,19 @@ namespace MANDUU.ViewModels
             var allProducts = await _productService.GetProductsByMainCategoryAsync(CategoryId);
 
             // Group products by subcategory
-            var grouped = allProducts
-                .GroupBy(p =>
-                    SelectedMainCategory.SubCategories
-                        .FirstOrDefault(sc => sc.Id == p.SubCategoryId)?.Name ?? "Other")
-                .Select(g => new SubCategoryGroup(g.Key, g))
+
+            var subCategories = SelectedMainCategory.SubCategories
+                .Select(sc => new SubCategory
+                {
+                    Id = sc.Id,
+                    Name = sc.Name,
+                    MainCategoryId = sc.MainCategoryId,
+                    MainCategory = sc.MainCategory,
+                    Products = new ObservableCollection<Product>(allProducts.Where(p => p.SubCategoryId == sc.Id))
+                })
                 .ToList();
 
-            SubCategoryGroups = new ObservableCollection<SubCategoryGroup>(grouped);
+            SubCategories = new ObservableCollection<SubCategory>(subCategories);
         }
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)

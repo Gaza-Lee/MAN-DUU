@@ -107,13 +107,15 @@ namespace MANDUU.Services
                     Id = NextProductId(),
                     Name = "Classic Leather Belt",
                     Description = "Premium leather belt with stylish buckle, perfect for both casual and formal wear.",
-                    ImageUrl = "belt.png",
-                    Gallery = new List<string> { "belt.png", "belt1.png", "belt2.png", "belt3.png" },
+                    ImageUrl = "belts.png",
+                    Gallery = new List<string> { "belts.png", "belt1.png", "belt2.png", "belt3.png" },
                     Price = 45.99m,
                     TotalSold = 180,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Accessories"),
-                    ShopId = GetShopId("FashionFix")
+                    ShopId = GetShopId("FashionFix"),
+                    CreatedDate = new DateTime(2024, 1, 15, 16, 9, 0),
+                    LastUpdated = DateTime.Now
                 });
 
                 _products.Add(new Product
@@ -127,7 +129,9 @@ namespace MANDUU.Services
                     TotalSold = 240,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Footwear"),
-                    ShopId = GetShopId("FashionFix")
+                    ShopId = GetShopId("FashionFix"),
+                    CreatedDate = new DateTime(2024, 5, 13, 16, 9, 0),
+                    LastUpdated = DateTime.Now
                 });
 
                 _products.Add(new Product
@@ -141,7 +145,9 @@ namespace MANDUU.Services
                     TotalSold = 150,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Footwear"),
-                    ShopId = GetShopId("FashionFix")
+                    ShopId = GetShopId("FashionFix"),
+                    CreatedDate = new DateTime(2024, 6, 5, 10, 9, 0),
+                    LastUpdated = DateTime.Now
                 });
 
                 _products.Add(new Product
@@ -155,7 +161,9 @@ namespace MANDUU.Services
                     TotalSold = 300,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Hats"),
-                    ShopId = GetShopId("FashionFix")
+                    ShopId = GetShopId("FashionFix"),
+                    CreatedDate = new DateTime(2024, 3, 9, 18, 20, 0),
+                    LastUpdated = DateTime.Now
                 });
 
                 _products.Add(new Product
@@ -169,7 +177,9 @@ namespace MANDUU.Services
                     TotalSold = 95,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Accessories"),
-                    ShopId = GetShopId("FashionFix")
+                    ShopId = GetShopId("FashionFix"),
+                    CreatedDate = new DateTime(2024, 6, 9, 11, 50, 0),
+                    LastUpdated = DateTime.Now
                 });
 
                 _products.Add(new Product
@@ -183,7 +193,9 @@ namespace MANDUU.Services
                     TotalSold = 240,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Clothing"),
-                    ShopId = GetShopId("FashionFix")
+                    ShopId = GetShopId("FashionFix"),
+                    CreatedDate = new DateTime(2024, 6, 8, 9, 1, 0),
+                    LastUpdated = DateTime.Now
                 });
 
                 _products.Add(new Product
@@ -195,6 +207,8 @@ namespace MANDUU.Services
                     Gallery = new List<string> { "sneakers.png", "sneakers1.png", "sneakers2.png", "sneakers3.png" },
                     Price = 120.5m,
                     TotalSold = 180,
+                    CreatedDate = new DateTime(2024, 1, 15, 10, 30, 0), // Jan 15, 2024 at 10:30 AM
+                    LastUpdated = DateTime.Now,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Footwear"),
                     ShopId = GetShopId("FashionFix")
@@ -209,6 +223,8 @@ namespace MANDUU.Services
                     Gallery = new List<string> { "womencasualwear.png", "womencasualwear1.png", "womencasualwear2.png", "womencasualwear3.png" },
                     Price = 85.99m,
                     TotalSold = 160,
+                    CreatedDate = new DateTime(2024, 1, 18, 14, 45, 0), // Jan 18, 2024 at 2:45 PM
+                    LastUpdated = DateTime.Now,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Clothing"),
                     ShopId = GetShopId("FashionFix")
@@ -223,6 +239,8 @@ namespace MANDUU.Services
                     Gallery = new List<string> { "womenofficialwear.png", "womenofficialwear1.png", "womenofficialwear2.png", "womenofficialwear3.png" },
                     Price = 129.99m,
                     TotalSold = 110,
+                    CreatedDate = new DateTime(2024, 1, 20, 9, 15, 0), // Jan 20, 2024 at 9:15 AM
+                    LastUpdated = DateTime.Now,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Clothing"),
                     ShopId = GetShopId("FashionFix")
@@ -237,6 +255,8 @@ namespace MANDUU.Services
                     Gallery = new List<string> { "wristwatch.png", "wristwatch1.png", "wristwatch2.png", "wristwatch3.png" },
                     Price = 159.99m,
                     TotalSold = 90,
+                    CreatedDate = new DateTime(2024, 1, 22, 16, 20, 0), // Jan 22, 2024 at 4:20 PM
+                    LastUpdated = DateTime.Now,
                     MainCategoryId = GetMainCategoryId("Fashion"),
                     SubCategoryId = GetSubCategoryId("Accessories"),
                     ShopId = GetShopId("FashionFix")
@@ -252,6 +272,8 @@ namespace MANDUU.Services
                     Gallery = new List<string> { "earphones.png", "earphones1.png", "earphones2.png", "earphones3.png" },
                     Price = 89.99m,
                     TotalSold = 120,
+                    CreatedDate = new DateTime(2024, 1, 23, 11, 0, 0), // Jan 23, 2024 at 11:00 AM
+                    LastUpdated = DateTime.Now,
                     MainCategoryId = GetMainCategoryId("Electronics"),
                     SubCategoryId = GetSubCategoryId("Accessories"),
                     ShopId = GetShopId("FashionFix")
@@ -267,6 +289,8 @@ namespace MANDUU.Services
                     Gallery = new List<string> { "perfume.png", "perfume1.png", "perfume2.png", "perfume3.png" },
                     Price = 75.99m,
                     TotalSold = 85,
+                    CreatedDate = new DateTime(2024, 1, 24, 13, 55, 0), // Jan 24, 2024 at 1:55 PM
+                    LastUpdated = DateTime.Now,
                     MainCategoryId = GetMainCategoryId("Beauty"),
                     SubCategoryId = GetSubCategoryId("Fragrances"),
                     ShopId = GetShopId("FashionFix")
