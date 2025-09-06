@@ -70,7 +70,7 @@
                         <Span Text="GrandMa"
                           FontFamily="Finlandica"
                           FontSize="25"
-                          TextColor="#ff7b1c"
+                          TextColor="{StaticResource Primary}"
                           FontAttributes="Bold"/>
                     </FormattedString>
                 </Label.FormattedText>
@@ -89,7 +89,8 @@
                             StrokeShape="RoundRectangle 10"
                             WidthRequest="250">
                             <Grid>
-                                <BoxView Color="{Binding BgColor}"/>
+                                <BoxView BackgroundColor="{Binding BgColor}"
+                                         Opacity="0.4"/>
 
                                 <Grid RowDefinitions="auto, *, auto"
                                   Margin="5">
@@ -147,7 +148,7 @@
                                         <Border Grid.Row="1"
                                             VerticalOptions="End"
                                             StrokeShape="RoundRectangle 10"
-                                            Background="White"
+                                            Background="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
                                             StrokeThickness="0.1"
                                             Margin="0,0,0,5">
                                             <Border.Shadow>
@@ -184,7 +185,7 @@
                              Margin="0,10"
                             ItemsSource="{Binding BestSellingProducts}"
                             SelectionMode="Single"
-                            SelectionChangedCommand="{Binding SelectedProductCommand, Mode=TwoWay}"
+                            SelectionChangedCommand="{Binding GoToSelectedProductDetailsCommand, Mode=TwoWay}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference BestSalesCollectionView}}">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal"/>
@@ -193,9 +194,9 @@
                             <DataTemplate x:DataType="models:Product">
                                 <Border StrokeShape="RoundRectangle 5"
                                 StrokeThickness="0.5"
-                                Background="#fff"
-                                WidthRequest="170"
-                                HeightRequest="200"
+                                Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
+                                WidthRequest="{OnPlatform Android=170, WinUI=250, MacCatalyst=250, iOS=170}"
+                                HeightRequest="{OnPlatform Android=200, WinUI=300, MacCatalyst=200,iOS=200}"
                                 Margin="5">
                                     <Grid RowDefinitions="*,auto">
                                         <Grid Grid.Row="0">
@@ -279,7 +280,7 @@
                             <DataTemplate x:DataType="models:Shop">
                                 <Border StrokeShape="RoundRectangle 5"
                                         StrokeThickness="0.5"
-                                        Background="#fff"
+                                        Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
                                         WidthRequest="180"
                                         HeightRequest="160"
                                         Margin="5">

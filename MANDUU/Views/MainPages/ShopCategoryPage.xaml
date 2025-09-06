@@ -100,7 +100,7 @@
                                     <DataTemplate x:DataType="models:Shop">
                                         <Border StrokeShape="RoundRectangle 5"
                                                 StrokeThickness="0.5"
-                                                Background="#fff"
+                                                Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
                                                 WidthRequest="150"
                                                 HeightRequest="150"
                                                 Margin="5">

@@ -70,7 +70,7 @@ namespace MANDUU.ViewModels
             await _cartService.AddToCartAsync(product);
 
 
-            var toast = Toast.Make($"{Product.Name} added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            var toast = Toast.Make($"{Product.Name} added to Cart", CommunityToolkit.Maui.Core.ToastDuration.Short, 12);
             await toast.Show();
         }
 

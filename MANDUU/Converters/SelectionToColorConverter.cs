@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Internals;
 
 namespace MANDUU.Converters
 {
@@ -12,9 +13,17 @@ namespace MANDUU.Converters
 
             if (values[0] is int stationId && values[1] is int selectedStationId)
             {
-                return stationId == selectedStationId
-                    ? Color.FromArgb("#2196F3")
-                    : Colors.Transparent;
+                if (stationId == selectedStationId)
+                {
+                    if (Application.Current.RequestedTheme == AppTheme.Light)
+                    {
+                        return Color.FromArgb("#2196F3");
+                    }
+                    else
+                    {
+                        return Color.FromArgb("#1E88E5");
+                    }
+                }
             }
 
             return Colors.Transparent;
@@ -33,9 +42,17 @@ namespace MANDUU.Converters
 
             if (values[0] is int stationId && values[1] is int selectedStationId)
             {
-                return stationId == selectedStationId
-                    ? Color.FromArgb("#E3F2FD")
-                    : Colors.Transparent;
+                if (stationId == selectedStationId)
+                {
+                    if (Application.Current.RequestedTheme == AppTheme.Light)
+                    {
+                        return Color.FromArgb("#E3F2FD");
+                    }
+                    else
+                    {
+                        return Color.FromArgb("#B3E5FC");
+                    }
+                }
             }
 
             return Colors.Transparent;

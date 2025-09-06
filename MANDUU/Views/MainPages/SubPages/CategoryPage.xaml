@@ -47,7 +47,7 @@
                                         <DataTemplate x:DataType="models:Product">
                                             <Border StrokeShape="RoundRectangle 5"
                                                     StrokeThickness="0.5"
-                                                    Background="#fff"
+                                                    Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
                                                     WidthRequest="125"
                                                     HeightRequest="150"
                                                     Margin="5">

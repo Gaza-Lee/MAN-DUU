@@ -201,16 +201,16 @@
                                 SelectionChangedCommand="{Binding SelectedProductCommand, Mode=TwoWay}"
                                 SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference ProductCollectionView}}">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="3"/>
+                        <GridItemsLayout Orientation="Vertical" Span="{OnPlatform Android=3, iOS=3, WinUI=5, MacCatalyst=4}" VerticalItemSpacing="10"/>
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Product">
                             <Border StrokeShape="RoundRectangle 5"
                                     StrokeThickness="0.5"
-                                    Background="#fff"
-                                    WidthRequest="125"
-                                    HeightRequest="150"
+                                    Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
+                                    WidthRequest="{OnPlatform Android=125, WinUI=250, MacCatalyst=200, iOS=125}"
+                                    HeightRequest="{OnPlatform Android=150, iOS=150}"
                                     Margin="5">
                                 <Grid RowDefinitions="*,auto">
                                     <Image Source="{Binding ImageUrl}" Aspect="AspectFill"/>
