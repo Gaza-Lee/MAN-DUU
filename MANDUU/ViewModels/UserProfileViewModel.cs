@@ -68,7 +68,7 @@ namespace MANDUU.ViewModels
                 var success = await _userService.LogoutAsync();
                 if (success)
                 {
-                    await _navigationService.NavigateToAsync("createaccountorsigninpage");
+                    await _navigationService.NavigateToAsync("//createaccountorsigninpage");
 
                     //Success message
                     await Application.Current.MainPage.DisplayAlert(

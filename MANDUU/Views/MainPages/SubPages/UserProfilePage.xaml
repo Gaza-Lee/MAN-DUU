@@ -11,7 +11,7 @@
                    FontSize="20"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
-                   TextColor="Black"/>
+                   TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}"/>
 
                 <!-- Right-aligned logo -->
             <Border HorizontalOptions="End"
@@ -34,7 +34,7 @@
     
     <Grid RowDefinitions="auto,*,auto" Margin="5" RowSpacing="20">
         <Border Grid.Row="0"
-                BackgroundColor="#fff"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                 HorizontalOptions="Center"
                 VerticalOptions="Start"
                 StrokeShape="RoundRectangle 10"
@@ -76,7 +76,7 @@
 
         <Grid RowDefinitions="auto,auto,auto" VerticalOptions="End"
               Grid.Row="1" RowSpacing="10">
-            <Border BackgroundColor="#fff"
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
@@ -107,7 +107,7 @@
                            TextColor="Gray"/>
                 </Grid>
             </Border>
-            <Border BackgroundColor="#fff"
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
@@ -137,7 +137,7 @@
                            TextColor="Gray"/>
                 </Grid>
             </Border>
-            <Border BackgroundColor="#fff"
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
@@ -197,11 +197,12 @@
                            VerticalTextAlignment="Center"
                            TextColor="#fff"
                            Rotation="180"
+                           FontAttributes="Bold"
                            />
                     <Label Text="LOGOUT"
                            FontSize="16"
                            TextColor="#fff"
-                           FontFamily="Findlandica"
+                           FontAttributes="Bold"
                            VerticalOptions="Center"
                            VerticalTextAlignment="Center" />
                 </HorizontalStackLayout>

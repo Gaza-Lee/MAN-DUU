@@ -4,6 +4,7 @@
              xmlns:icons="clr-namespace:MANDUU.Helpers"
              xmlns:models="clr-namespace:MANDUU.Models"
              x:Class="MANDUU.Views.MainPages.SubPages.CategoryPage"
+             Shell.TabBarIsVisible="False"
              x:Name="CategoryPageRoot"
              Title="{Binding SelectedMainCategory.Name}">
 

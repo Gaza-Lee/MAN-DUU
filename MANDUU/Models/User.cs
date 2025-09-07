@@ -28,9 +28,9 @@ namespace MANDUU.Models
         // Profile
         public string? ProfilePicture { get; set; }
 
-        // Favorites (IDs for now, can be navigation later)
-        public List<int> FavoriteProducts { get; set; } = new List<int>();
-        public List<int> FavoriteShops { get; set; } = new List<int>();
+        // Favorites 
+        public List<FavoriteItem> FavoriteProducts { get; set; } = new List<FavoriteItem>();
+        public List<FavoriteItem> FavoriteShops { get; set; } = new List<FavoriteItem>();
 
         // Shops owned by the user
         public List<Shop> Shops { get; set; } = new List<Shop>();

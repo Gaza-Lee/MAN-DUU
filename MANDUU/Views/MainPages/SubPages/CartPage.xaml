@@ -16,7 +16,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate  x:DataType="models:CartItem">
                     <Border StrokeShape="RoundRectangle 8"
-                            BackgroundColor="#fff"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                             Padding="10">
                         <Border.Shadow>
                             <Shadow Brush="Gray"
@@ -79,7 +79,7 @@
                                                 HeightRequest="20"
                                                 WidthRequest="20">
                                             <Border.Shadow>
-                                                <Shadow Brush="Gray"
+                                                <Shadow Brush="DarkGrey"
                                                         Offset="5,5"
                                                         Opacity="0.5"/>
                                             </Border.Shadow>
