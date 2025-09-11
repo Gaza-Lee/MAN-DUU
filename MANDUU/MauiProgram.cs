@@ -117,6 +117,7 @@ namespace MANDUU
             builder.Services.AddTransient<MyShopViewModel>();
             builder.Services.AddTransient<CartPageViewModel>();
             builder.Services.AddTransient<DashboardViewModel>();
+            builder.Services.AddTransient<CreateShopViewModel>();
 
             return builder;
         }

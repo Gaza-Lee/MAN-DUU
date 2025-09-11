@@ -12,7 +12,7 @@ namespace MANDUU.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Offer ShopAdd { get; set; }
+        public Offer ShopAd { get; set; } //Shop Advertisement(could later be multiple ads) so might need to be a list later
 
         // Owner Info
         public int OwnerId { get; set; }
@@ -32,9 +32,9 @@ namespace MANDUU.Models
         public string ShopProfileImage { get; set; }
 
         public int MainCategoryId { get; set; }
-        public ShopCategory MainCategory { get; set; }
+        public ShopCategory MainCategory { get; set; } // The primary category that the shop belongs to
 
-        // Other main categories that the shop can belong to
+        // Other main categories that the shop can belong to (for shops that sell multiple types of products)
         public List<ShopCategory> AdditionalCategories { get; set; } = new();
         public List<int> AdditionalCategoryIds { get; set; } = new List<int>();
 

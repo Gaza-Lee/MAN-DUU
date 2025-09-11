@@ -39,20 +39,22 @@
                 VerticalOptions="Start"
                 StrokeShape="RoundRectangle 10"
                 StrokeThickness="0"
-                Padding="10,5">
+                Padding="5,20,5,5">
             <Border.Shadow>
                 <Shadow Brush="Gray"
                         Offset="5,5"
                         Opacity="0.5"/>
             </Border.Shadow>
             <VerticalStackLayout HorizontalOptions="Center">
-                <Border WidthRequest="80"
+                <Border WidthRequest="120"
+                        HeightRequest="120"
                         StrokeShape="RoundRectangle 100"
                         StrokeThickness="0">
-                    <Image Source="{Binding ProfileImage}"/>
+                    <Image Source="{Binding ProfileImage}"
+                           Aspect="AspectFill"/>
                 </Border>
                 <Label Text="{Binding FullName}"
-                       FontSize="20"
+                       FontSize="24"
                        HorizontalOptions="Center"/>
                 
                 <Border WidthRequest="360"

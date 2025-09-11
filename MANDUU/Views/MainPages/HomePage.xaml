@@ -271,7 +271,7 @@
                                      Margin="0,10"
                                     ItemsSource="{Binding RecommendedShops}"
                                     SelectionMode="Single"
-                                    SelectionChangedCommand="{Binding SelectedShopCommand, Mode=TwoWay}"
+                                    SelectionChangedCommand="{Binding GoToSelectedShopProfileCommand, Mode=TwoWay}"
                                     SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference RecommendedShopsCollectionView}}">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal"/>

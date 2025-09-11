@@ -7,21 +7,19 @@ public partial class HomePage : ContentPage
 {
 
 	private readonly HomePageViewModel _homePageViewModel;
-	public HomePage(ProductCategoryService categoryService,
-            ProductService productService,
-            INavigationService navigationService,
-            ShopService shopService,
-            CartService cartService,
-            FavoritesService favoritesService)
+	public HomePage(HomePageViewModel homePageViewModel)
 	{
 		InitializeComponent();
-		_homePageViewModel = new HomePageViewModel(categoryService, productService, navigationService, shopService, cartService, favoritesService);
+		_homePageViewModel = homePageViewModel;
 		BindingContext = _homePageViewModel;
 	}
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-		await _homePageViewModel.InitializeAsync();
+		if (!_homePageViewModel.IsInitialized)
+		{
+			await _homePageViewModel.InitializeAsyncCommand.ExecuteAsync(null);
+        }
     }
 }
