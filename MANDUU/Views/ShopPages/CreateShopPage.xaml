@@ -11,10 +11,45 @@
             <!-- Cover Image and Profile Image Container -->
             <Grid Grid.Row="0" Grid.Column="0" HeightRequest="250">
                 <!-- Cover Image (Background) -->
-                <Image Source="acrylic.png"
-                       Aspect="AspectFill"
-                       VerticalOptions="FillAndExpand"
-                       HorizontalOptions="FillAndExpand"/>
+                <Grid >
+                    <!--Capture-->
+                    <Border HorizontalOptions="End" VerticalOptions="Start"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 5"
+                            BackgroundColor="{StaticResource Primary}"
+                            Margin="10"
+                            Padding="15,5">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TakeShopCoverImageCommand}"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="{x:Static icons:Icons.cartIcon}"
+                               TextColor="{StaticResource White}"
+                               FontFamily="MaterialIcon"
+                               FontSize="30"/>
+                    </Border>
+                    <!--Pick image-->
+                    <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5">
+                        <Border Stroke="{StaticResource Black}"
+                                StrokeThickness="2"
+                                StrokeShape="RoundRectangle 10"
+                                Padding="10,0">
+                            <Label Text="+"
+                                   FontSize="60"/>
+                        </Border>
+                        <Label Text="Cover"
+                               FontSize="30"
+                               VerticalOptions="Center"
+                               VerticalTextAlignment="Center"/>
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PickShopCoverImageCommand}"/>
+                        </HorizontalStackLayout.GestureRecognizers>
+                    </HorizontalStackLayout>
+                    <Image Source="{Binding ShopCoverImage}"
+                           Aspect="AspectFill"
+                           Opacity="0.5"
+                           VerticalOptions="FillAndExpand"
+                           HorizontalOptions="FillAndExpand"/>
+                </Grid>
 
                 <!-- Profile Image (Overlay) -->
                 <Border StrokeThickness="2"

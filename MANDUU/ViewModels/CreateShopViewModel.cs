@@ -20,6 +20,12 @@ namespace MANDUU.ViewModels
         private readonly IUserService _userService;
 
         [ObservableProperty]
+        private string _shopProfileImage;
+
+        [ObservableProperty]
+        private string _shopCoverImage;
+
+        [ObservableProperty]
         private string _shopName;
 
         [ObservableProperty]
@@ -62,6 +68,50 @@ namespace MANDUU.ViewModels
             _userService = userService;
         }
 
+
+
+        [RelayCommand]
+        private async Task PickShopCoverImageAsync()
+        {
+            try
+            {
+                var result = await MediaPicker.PickPhotoAsync();
+                if (result != null)
+                {
+                    ShopCoverImage = await SaveImageToFile(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"An error occurred while picking the image: {ex.Message}", "OK");
+            }
+        }
+
+        [RelayCommand]
+        private async Task TakeShopCoverImageAsync()
+        {
+            try
+            {
+                if (MediaPicker.IsCaptureSupported)
+                {
+                    var result = await MediaPicker.CapturePhotoAsync();
+                    if (result != null)
+                    {
+                        ShopCoverImage = await SaveImageToFile(result);
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Unsupported", "Camera is not supported on device", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
+
+
         [RelayCommand]
         public async Task LocationOnMapAsync()
         {
@@ -93,6 +143,17 @@ namespace MANDUU.ViewModels
             //Generate Google Maps link
             LongLocation = $"https://www.google.com/maps/search/?api=1&query={location.Latitude},{location.Longitude}";
             LocationButtonText = "CAPTURED";
+        }
+
+        private async Task<string> SaveImageToFile(FileResult file)
+        {
+            var newFile = Path.Combine(FileSystem.CacheDirectory, file.FileName);
+            using (var stream = await file.OpenReadAsync())
+            using (var newStream = File.OpenWrite(newFile))
+            {
+                await stream.CopyToAsync(newStream);
+            }
+            return newFile;
         }
         private bool CanCreateShop()
         {
@@ -135,6 +196,8 @@ namespace MANDUU.ViewModels
             var newShop = new Shop
             {
                 Name = ShopName.Trim(),
+                CoverImage = ShopCoverImage,
+                ShopProfileImage = ShopCoverImage, // set to cover image for now
                 Email = ShopEmail.Trim(),
                 ShortLocation = ShortLocation.Trim(),
                 PhoneNumber = ShopPhoneNumber.Trim(),
@@ -153,7 +216,11 @@ namespace MANDUU.ViewModels
                 CreatedAt = DateTime.UtcNow
             };
 
+            //add shop to shops list
             await _shopService.AddShopAsync(newShop);
+
+            //add shop to current user's shops
+            await _userService.AddShopToUserAsync(currentUser.Id, newShop);
 
             ShowToast("Shop created successfully!");
 
