@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Alerts;
 
 namespace MANDUU.ViewModels
 {
@@ -110,6 +111,33 @@ namespace MANDUU.ViewModels
                 {"ShopId", shop.Id },
                 {"ShopName", shop.Name   }
             });
+        }
+
+        [RelayCommand]
+        private async Task RemoveShopAsync(Shop shop)
+        {
+            if (shop == null) return;
+            try
+            {
+                var confirm = await Shell.Current.DisplayAlert("Confirm", 
+                    $"Are you sure you want to remove the shop '{shop.Name}'? This action cannot be undone.", 
+                    "Yes", "No");
+               if (confirm)
+                {
+                    await _shopService.DeleteShopAsync(shop.Id);
+                    UserShops.Remove(shop);
+                }
+                else
+                {
+                    var cancelToast = Toast.Make("Cancelled", CommunityToolkit.Maui.Core.ToastDuration.Short, 12);
+                    await cancelToast.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle error
+                System.Diagnostics.Debug.WriteLine($"Error removing shop: {ex.Message}");
+            }
         }
     }
 }

@@ -227,7 +227,7 @@ namespace MANDUU.ViewModels
 
             ShowToast("Shop created successfully!");
 
-            await NavigationService.NavigateToAsync("myshoppage");
+            await NavigationService.PopAsync();
         }
 
         public override async Task InitializeAsync()

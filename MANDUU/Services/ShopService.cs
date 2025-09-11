@@ -10,15 +10,17 @@ namespace MANDUU.Services
     {
         private List<Shop> _shops = new();
         private readonly ShopCategoryService _shopCategoryService;
+        private bool _isInitialized = false;
 
         public ShopService(ShopCategoryService shopCategoryService)
         {
             _shopCategoryService = shopCategoryService;
-            InitializeShops();
         }
 
-        private async void InitializeShops()
+        private async Task InitializeShops()
         {
+            if (_isInitialized) return;
+
             var shopCategories = (await _shopCategoryService.GetAllShopCategoriesAsync()).ToList();
 
             _shops = new List<Shop>
@@ -143,67 +145,77 @@ namespace MANDUU.Services
                     .Where(sc => shop.AdditionalCategoryIds.Contains(sc.Id))
                     .ToList();
             }
+
+            _isInitialized = true;
         }
 
         public async Task<IEnumerable<Shop>> GetAllShopsAsync()
         {
-            return await Task.FromResult(_shops);
+           await InitializeShops();
+            return _shops;
         }
 
         public async Task<Shop> GetShopByIdAsync(int id)
         {
-            var shop = _shops.FirstOrDefault(s => s.Id == id);
-            return await Task.FromResult(shop);
+            await InitializeShops();
+            return _shops.FirstOrDefault(s => s.Id == id);
         }
 
         public async Task<IEnumerable<Shop>> GetRecommendedShopsAsync(int count = 4)
         {
-            return await Task.FromResult(_shops
+            await InitializeShops();
+            return _shops
                 .OrderByDescending(s => s.Products.Count)
                 .ThenByDescending(s => s.AdditionalCategoryIds.Count) // Shops with more diversity
                 .ThenByDescending(s => s.CreatedAt)
                 .Take(count)
-                .ToList());
+                .ToList();
         }
 
         public async Task<IEnumerable<Shop>> GetShopsByCategoryAsync(int categoryId)
         {
-            return await Task.FromResult(_shops
+            await InitializeShops();
+            return _shops
                 .Where(s => s.MainCategoryId == categoryId || s.AdditionalCategoryIds.Contains(categoryId))
-                .ToList());
+                .ToList();
         }
 
         public async Task<IEnumerable<Shop>> GetShopsByMainCategoryAsync(int categoryId)
         {
-            return await Task.FromResult(_shops
+            await InitializeShops();
+            return _shops
                 .Where(s => s.MainCategoryId == categoryId)
-                .ToList());
+                .ToList();
         }
 
         public async Task<IEnumerable<Shop>> GetShopsWithAdditionalCategoriesAsync()
         {
-            return await Task.FromResult(_shops
+            await InitializeShops();
+            return _shops
                 .Where(s => s.AdditionalCategoryIds.Any())
-                .ToList());
+                .ToList();
         }
 
         public async Task<IEnumerable<Shop>> SearchShopsAsync(string searchTerm)
         {
-            return await Task.FromResult(_shops
+            await InitializeShops();
+            return _shops
                 .Where(s => s.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                             s.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
                             s.ShortLocation.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                .ToList());
+                .ToList();
         }
 
         public async Task<bool> CanShopSellInCategoryAsync(int shopId, int categoryId)
         {
+            await InitializeShops();
             var shop = _shops.FirstOrDefault(s => s.Id == shopId);
             return shop != null && (shop.MainCategoryId == categoryId || shop.AdditionalCategoryIds.Contains(categoryId));
         }
 
         public async Task<IEnumerable<ShopCategory>> GetShopCategoriesAsync(int shopId)
         {
+            await InitializeShops();
             var shop = _shops.FirstOrDefault(s => s.Id == shopId);
             if (shop == null) return Enumerable.Empty<ShopCategory>();
 
@@ -215,9 +227,10 @@ namespace MANDUU.Services
 
         public async Task<IEnumerable<Shop>> GetShopsByOwnerAsync(int ownerId)
         {
-            return await Task.FromResult(_shops
+            await InitializeShops();
+            return _shops
                 .Where(s => s.OwnerId == ownerId)
-                .ToList());
+                .ToList();
         }
 
         public async Task<int> GetShopProductCountAsync(int shopId)
@@ -228,6 +241,8 @@ namespace MANDUU.Services
 
         public async Task AddShopAsync(Shop shop)
         {
+            await InitializeShops();
+
             shop.Id = _shops.Max(s => s.Id) + 1;
             shop.CreatedAt = DateTime.UtcNow;
 

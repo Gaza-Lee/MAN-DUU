@@ -37,7 +37,7 @@
                                       RowDefinitions="auto,auto,auto,*">
                                 <Label Text="{Binding Name}"
                                            FontSize="24"
-                                           HorizontalOptions="Center"
+                                           HorizontalOptions="Start"
                                            Grid.Row="0"/>
                                 <HorizontalStackLayout Grid.Row="1">
                                     <Label Text="{x:Static icons:Icons.locationIcon}"
@@ -114,7 +114,12 @@
                                        TextColor="Red"
                                        Margin="5"
                                        VerticalOptions="Start"
-                                       HorizontalOptions="End"/>
+                                       HorizontalOptions="End">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.RemoveShopCommand, Source={x:Reference ShopCollectionView}}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </Border>
                 </DataTemplate>

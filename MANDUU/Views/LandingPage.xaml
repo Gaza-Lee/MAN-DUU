@@ -71,7 +71,13 @@
                 Margin="0,0,0,60"
                 BackgroundColor="#FF7B1C"
                 StrokeShape="RoundRectangle 15"
-                Padding="20,5,10,5">
+                Padding="20,5,10,5"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource Gray100}}"
+                        Offset="5,5"
+                        Opacity="0.5"/>
+            </Border.Shadow>
             <HorizontalStackLayout VerticalOptions="Center">
                 <Label Text="Get started"
                        TextColor="#fff"

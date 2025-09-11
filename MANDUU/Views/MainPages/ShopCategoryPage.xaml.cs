@@ -5,17 +5,17 @@ namespace MANDUU.Views.MainPages;
 
 public partial class ShopCategoryPage : ContentPage
 {
-	private readonly ShopCategoryViewModel shopCategoryViewModel;
-	public ShopCategoryPage(ShopCategoryService categoryService, ShopService shopService, INavigationService navigationService)
+	private readonly ShopCategoryViewModel _shopCategoryViewModel;
+	public ShopCategoryPage(ShopCategoryViewModel shopCategoryViewModel)
 	{
 		InitializeComponent();
-		shopCategoryViewModel = new ShopCategoryViewModel(categoryService, shopService, navigationService);
-		BindingContext = shopCategoryViewModel;
+		_shopCategoryViewModel = shopCategoryViewModel;
+		BindingContext = _shopCategoryViewModel;
 	}
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-		await shopCategoryViewModel.InitializeAsync();
+		await _shopCategoryViewModel.InitializeAsync();
     }
 }
