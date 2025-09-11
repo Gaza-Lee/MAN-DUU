@@ -13,6 +13,9 @@ using MANDUU.Models;
 
 namespace MANDUU.ViewModels
 {
+    //TODO: add relay commands for profile Image picking
+    //TODO: Add Busy indicator when getting location from map and while creating shop
+    //TODO: Improve UI/UX correspondingly
     public partial class CreateShopViewModel : BaseViewModel
     {
         private readonly ShopService _shopService;
