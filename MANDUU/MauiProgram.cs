@@ -123,6 +123,7 @@ namespace MANDUU
             builder.Services.AddTransient<DashboardViewModel>();
             builder.Services.AddTransient<CreateShopViewModel>();
             builder.Services.AddTransient<CheckoutPageViewModel>();
+            builder.Services.AddTransient<PaymentPageViewModel>();
 
             return builder;
         }

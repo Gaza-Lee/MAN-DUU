@@ -40,7 +40,7 @@ namespace MANDUU.ViewModels
 
         private void LoadCartItems()
         {
-            CartItems = _cartService.GetCartItems();
+            CartItems = new ObservableCollection<CartItem>(_cartService.GetCartItems());
             CartTotal = _cartService.GetCartTotal();
             CartItemCount = _cartService.GetCartItemCount();
         }

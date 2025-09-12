@@ -12,7 +12,7 @@ namespace MANDUU.Services
 
         public event EventHandler CartUpdated;
 
-        public ObservableCollection<CartItem> GetCartItems() => _cartItems;
+        public IReadOnlyList<CartItem> GetCartItems() => _cartItems.ToList().AsReadOnly();
 
         public async Task AddToCartAsync(Product product, int quantity = 1)
         {

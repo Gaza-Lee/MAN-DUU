@@ -57,7 +57,7 @@ namespace MANDUU.Helpers
 
         public static string deleteIcon = "\ue872";
 
-        public static string infoIcon = "\uf59b";
+        public static string infoIcon = "\ue88e";
 
         public static string plusIcon = "\uf3dd";
 
@@ -70,6 +70,5 @@ namespace MANDUU.Helpers
         public static string analyticsIcon = "\ue6e1";
 
         public static string cameraIcon = "\ue412";
-
     }
 }

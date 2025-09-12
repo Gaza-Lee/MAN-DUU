@@ -2,17 +2,131 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MANDUU.Views.MainPages.SubPages.CheckoutAndPayment.CheckoutPage"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
              Shell.TabBarIsVisible="False"
              Title="Checkout">
     <!--Todo: Create and bind viewmodel with UI components-->
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ProceedToPaymentCommand}"/>
-            </Label.GestureRecognizers>
-        </Label>
-    </VerticalStackLayout>
+    <Grid Margin="10,0">
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           Color="{StaticResource Primary}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           ZIndex="1"/>
+        
+        <BoxView BackgroundColor="{AppThemeBinding Dark={StaticResource Gray400}, Light={StaticResource Gray600}}"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Fill"
+                 IsVisible="{Binding IsBusy}"/>
+        <VerticalStackLayout Margin="10" Spacing="10">
+            <VerticalStackLayout>
+                <Label Text="Setup Delivery Address"
+                       FontSize="20"
+                       FontFamily="Finlandica"
+                       Grid.Row="0"
+                       Margin="-10,0,0,20"/>
+                <Label Text="Full Name"
+                       FontFamily="Finlandica"
+                       FontSize="16"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray100}}"/>
+                <Border StrokeThickness="0.5"
+                        StrokeShape="RoundRectangle 10"
+                        >
+                    <Entry Text="{Binding FullName}"
+                           Margin="10,0"/>
+                </Border>
+            </VerticalStackLayout>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" RowDefinitions="*, auto" RowSpacing="5">
+                <Border Grid.Column="0"
+                        StrokeThickness="0"
+                        BackgroundColor="{StaticResource Primary}"
+                        StrokeShape="RoundRectangle 5"
+                        Padding="10,5"
+                        Grid.Row="0">
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource Gray100}}"
+                                Opacity="0.5"
+                                Offset="5,5"/>
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UseCurrentLocationCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="USE CURRENT GPS LOCATION"
+                           TextColor="{StaticResource White}"
+                           HorizontalTextAlignment="Center"
+                           FontSize="10"
+                           VerticalTextAlignment="Center"/>
+                </Border>
+
+                <Border Grid.Column="1 "
+                        StrokeThickness='0'
+                        BackgroundColor="Blue"
+                        StrokeShape="RoundRectangle 5"
+                        Grid.Row="0">
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource Gray100}}"
+                                Opacity="0.5"
+                                Offset="5,5"/>
+                    </Border.Shadow>
+                    <Label Text="SET UP MANUALLY"
+                           TextColor="{StaticResource White}"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"/>
+                </Border>
+                <HorizontalStackLayout Grid.Row="1"
+                                       Grid.Column="0">
+                    <Label Text="{x:Static icons:Icons.infoIcon}"
+                           FontFamily="MaterialIcon"
+                           FontSize="16"
+                           VerticalTextAlignment="Center"/>
+                    <Label Text="Use current location as delivery location"
+                           FontSize="10"/>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <VerticalStackLayout Spacing="10">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Location"
+                           FontFamily="Finlandica"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray100}}"
+                           FontSize="16"/>
+                    <Border StrokeThickness="0.5"
+                            StrokeShape="RoundRectangle 10">
+                        <Entry Text="{Binding CurrentLocation}"
+                               Margin="10,0"/>
+                    </Border>
+                </VerticalStackLayout>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <VerticalStackLayout Spacing="5" Grid.Column="0">
+                        <Label Text="Residence"
+                               FontFamily="Finlandica"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray100}}"
+                               FontSize="16"/>
+                        <Border StrokeThickness="0.5"
+                                StrokeShape="RoundRectangle 10">
+                            <Entry Text="{Binding ResidentialAddress}"
+                                    Margin="10,0"/>
+                        </Border>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                        <Label Text="Locate on Map"
+                               FontFamily="Finlandica"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray100}}"
+                               FontSize="16"/>
+                        <Label Text="{x:Static icons:Icons.mapIcon}"
+                               FontFamily="MaterialIcon"
+                               FontSize="50"
+                               TextColor="{StaticResource Primary}"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+
+            <Button BackgroundColor="Green"
+                    HorizontalOptions="Center"
+                    Text="Proceed to payment"
+                    TextColor="{StaticResource White}"
+                    Padding="60,0"
+                    Command="{Binding ProceedToPaymentCommand}"/>
+        </VerticalStackLayout>
+    </Grid>        
 </ContentPage>

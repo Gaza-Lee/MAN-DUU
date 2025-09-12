@@ -14,6 +14,8 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
 {
     public partial class CheckoutPageViewModel : BaseViewModel
     {
+        private readonly IUserService _userService;
+
         [ObservableProperty]
         private string _fullName = string.Empty;
 
@@ -26,12 +28,13 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         [ObservableProperty]
         private string _currentLocation = string.Empty;
 
-        public CheckoutPageViewModel(INavigationService navigationService) : base(navigationService)
+        public CheckoutPageViewModel(INavigationService navigationService, IUserService userService) : base(navigationService)
         {          
+            _userService = userService;
         }
 
         [RelayCommand]
-        private async Task UseCurrentLocation()
+        private async Task UseCurrentLocationAsync()
         {
             await IsBusyFor(async () =>
             {
@@ -89,7 +92,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         }
 
         [RelayCommand]
-        private async Task ProceedToPayment()
+        private async Task ProceedToPaymentAsync()
         {
             await IsBusyFor(async () =>
             {
@@ -119,6 +122,17 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
 
                 });
             });
+        }
+
+        public override async Task InitializeAsync()
+        {
+            await base.InitializeAsync();
+
+            var currentuser =await _userService.GetCurrentUserAsync();
+            if (currentuser != null)
+            {
+                FullName = currentuser.FullName;
+            }
         }
     }
 }
