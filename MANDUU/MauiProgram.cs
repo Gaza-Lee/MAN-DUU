@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Maui;
 using MANDUU.Services;
 using MANDUU.ViewModels;
+using MANDUU.ViewModels.CheckoutAndPayment;
 using MANDUU.Views;
 using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
 using MANDUU.Views.MainPages.SubPages;
+using MANDUU.Views.MainPages.SubPages.CheckoutAndPayment;
 using MANDUU.Views.ShopPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -93,6 +95,8 @@ namespace MANDUU
             builder.Services.AddTransient<CartPage>();
             builder.Services.AddTransient<FavoritesPage>();
             builder.Services.AddTransient<FAQPage>();
+            builder.Services.AddTransient<CheckoutPage>();
+            builder.Services.AddTransient<PaymentPage>();
 
             return builder;
         }
@@ -118,6 +122,7 @@ namespace MANDUU
             builder.Services.AddTransient<CartPageViewModel>();
             builder.Services.AddTransient<DashboardViewModel>();
             builder.Services.AddTransient<CreateShopViewModel>();
+            builder.Services.AddTransient<CheckoutPageViewModel>();
 
             return builder;
         }

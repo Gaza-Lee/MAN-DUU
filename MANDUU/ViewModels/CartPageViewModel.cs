@@ -85,9 +85,7 @@ namespace MANDUU.ViewModels
                 return;
             }
 
-            // Navigate to checkout page
-            await Shell.Current.DisplayAlert("Checkout", "Proceeding to checkout...", "OK");
-            // await Shell.Current.GoToAsync("//checkout");
+            await NavigationService.NavigateToAsync("checkoutpage");
         }
 
         public void Dispose()
