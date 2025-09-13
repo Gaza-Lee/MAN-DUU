@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
+             x:Class="MANDUU.Views.MainPages.SubPages.CheckoutAndPayment.MobileMoneyPaymentMethod">
+    <Grid RowSpacing="10" RowDefinitions="auto,auto,*,*">
+        <Border StrokeThickness="0.5"
+            StrokeShape="RoundRectangle 10"
+            Grid.Row="0">
+            <Picker Title="Select Network" Margin="10,0"/>
+        </Border>
+        <VerticalStackLayout Grid.Row="1">
+            <Label Text="Mobile Number"
+               FontFamily="Finlandica"
+               TextColor="{AppThemeBinding Dark={StaticResource Gray100}, Light= {StaticResource Gray600}}"/>
+            <Border StrokeThickness="0.5"
+                StrokeShape="RoundRectangle 10">
+                <Entry Placeholder="e.g. 0241234567" />
+            </Border>
+            <HorizontalStackLayout Margin="0,5">
+                <Label Text="{x:Static icons:Icons.infoIcon}"
+                   FontFamily="MaterialIcon"
+                   VerticalTextAlignment="Center"/>
+                <Label Text="Enter Phone number to be used for payment"
+                   FontFamily="Finlandica"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Border StrokeThickness="0"
+            StrokeShape="RoundRectangle 10"
+            BackgroundColor="#145CEC"
+            Padding="10,5" 
+            Grid.Row="2">
+            <VerticalStackLayout>
+                <HorizontalStackLayout Spacing="5">
+                    <Label Text="{x:Static icons:Icons.infoIcon}"
+                       FontFamily="MaterialIcon"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="20"/>
+                    <Label Text="Payment Process"
+                       FontFamily="Finlandica"/>
+                </HorizontalStackLayout>
+                <VerticalStackLayout Margin="30,5">
+                    <Label Text="1. You will receive a payment prompt on your phone" 
+                       FontFamily="Finlandica"
+                       FontSize="12"/>
+                    <Label Text="2. Enter Mobile Money PIN to confirm" 
+                       FontFamily="Finlandica"
+                       FontSize="12"/>
+                    <Label Text="3. Payment will be processed instantly" 
+                       FontFamily="Finlandica"
+                       FontSize="12"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+
+        <Button Text="{Binding CartTotal, StringFormat='Pay ₵ {0:N2}'}"
+            TextColor="{StaticResource White}"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="Center"
+            Padding="100,0"
+            Grid.Row="3"
+            VerticalOptions="End"
+            Margin="0,0,0,50"/>
+    </Grid>
+</ContentView>

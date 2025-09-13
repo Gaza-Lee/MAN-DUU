@@ -2,36 +2,34 @@
 using MANDUU.Models;
 using MANDUU.Services;
 using MANDUU.ViewModels.Base;
-using System;
 using MANDUU.Enumeration;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MANDUU.ViewModels.CheckoutAndPayment
 {
-    public partial class PaymentPageViewModel: BaseViewModel
+    public partial class PaymentPageViewModel : BaseViewModel
     {
         private readonly CartService _cartService;
 
         [ObservableProperty]
-        private PaymentMethod _selectedPaymentMethod = PaymentMethod.MobileMoney; //Default
+        private int selectedPaymentMethodIndex = 0; // Default: MobileMoney = 0
+
+        // Derived property 
+        public PaymentMethod SelectedPaymentMethod => (PaymentMethod)SelectedPaymentMethodIndex;
 
         [ObservableProperty]
-        private string _cartItemsNames;
+        private string cartItemsNames = string.Empty;
 
         [ObservableProperty]
-        private decimal _cartTotal;
+        private decimal cartTotal;
 
         [ObservableProperty]
-        private decimal _deliveryFee = 20m; //For now set to 20
+        private decimal deliveryFee = 20m;
 
         [ObservableProperty]
-        private int _orderNumber = 00035; // set to value for now
+        private int orderNumber = 35; //
 
         public PaymentPageViewModel(CartService cartService,
             INavigationService navigationService) : base(navigationService)
@@ -39,22 +37,14 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
             _cartService = cartService;
         }
 
-        [RelayCommand]
-        private void SelectedPaymentMethodAsync(PaymentMethod method)
-        {
-            Debug.WriteLine($"Tapped: {method}");
-            SelectedPaymentMethod = method;
-        }
         public override async Task InitializeAsync()
         {
-           await base.InitializeAsync();
+            await base.InitializeAsync();
             var cartItems = _cartService.GetCartItems();
-            CartItemsNames = string.Join(",",
+            CartItemsNames = string.Join(", ",
                 cartItems.Select(item => item.Product?.Name)
-                .Where(name => !string.IsNullOrWhiteSpace(name))
-                );
+                         .Where(name => !string.IsNullOrWhiteSpace(name)));
             CartTotal = _cartService.GetCartTotal();
         }
-
     }
 }

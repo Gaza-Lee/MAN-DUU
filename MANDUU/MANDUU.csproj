@@ -62,7 +62,6 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="12.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="MailKit" Version="4.13.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.80" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.6" />
 		<PackageReference Include="Sharpnado.Tabs.Maui" Version="3.2.1" />
@@ -117,7 +116,16 @@
 	  <MauiXaml Update="Views\MainPages\SubPages\CategoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\MainPages\SubPages\CheckoutAndPayment\BankTransferPaymentMethod.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MainPages\SubPages\CheckoutAndPayment\CardPaymentMethod.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\MainPages\SubPages\CheckoutAndPayment\CheckoutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MainPages\SubPages\CheckoutAndPayment\MobileMoneyPaymentMethod.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MainPages\SubPages\CheckoutAndPayment\PaymentPage.xaml">

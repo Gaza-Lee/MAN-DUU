@@ -3,17 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icons="clr-namespace:MANDUU.Helpers"
              xmlns:enumeration="clr-namespace:MANDUU.Enumeration"
+             xmlns:sharpnado="http://sharpnado.com"
              xmlns:convertor="clr-namespace:MANDUU.Converters"
+             xmlns:tabviews="clr-namespace:MANDUU.Views.MainPages.SubPages.CheckoutAndPayment"
              x:Class="MANDUU.Views.MainPages.SubPages.CheckoutAndPayment.PaymentPage"
              Shell.TabBarIsVisible="False"
              Title="Payment">
-
     <ContentPage.Resources>
         <ResourceDictionary>
-            <convertor:SelectedPaymentMethodBackgroundConvertor  x:Key="SelectedPaymentMethodBackground"/>
-            <convertor:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+            <Style TargetType="sharpnado:SegmentedTabItem">
+                <Setter Property="SelectedTabColor" Value="{StaticResource Primary}"/>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
+
     <ScrollView>
         <Grid RowDefinitions="auto,auto,*" Margin="10,0" RowSpacing="10">
             <Label Text="Complete payment"
@@ -90,11 +93,11 @@
             <Border Grid.Row="2"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5">
-                <Grid RowSpacing="10" RowDefinitions="auto,auto, *">
+                <Grid RowSpacing="10" RowDefinitions="auto,auto,*">
                     <VerticalStackLayout Grid.Row="0">
-                        <Label  Text="Payment Method"
-                                FontFamily="Finlandica"
-                                FontSize="18"/>
+                        <Label Text="Payment Method"
+                               FontFamily="Finlandica"
+                               FontSize="18"/>
                         <HorizontalStackLayout>
                             <Label Text="{x:Static icons:Icons.infoIcon}" 
                                    FontFamily="MaterialIcon"
@@ -104,156 +107,51 @@
                                    FontSize="Small"
                                    FontFamily="Finlandica"
                                    VerticalTextAlignment="Center"/>
-                        </HorizontalStackLayout>                        
+                        </HorizontalStackLayout>
                     </VerticalStackLayout>
 
-                    <Border BackgroundColor="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource Gray100}}"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 5"
-                            Grid.Row="1">
-                        <Border.Shadow>
-                            <Shadow Brush="{AppThemeBinding Dark={StaticResource Gray950}, Light={StaticResource Gray600}}"
-                                    Offset="5,5"
-                                    Opacity="0.5"/>
-                        </Border.Shadow>
-                        <Grid Padding="5" ColumnSpacing="20" ColumnDefinitions="*,*,*">
+                    <!-- Tabs -->
+                    <sharpnado:TabHostView x:Name="TabHost"
+                                           Grid.Row="1"
+                                           Padding="10,5"
+                                           CornerRadius="10"
+                                           BackgroundColor="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource Gray100}}"
+                                           SelectedIndex="{Binding SelectedPaymentMethodIndex}"
+                                           TabType="Fixed"
+                                           VerticalOptions="Start">
+
+                        <sharpnado:TabHostView.Tabs>
+                            <sharpnado:SegmentedTabItem Label="Mobile Money"
+                                                        FontFamily="Finlandica"
+                                                        Margin="5"/>
+                            <sharpnado:SegmentedTabItem Label="Card"
+                                                        FontFamily="Finlandica"
+                                                        Margin="5"/>
+                            <sharpnado:SegmentedTabItem Label="Bank Transfer"
+                                                        FontFamily="Finlandica"
+                                                        Margin="5"/>
+                        </sharpnado:TabHostView.Tabs>
+                    </sharpnado:TabHostView>
+
+                    <!-- Tab Content -->
+                    <sharpnado:ViewSwitcher Grid.Row="2"
+                                            Animate="True"
+                                            SelectedIndex="{Binding Source={x:Reference TabHost}, Path=SelectedIndex}">
+
+                        <!-- Mobile Money -->
+                        <sharpnado:DelayedView x:TypeArguments="tabviews:MobileMoneyPaymentMethod">                            
+                        </sharpnado:DelayedView>
+                        <!-- Card -->
+                        <sharpnado:DelayedView x:TypeArguments="tabviews:CardPaymentMethod">
                             
-                            <Border StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 10"
-                                    Padding="10,5"
-                                    BackgroundColor="{Binding SelectedPaymentMethod, Converter={StaticResource SelectedPaymentMethodBackground},
-                                                    ConverterParameter=MobileMoney}"
-                                    Grid.Column="0">
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectPaymentMethodCommand}" 
-                                            CommandParameter="{x:Static enumeration:PaymentMethod.MobileMoney}" />
-                                </Border.GestureRecognizers>
-                                <Label Text="Mobile Money"
-                                       FontFamily="Finlandica"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"
-                                       InputTransparent="True"/>
-                            </Border>
+                        </sharpnado:DelayedView>
 
-                            <Border StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 10"
-                                    Padding="10,5"
-                                    BackgroundColor="{Binding SelectedPaymentMethod, Converter={StaticResource SelectedPaymentMethodBackground},
-                                        ConverterParameter=Card}"
-                                    Grid.Column="1">
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectPaymentMethodCommand}" 
-                                                          CommandParameter="{x:Static enumeration:PaymentMethod.Card}" />
-                                </Border.GestureRecognizers>
-                                <Label Text="Card"
-                                       FontFamily="Finlandica"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"
-                                       InputTransparent="True"/>
-                            </Border>
+                        <!-- Bank Transfer -->
+                        <sharpnado:DelayedView x:TypeArguments="tabviews:BankTransferPaymentMethod">
+                            
+                        </sharpnado:DelayedView>
 
-                            <Border StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 10"
-                                    Padding="10,5"
-                                    BackgroundColor="{Binding SelectedPaymentMethod, Converter={StaticResource SelectedPaymentMethodBackground},
-                                                ConverterParameter=BankTransfer}"
-                                    Grid.Column="2">
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectPaymentMethodCommand}" 
-                                                          CommandParameter="{x:Static enumeration:PaymentMethod.BankTransfer}" />
-                                </Border.GestureRecognizers>
-                                <Label Text="Bank Transfer"
-                                       FontFamily="Finlandica"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"
-                                       InputTransparent="True"/>
-                            </Border>
-                        </Grid>
-                    </Border>
-
-                    <!--Mobile Money-->
-                    <Grid Grid.Row="2" Margin="10,5" RowSpacing="10" RowDefinitions="auto,auto,*,*"
-                          IsVisible="{Binding SelectedPaymentMethod, Converter={StaticResource EnumToBoolConverter},
-                                        ConverterParameter=MobileMoney}">
-                        <Border StrokeThickness="0.5"
-                                StrokeShape="RoundRectangle 10"
-                                Grid.Row="0">
-                            <Picker Title="Select Network"
-                                Margin="10,0"/>
-                        </Border>
-                        <VerticalStackLayout Grid.Row="1">
-                            <Label Text="Mobile Number"
-                                   FontFamily="Finlandica"
-                                   TextColor="{AppThemeBinding Dark={StaticResource Gray100}, Light= {StaticResource Gray600}}"/>
-                            <Border StrokeThickness="0.5"
-                                    StrokeShape="RoundRectangle 10">
-                                <Entry />
-                            </Border>
-                            <HorizontalStackLayout Margin="0,5">
-                                <Label Text="{x:Static icons:Icons.infoIcon}"
-                                       FontFamily="MaterialIcon"
-                                       VerticalTextAlignment="Center"/>
-                                <Label Text="Enter Phone number to be used for payment"
-                                       FontFamily="Finlandica"/>
-                            </HorizontalStackLayout>                            
-                        </VerticalStackLayout>
-
-                        <Border StrokeThickness="0"
-                                StrokeShape="RoundRectangle 10"
-                                BackgroundColor="#145CEC"
-                                Padding="10,5" 
-                                Grid.Row="2">
-                            <VerticalStackLayout>
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="{x:Static icons:Icons.infoIcon}"
-                                           FontFamily="MaterialIcon"
-                                           VerticalOptions="Center"
-                                           VerticalTextAlignment="Center"
-                                           FontSize="20"/>
-                                    <Label Text="Payment Process"/>
-                                </HorizontalStackLayout>
-                                <VerticalStackLayout Margin="30,5">
-                                    <Label Text="1. You will receive a payment prompt on your phone" 
-                                           FontFamily="Finlandica"
-                                           FontSize="12"/>
-                                    <Label Text="2. Enter Mobile Money PIN to confirm" 
-                                           FontFamily="Finlandica"
-                                           FontSize="12"/>
-                                    <Label Text="3. Payment will be processed instantly" 
-                                           FontFamily="Finlandica"
-                                           FontSize="12"/>
-                                </VerticalStackLayout>
-                            </VerticalStackLayout>
-                        </Border>
-                        
-                        <Button Text="{Binding CartTotal, StringFormat='Pay ₵ {0:N2}'}"
-                                TextColor="{StaticResource White}"
-                                BackgroundColor="{StaticResource Primary}"
-                                HorizontalOptions="Center"
-                                Padding="100,0"
-                                Grid.Row="3"
-                                VerticalOptions="End"
-                                Margin="0,0,0,50"/>
-                    </Grid>
-
-                    <!-- Card Section -->
-                    <Grid Grid.Row="2" 
-                          IsVisible="{Binding SelectedPaymentMethod, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Card}"
-                          Margin="10,5">
-                        <Label Text="Card payment form coming soon..."
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               FontSize="16"/>
-                    </Grid>
-
-                    <Grid Grid.Row="2" 
-                          IsVisible="{Binding SelectedPaymentMethod, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=BankTransfer}"
-                          Margin="10,5">
-                        <Label Text="Bank transfer instructions coming soon..."
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               FontSize="16"/>
-                    </Grid>
+                    </sharpnado:ViewSwitcher>
                 </Grid>
             </Border>
         </Grid>
