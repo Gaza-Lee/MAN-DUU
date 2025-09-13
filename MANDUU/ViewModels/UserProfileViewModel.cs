@@ -55,6 +55,12 @@ namespace MANDUU.ViewModels
         }
 
         [RelayCommand]
+        private async Task GoToGetVerifiedAsync()
+        {
+            await _navigationService.NavigateToAsync("getverifiedpage");
+        }
+
+        [RelayCommand]
         private async Task LogoutAsync()
         {
             bool confirmLogout = await Application.Current.MainPage.DisplayAlert(

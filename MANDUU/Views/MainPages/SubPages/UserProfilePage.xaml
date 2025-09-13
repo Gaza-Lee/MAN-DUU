@@ -76,13 +76,57 @@
             </VerticalStackLayout>
         </Border>
 
-        <Grid RowDefinitions="auto,auto,auto" VerticalOptions="End"
+        <Grid RowDefinitions="auto,auto,auto,auto" VerticalOptions="End"
               Grid.Row="1" RowSpacing="10">
+
             <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
                     Grid.Row="0">
+                <Border.Shadow>
+                    <Shadow Brush="Gray"
+                            Offset="5,5"
+                            Opacity="0.3"/>
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToGetVerifiedCommand, Mode=TwoWay}"/>
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
+                    <Label Grid.Column="0"
+                           Text="{x:Static icons:Icons.verificationBadgeIcon}"
+                           FontFamily="MaterialIcon"
+                           TextColor="Green"
+                           FontSize="30"
+                           VerticalTextAlignment="Center"/>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                        <Label Text="GET VERIFIED"
+                               FontSize="18"/>
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="{x:Static icons:Icons.infoIcon}"
+                                   FontFamily="MaterialIcon"
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center"/>
+                            <Label Text="Recommended for vendors"
+                                   VerticalTextAlignment="Center"
+                                   FontFamily="Finlandica"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    <Label Text="{x:Static icons:Icons.getStartedIcon}"
+                           Grid.Column="2"
+                           FontFamily="MaterialIcon"
+                           FontSize="30"
+                           VerticalOptions="Center"
+                           HorizontalOptions="End"
+                           TextColor="Gray"/>
+                </Grid>
+            </Border>
+
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="10,5"
+                    StrokeThickness="0"
+                    Grid.Row="1">
                 <Border.Shadow>
                     <Shadow Brush="Gray"
                             Offset="5,5"
@@ -113,7 +157,7 @@
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
-                    Grid.Row="1">
+                    Grid.Row="3">
                 <Border.Shadow>
                     <Shadow Brush="Gray"
                             Offset="5,5"

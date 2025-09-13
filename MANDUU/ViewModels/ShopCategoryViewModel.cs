@@ -11,15 +11,23 @@ namespace MANDUU.ViewModels
         private readonly ShopCategoryService _categoryService;
         private readonly ShopService _shopService;
         private readonly INavigationService _navigationService;
+        private readonly CartService _cartService;
+
+        [ObservableProperty]
+        private bool _hasCartItems;
 
         [ObservableProperty]
         private ObservableCollection<ShopCategory> shopCategories = new();
 
-        public ShopCategoryViewModel(ShopCategoryService categoryService, ShopService shopService, INavigationService navigationService)
+        public ShopCategoryViewModel(ShopCategoryService categoryService, 
+            ShopService shopService, 
+            INavigationService navigationService,
+            CartService cartService)
         {
             _categoryService = categoryService;
             _shopService = shopService;
             _navigationService = navigationService;
+            _cartService = cartService;
         }
 
         [RelayCommand]
@@ -40,11 +48,23 @@ namespace MANDUU.ViewModels
             });
         }
 
+        [RelayCommand]
+        private async Task GoToProfileAsync()
+        {
+            await _navigationService.NavigateToAsync("userprofilepage");
+        }
+
+        [RelayCommand]
+        private async Task GoToCartAsync()
+        {
+            await _navigationService.NavigateToAsync("cartpage");
+        }
+
 
         public async Task InitializeAsync()
         {
+            HasCartItems = _cartService.HasItems();
             ShopCategories.Clear();
-
             var categories = await _categoryService.GetAllShopCategoriesAsync();
 
             foreach (var category in categories)
@@ -58,5 +78,7 @@ namespace MANDUU.ViewModels
                 }
             }
         }
+
+        
     }
 }

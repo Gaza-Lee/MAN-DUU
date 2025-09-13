@@ -139,15 +139,18 @@
                                             SelectedIndex="{Binding Source={x:Reference TabHost}, Path=SelectedIndex}">
 
                         <!-- Mobile Money -->
-                        <sharpnado:DelayedView x:TypeArguments="tabviews:MobileMoneyPaymentMethod">                            
+                        <sharpnado:DelayedView x:TypeArguments="tabviews:MobileMoneyPaymentMethod"
+                                               Animate="True">                            
                         </sharpnado:DelayedView>
                         <!-- Card -->
-                        <sharpnado:DelayedView x:TypeArguments="tabviews:CardPaymentMethod">
+                        <sharpnado:DelayedView x:TypeArguments="tabviews:CardPaymentMethod"
+                                               Animate="True">
                             
                         </sharpnado:DelayedView>
 
                         <!-- Bank Transfer -->
-                        <sharpnado:DelayedView x:TypeArguments="tabviews:BankTransferPaymentMethod">
+                        <sharpnado:DelayedView x:TypeArguments="tabviews:BankTransferPaymentMethod"
+                                               Animate="True">
                             
                         </sharpnado:DelayedView>
 

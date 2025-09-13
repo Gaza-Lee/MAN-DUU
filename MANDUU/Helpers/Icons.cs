@@ -70,5 +70,7 @@ namespace MANDUU.Helpers
         public static string analyticsIcon = "\ue6e1";
 
         public static string cameraIcon = "\ue412";
+
+        public static string verificationBadgeIcon = "\uef76";
     }
 }

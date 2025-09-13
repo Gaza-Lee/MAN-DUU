@@ -7,6 +7,7 @@ using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
 using MANDUU.Views.MainPages.SubPages;
 using MANDUU.Views.MainPages.SubPages.CheckoutAndPayment;
+using MANDUU.Views.MainPages.SubPages.GetVerified;
 using MANDUU.Views.ShopPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -97,6 +98,7 @@ namespace MANDUU
             builder.Services.AddTransient<FAQPage>();
             builder.Services.AddTransient<CheckoutPage>();
             builder.Services.AddTransient<PaymentPage>();
+            builder.Services.AddTransient<GetVerifiedPage>();
 
             return builder;
         }
@@ -124,6 +126,7 @@ namespace MANDUU
             builder.Services.AddTransient<CreateShopViewModel>();
             builder.Services.AddTransient<CheckoutPageViewModel>();
             builder.Services.AddTransient<PaymentPageViewModel>();
+            builder.Services.AddTransient<GetVerifiedPageViewModel>();
 
             return builder;
         }

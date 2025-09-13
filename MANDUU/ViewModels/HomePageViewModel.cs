@@ -23,25 +23,25 @@ namespace MANDUU.ViewModels
 
         #region Observable Properties
         [ObservableProperty]
-        private ObservableCollection<MainCategory> mainCategories = new();
+        private ObservableCollection<MainCategory> _mainCategories = new();
 
         [ObservableProperty]
-        private ObservableCollection<Product> bestSellingProducts = new();
+        private ObservableCollection<Product> _bestSellingProducts = new();
 
         [ObservableProperty]
-        private ObservableCollection<Offer> offers = new();
+        private ObservableCollection<Offer> _offers = new();
 
         [ObservableProperty]
-        private MainCategory selectedCategory;
+        private MainCategory _selectedCategory;
 
         [ObservableProperty]
-        private Shop selectedShop;
+        private Shop _selectedShop;
 
         [ObservableProperty]
-        private ObservableCollection<Shop> recommendedShops = new();
+        private ObservableCollection<Shop> _recommendedShops = new();
 
         [ObservableProperty]
-        private bool hasCartItems;
+        private bool _hasCartItems;
         #endregion
 
         #region Constructor

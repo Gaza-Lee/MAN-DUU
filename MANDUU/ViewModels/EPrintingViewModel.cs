@@ -11,6 +11,10 @@ namespace MANDUU.ViewModels
     {
         private readonly PrintingStationService _printingStationService;
         private readonly INavigationService _navigationService;
+        private readonly CartService _cartService;
+
+        [ObservableProperty]
+        private bool _hasCartItems;
 
         [ObservableProperty]
         private ObservableCollection<PrintingStation> _allStations = new();
@@ -36,12 +40,22 @@ namespace MANDUU.ViewModels
         [ObservableProperty]
         private bool _isStationSelected;
 
-        public EPrintingViewModel(PrintingStationService printingStationService, INavigationService navigationService)
+        public EPrintingViewModel(PrintingStationService printingStationService, 
+            INavigationService navigationService,
+            CartService cartService)
         {
             _printingStationService = printingStationService;
             _navigationService = navigationService;
+            _cartService = cartService;
             LoadStations();
             PropertyChanged += OnPropertyChanged;
+            UpdateCartStatus();
+
+        }
+
+        private void UpdateCartStatus()
+        {
+            HasCartItems = _cartService.HasItems();
         }
 
         [RelayCommand]
@@ -120,6 +134,18 @@ namespace MANDUU.ViewModels
                     { "SelectedStation", SelectedStation },
                     { "SelectedDocument", SelectedDocument }
                 });
+        }
+
+        [RelayCommand]
+        private async Task GoToProfileAsync()
+        {
+            await _navigationService.NavigateToAsync("userprofilepage");
+        }
+
+        [RelayCommand]
+        private async Task GoToCartAsync()
+        {
+            await _navigationService.NavigateToAsync("cartpage");
         }
 
         [RelayCommand]

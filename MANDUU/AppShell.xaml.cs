@@ -3,6 +3,7 @@ using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
 using MANDUU.Views.MainPages.SubPages;
 using MANDUU.Views.MainPages.SubPages.CheckoutAndPayment;
+using MANDUU.Views.MainPages.SubPages.GetVerified;
 using MANDUU.Views.ShopPages;
 
 namespace MANDUU
@@ -36,6 +37,7 @@ namespace MANDUU
             Routing.RegisterRoute("favoritespage", typeof(FavoritesPage));
             Routing.RegisterRoute("checkoutpage", typeof(CheckoutPage));
             Routing.RegisterRoute("paymentpage", typeof(PaymentPage));
+            Routing.RegisterRoute("getverifiedpage", typeof(GetVerifiedPage));
         }
     }
 }

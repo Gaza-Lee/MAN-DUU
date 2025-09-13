@@ -10,36 +10,60 @@
 
     <Shell.TitleView>
         <Grid ColumnDefinitions="*, Auto, *"
-              Padding="0, 0, 5, 0"
-              Margin="0"
-              VerticalOptions="Center">
+          Padding="0, 0, 5, 0"
+          Margin="0"
+          VerticalOptions="Center">
             <Label Grid.Column="0" 
-                   Text="{x:Static icons:Icons.profileIcon}"
-                   HorizontalOptions="Start"
-                   FontFamily="MaterialIcon"
-                   VerticalOptions="Center"
-                   FontSize="30">
+           Text="{x:Static icons:Icons.profileIcon}"
+           HorizontalOptions="Start"
+           FontFamily="MaterialIcon"
+           VerticalOptions="Center"
+           FontSize="30">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ProfileCommand}"/>
+                    <TapGestureRecognizer Command="{Binding GoToProfileCommand}"/>
                 </Label.GestureRecognizers>
             </Label>
 
             <Label Text="Shop Categories"
-                   Grid.Column="1"
-                   FontSize="20"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
+           Grid.Column="1"
+           FontSize="20"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"/>
 
-            <Label Grid.Column="2" 
+            <HorizontalStackLayout Grid.Column="2" VerticalOptions="Center"
+                               HorizontalOptions="End"
+                               Spacing="10">
+                <Grid VerticalOptions="Center" HorizontalOptions="End" WidthRequest="40" HeightRequest="40">
+                    <!-- Cart Icon -->
+                    <Label Text="{x:Static icons:Icons.cartIcon}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontFamily="MaterialIcon"
+                       FontSize="30">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToCartCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <!-- Badge Dot - Positioned Top Right -->
+                    <Border BackgroundColor="Red"
+                        HeightRequest="10"
+                        WidthRequest="10"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 5"
+                        IsVisible="{Binding HasCartItems}"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="0,0,2,2" />
+                </Grid>
+                <Label  
                    Text="{x:Static icons:Icons.searchIcon}"
                    HorizontalOptions="End"
                    FontFamily="MaterialIcon"
-                   VerticalOptions="Center"
-                   FontSize="30">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SearchCommand}"/>
-                </Label.GestureRecognizers>
-            </Label>
+                   FontSize="30"
+                VerticalTextAlignment="Center">
+                </Label>
+            </HorizontalStackLayout>
         </Grid>
     </Shell.TitleView>
 
