@@ -139,7 +139,7 @@
                             <Border StrokeShape="RoundRectangle 10"
                                 StrokeThickness="0"
                                 WidthRequest="80"
-                                BackgroundColor="#FFAF80">
+                                BackgroundColor="{StaticResource PrimaryLightColor}">
                                 <Grid>
 
                                     <VerticalStackLayout VerticalOptions="Center"

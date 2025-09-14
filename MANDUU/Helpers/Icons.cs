@@ -72,5 +72,11 @@ namespace MANDUU.Helpers
         public static string cameraIcon = "\ue412";
 
         public static string verificationBadgeIcon = "\uef76";
+
+        public static string personalInfoIcon = "\ue7fd";
+
+        public static string faceIdenticationIcon = "\uec10";
+
+        public static string identidicationCardIcon = "\uf8d1";
     }
 }

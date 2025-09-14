@@ -1,8 +1,166 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
+             xmlns:sharpnado="http://sharpnado.com"
+             xmlns:currentTabView="clr-namespace:MANDUU.Views.MainPages.SubPages.GetVerified"
+             xmlns:converters="clr-namespace:MANDUU.Converters"
              x:Class="MANDUU.Views.MainPages.SubPages.GetVerified.GetVerifiedPage"
              Shell.TabBarIsVisible="False"
              Title="Get Verified">
-    
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="sharpnado:UnderlinedTabItem" x:Key="TabStyle">
+                <Setter Property="SelectedTabColor" Value="{StaticResource PrimaryLight400}"/>
+            </Style>
+
+            <!-- Add the converter -->
+            <converters:SelectedToColorConverter x:Key="SelectedToColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid Margin="20,0" RowDefinitions="auto,auto,*" RowSpacing="5">
+        <Label Text="Complete verification to prove to costumers that you are legit"
+               FontFamily="Finladica"
+               Grid.Row="0"/>
+
+        <Grid Grid.Row="1" RowDefinitions="auto,*" RowSpacing="10">
+            <ProgressBar Progress="0.25"
+                         ProgressColor="{StaticResource Primary}"
+                         Grid.Row="0" />
+
+            <sharpnado:TabHostView x:Name="TabHost"
+                                   Grid.Row="1"
+                                   Padding="10,5"
+                                   CornerRadius="10"
+                                   TabType="Fixed"
+                                   VerticalOptions="Start"
+                                   Orientation="Vertical"
+                                   SelectedIndex="{Binding Source={x:Reference Switcher}, Path=SelectedIndex, Mode=TwoWay}">
+
+                <sharpnado:TabHostView.Tabs>
+                    <!-- Personal Information Tab -->
+                    <sharpnado:UnderlinedTabItem x:Name="PersonalInfoTab" Margin="0,5">
+                        <sharpnado:UnderlinedTabItem.Content>
+                            <Border 
+                                Stroke="{Binding Source={x:Reference PersonalInfoTab}, Path=IsSelected, 
+                                         Converter={StaticResource SelectedToColorConverter}, 
+                                         ConverterParameter={StaticResource Primary}}"
+                                BackgroundColor="{Binding Source={x:Reference PersonalInfoTab}, Path=IsSelected, 
+                                                 Converter={StaticResource SelectedToColorConverter}, 
+                                                 ConverterParameter={x:StaticResource PrimaryLight400}}"
+                                StrokeThickness="2"
+                                StrokeShape="RoundRectangle 5"
+                                Padding="15,10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{x:Static icons:Icons.personalInfoIcon}"
+                                           FontFamily="MaterialIcon"
+                                           FontSize="20"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="Personal Information"
+                                           FontFamily="Finlandica" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </sharpnado:UnderlinedTabItem.Content>
+                    </sharpnado:UnderlinedTabItem>
+
+                    <!-- Location Details Tab -->
+                    <sharpnado:UnderlinedTabItem x:Name="LocationTab" Margin="0,5">
+                        <sharpnado:UnderlinedTabItem.Content>
+                            <Border 
+                                Stroke="{Binding Source={x:Reference LocationTab}, Path=IsSelected, 
+                                         Converter={StaticResource SelectedToColorConverter}, 
+                                         ConverterParameter={StaticResource Primary}}"
+                                BackgroundColor="{Binding Source={x:Reference LocationTab}, Path=IsSelected, 
+                                                 Converter={StaticResource SelectedToColorConverter}, 
+                                                 ConverterParameter={StaticResource PrimaryLight400}}"
+                                StrokeThickness="2"
+                                StrokeShape="RoundRectangle 5"
+                                Padding="15,10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{x:Static icons:Icons.locationIcon}"
+                                           FontFamily="MaterialIcon"
+                                           FontSize="20"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="Location Details"
+                                           FontFamily="Finlandica" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </sharpnado:UnderlinedTabItem.Content>
+                    </sharpnado:UnderlinedTabItem>
+
+                    <!-- ID Verification Tab -->
+                    <sharpnado:UnderlinedTabItem x:Name="IdVerificationTab" Margin="0,5">
+                        <sharpnado:UnderlinedTabItem.Content>
+                            <Border 
+                                Stroke="{Binding Source={x:Reference IdVerificationTab}, Path=IsSelected, 
+                                         Converter={StaticResource SelectedToColorConverter}, 
+                                         ConverterParameter={StaticResource Primary}}"
+                                BackgroundColor="{Binding Source={x:Reference IdVerificationTab}, Path=IsSelected, 
+                                                 Converter={StaticResource SelectedToColorConverter}, 
+                                                 ConverterParameter={StaticResource PrimaryLight400}}"
+                                StrokeThickness="2"
+                                StrokeShape="RoundRectangle 5"
+                                Padding="15,10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{x:Static icons:Icons.identidicationCardIcon}"
+                                           FontFamily="MaterialIcon"
+                                           FontSize="20"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="ID Verification"
+                                            FontFamily="Finlandica" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </sharpnado:UnderlinedTabItem.Content>
+                    </sharpnado:UnderlinedTabItem>
+
+                    <!-- Face Verification Tab -->
+                    <sharpnado:UnderlinedTabItem x:Name="FaceVerificationTab" Margin="0,5">
+                        <sharpnado:UnderlinedTabItem.Content>
+                            <Border 
+                                Stroke="{Binding Source={x:Reference FaceVerificationTab}, Path=IsSelected, 
+                                         Converter={StaticResource SelectedToColorConverter}, 
+                                         ConverterParameter={StaticResource Primary}}"
+                                BackgroundColor="{Binding Source={x:Reference FaceVerificationTab}, Path=IsSelected, 
+                                                 Converter={StaticResource SelectedToColorConverter}, 
+                                                 ConverterParameter={StaticResource PrimaryLight400}}"
+                                StrokeThickness="2"
+                                StrokeShape="RoundRectangle 5"
+                                Padding="15,10">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{x:Static icons:Icons.faceIdenticationIcon}"
+                                           FontFamily="MaterialIcon"
+                                           FontSize="20"
+                                           VerticalOptions="Center"/>
+                                    <Label Text="Face verification"
+                                            FontFamily="Finlandica" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </sharpnado:UnderlinedTabItem.Content>
+                    </sharpnado:UnderlinedTabItem>
+                </sharpnado:TabHostView.Tabs>
+            </sharpnado:TabHostView>
+        </Grid>
+
+        <ScrollView Grid.Row="2">
+            <Border 
+                StrokeThickness="0.5"
+                StrokeShape="RoundRectangle 10"
+                Margin="5">
+                <sharpnado:ViewSwitcher x:Name="Switcher"
+                                        Animate="True"
+                                        SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+                    <sharpnado:DelayedView x:TypeArguments="currentTabView:PersonalInformation"
+                                           Animate="True"/>
+                    <sharpnado:DelayedView x:TypeArguments="currentTabView:LocationDetails"
+                                           Animate="True"/>
+                    <sharpnado:DelayedView x:TypeArguments="currentTabView:IdentificationCardVerification"
+                                           Animate="True"/>
+                    <sharpnado:DelayedView x:TypeArguments="currentTabView:FaceVerification"
+                                           Animate="True"/>
+                </sharpnado:ViewSwitcher>
+            </Border>
+        </ScrollView>
+    </Grid>
 </ContentPage>
