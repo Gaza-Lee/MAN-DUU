@@ -4,7 +4,6 @@
              xmlns:icons="clr-namespace:MANDUU.Helpers"
              xmlns:sharpnado="http://sharpnado.com"
              xmlns:currentTabView="clr-namespace:MANDUU.Views.MainPages.SubPages.GetVerified"
-             xmlns:converters="clr-namespace:MANDUU.Converters"
              x:Class="MANDUU.Views.MainPages.SubPages.GetVerified.GetVerifiedPage"
              Shell.TabBarIsVisible="False"
              Title="Get Verified">
@@ -15,8 +14,23 @@
                 <Setter Property="SelectedTabColor" Value="{StaticResource PrimaryLight400}"/>
             </Style>
 
-            <!-- Add the converter -->
-            <converters:SelectedToColorConverter x:Key="SelectedToColorConverter" />
+            <!-- Tab Border Style with Triggers -->
+            <Style TargetType="Border" x:Key="TabBorderStyle">
+                <Setter Property="Stroke" Value="{StaticResource Gray100}"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="StrokeThickness" Value="2"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 5"/>
+                <Setter Property="Padding" Value="15,10"/>
+
+                <!-- Trigger for when the tab is selected -->
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Source={RelativeSource AncestorType={x:Type sharpnado:UnderlinedTabItem}}, Path=IsSelected}" 
+                                 Value="True" TargetType="Border">
+                        <Setter Property="Stroke" Value="{StaticResource Primary}"/>
+                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryLight400}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -25,11 +39,24 @@
                FontFamily="Finladica"
                Grid.Row="0"/>
 
-        <Grid Grid.Row="1" RowDefinitions="auto,*" RowSpacing="10">
-            <ProgressBar Progress="0.25"
-                         ProgressColor="{StaticResource Primary}"
-                         Grid.Row="0" />
-
+        <Grid Grid.Row="1" RowDefinitions="auto,*" RowSpacing="5" Margin="0,10">
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="*,*"
+                  RowDefinitions="auto,*">
+                <Label Text="Step 1 of 4"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       HorizontalOptions="Start"/>
+                <Label Text="25%"
+                       Grid.Column="1"
+                       HorizontalOptions="End"
+                       />
+                <ProgressBar Progress="0.25"
+                            ProgressColor="{StaticResource Primary}"
+                             Grid.Column="0"
+                             Grid.Row="1"
+                             Grid.ColumnSpan="2"/>
+            </Grid>
             <sharpnado:TabHostView x:Name="TabHost"
                                    Grid.Row="1"
                                    Padding="10,5"
@@ -43,16 +70,7 @@
                     <!-- Personal Information Tab -->
                     <sharpnado:UnderlinedTabItem x:Name="PersonalInfoTab" Margin="0,5">
                         <sharpnado:UnderlinedTabItem.Content>
-                            <Border 
-                                Stroke="{Binding Source={x:Reference PersonalInfoTab}, Path=IsSelected, 
-                                         Converter={StaticResource SelectedToColorConverter}, 
-                                         ConverterParameter={StaticResource Primary}}"
-                                BackgroundColor="{Binding Source={x:Reference PersonalInfoTab}, Path=IsSelected, 
-                                                 Converter={StaticResource SelectedToColorConverter}, 
-                                                 ConverterParameter={x:StaticResource PrimaryLight400}}"
-                                StrokeThickness="2"
-                                StrokeShape="RoundRectangle 5"
-                                Padding="15,10">
+                            <Border Style="{StaticResource TabBorderStyle}">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="{x:Static icons:Icons.personalInfoIcon}"
                                            FontFamily="MaterialIcon"
@@ -68,16 +86,7 @@
                     <!-- Location Details Tab -->
                     <sharpnado:UnderlinedTabItem x:Name="LocationTab" Margin="0,5">
                         <sharpnado:UnderlinedTabItem.Content>
-                            <Border 
-                                Stroke="{Binding Source={x:Reference LocationTab}, Path=IsSelected, 
-                                         Converter={StaticResource SelectedToColorConverter}, 
-                                         ConverterParameter={StaticResource Primary}}"
-                                BackgroundColor="{Binding Source={x:Reference LocationTab}, Path=IsSelected, 
-                                                 Converter={StaticResource SelectedToColorConverter}, 
-                                                 ConverterParameter={StaticResource PrimaryLight400}}"
-                                StrokeThickness="2"
-                                StrokeShape="RoundRectangle 5"
-                                Padding="15,10">
+                            <Border Style="{StaticResource TabBorderStyle}">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="{x:Static icons:Icons.locationIcon}"
                                            FontFamily="MaterialIcon"
@@ -93,16 +102,7 @@
                     <!-- ID Verification Tab -->
                     <sharpnado:UnderlinedTabItem x:Name="IdVerificationTab" Margin="0,5">
                         <sharpnado:UnderlinedTabItem.Content>
-                            <Border 
-                                Stroke="{Binding Source={x:Reference IdVerificationTab}, Path=IsSelected, 
-                                         Converter={StaticResource SelectedToColorConverter}, 
-                                         ConverterParameter={StaticResource Primary}}"
-                                BackgroundColor="{Binding Source={x:Reference IdVerificationTab}, Path=IsSelected, 
-                                                 Converter={StaticResource SelectedToColorConverter}, 
-                                                 ConverterParameter={StaticResource PrimaryLight400}}"
-                                StrokeThickness="2"
-                                StrokeShape="RoundRectangle 5"
-                                Padding="15,10">
+                            <Border Style="{StaticResource TabBorderStyle}">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="{x:Static icons:Icons.identidicationCardIcon}"
                                            FontFamily="MaterialIcon"
@@ -118,16 +118,7 @@
                     <!-- Face Verification Tab -->
                     <sharpnado:UnderlinedTabItem x:Name="FaceVerificationTab" Margin="0,5">
                         <sharpnado:UnderlinedTabItem.Content>
-                            <Border 
-                                Stroke="{Binding Source={x:Reference FaceVerificationTab}, Path=IsSelected, 
-                                         Converter={StaticResource SelectedToColorConverter}, 
-                                         ConverterParameter={StaticResource Primary}}"
-                                BackgroundColor="{Binding Source={x:Reference FaceVerificationTab}, Path=IsSelected, 
-                                                 Converter={StaticResource SelectedToColorConverter}, 
-                                                 ConverterParameter={StaticResource PrimaryLight400}}"
-                                StrokeThickness="2"
-                                StrokeShape="RoundRectangle 5"
-                                Padding="15,10">
+                            <Border Style="{StaticResource TabBorderStyle}">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="{x:Static icons:Icons.faceIdenticationIcon}"
                                            FontFamily="MaterialIcon"
@@ -147,19 +138,58 @@
             <Border 
                 StrokeThickness="0.5"
                 StrokeShape="RoundRectangle 10"
-                Margin="5">
-                <sharpnado:ViewSwitcher x:Name="Switcher"
-                                        Animate="True"
-                                        SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
-                    <sharpnado:DelayedView x:TypeArguments="currentTabView:PersonalInformation"
-                                           Animate="True"/>
-                    <sharpnado:DelayedView x:TypeArguments="currentTabView:LocationDetails"
-                                           Animate="True"/>
-                    <sharpnado:DelayedView x:TypeArguments="currentTabView:IdentificationCardVerification"
-                                           Animate="True"/>
-                    <sharpnado:DelayedView x:TypeArguments="currentTabView:FaceVerification"
-                                           Animate="True"/>
-                </sharpnado:ViewSwitcher>
+                Padding="10,5">
+                <Grid RowDefinitions="*,auto" RowSpacing="20"
+                      Margin="0,0,0,30">
+                    <sharpnado:ViewSwitcher x:Name="Switcher"
+                        Animate="True"
+                        SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}" Grid.Row="0">
+                        <sharpnado:DelayedView x:TypeArguments="currentTabView:PersonalInformation"
+                           Animate="True"/>
+                        <sharpnado:DelayedView x:TypeArguments="currentTabView:LocationDetails"
+                           Animate="True"/>
+                        <sharpnado:DelayedView x:TypeArguments="currentTabView:IdentificationCardVerification"
+                           Animate="True"/>
+                        <sharpnado:DelayedView x:TypeArguments="currentTabView:FaceVerification"
+                           Animate="True"/>
+                    </sharpnado:ViewSwitcher>
+                    <Grid ColumnDefinitions="*,*" Grid.Row="1" Padding="5,10"
+                          VerticalOptions="End">
+                        <Border HorizontalOptions="Start"
+                                Padding="10,5"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
+                                StrokeThickness="0"
+                                Grid.Column="0"
+                                VerticalOptions="Center">
+                            <Border.Shadow>
+                                <Shadow Brush="{AppThemeBinding Light={StaticResource Gray300}}"
+                                        Offset="5,5"
+                                        Opacity="0.5"/>
+                            </Border.Shadow>
+                            <Label Text="Previous"
+                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}"
+                                   FontSize="20"/>
+                        </Border>
+
+                        <Border HorizontalOptions="End"
+                                Padding="10,5"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{StaticResource Primary}"
+                                StrokeThickness="0"
+                                Grid.Column="1"
+                                VerticalOptions="Center">
+                            <Border.Shadow>
+                                <Shadow Brush="{AppThemeBinding Light={StaticResource Gray300}}"
+                                        Offset="5,5"
+                                        Opacity="0.5"/>
+                            </Border.Shadow>
+                            <Label Text="Next"
+                                   TextColor="{StaticResource White}"
+                                   FontSize="20"/>
+                        </Border>
+                    </Grid>
+                </Grid>
             </Border>
         </ScrollView>
     </Grid>

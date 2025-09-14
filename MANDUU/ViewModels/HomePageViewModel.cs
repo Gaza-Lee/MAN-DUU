@@ -32,7 +32,7 @@ namespace MANDUU.ViewModels
         private ObservableCollection<Offer> _offers = new();
 
         [ObservableProperty]
-        private MainCategory _selectedCategory;
+        private MainCategory _selectedMainCategory;
 
         [ObservableProperty]
         private Shop _selectedShop;
@@ -73,14 +73,14 @@ namespace MANDUU.ViewModels
         [RelayCommand]
         private async Task GoToSelectedMainCategoryAsync(MainCategory selectedMainCategory)
         {
-            if (selectedMainCategory == null) return;
-
-            await NavigationService.NavigateToAsync("categorypage", new Dictionary<string, object>
+            if (selectedMainCategory != null)
             {
-                { "CategoryId", selectedMainCategory.Id }
-            });
-
-            SelectedCategory = null;
+                await NavigationService.NavigateToAsync("categorypage", new Dictionary<string, object>
+                {
+                    { "CategoryId", selectedMainCategory.Id }
+                });
+                selectedMainCategory = null;
+            }            
         }
 
         [RelayCommand]

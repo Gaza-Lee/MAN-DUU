@@ -2,10 +2,70 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MANDUU.Views.MainPages.SubPages.GetVerified.PersonalInformation">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout Margin="5" Spacing="10">
+        <VerticalStackLayout>
+            <Label Text="Perosonal Information"
+                   FontSize="16"
+                   FontFamily="Finlandica"
+                   FontAttributes="Bold"/>
+            <Label FontFamily="Finlandica"
+                   FontSize="12"
+                   Text="Ensure your personal details are accurate"
+                   Margin="10,0"
+                   TextColor="{StaticResource Gray600}"/>
+        </VerticalStackLayout>
+
+        <!--First Name-->
+        <VerticalStackLayout>
+            <Label Text="First Name"
+                   FontFamily="Finlandica"
+                   Margin="5,0"/>
+            <Border StrokeShape="RoundRectangle 10"
+                    StrokeThickness="0.8">
+                <Entry />
+            </Border>
+        </VerticalStackLayout>
+        <!--Last Name-->
+        <VerticalStackLayout>
+            <Label Text="Last Name"
+           FontFamily="Finlandica"
+           Margin="5,0"/>
+            <Border StrokeShape="RoundRectangle 10"
+            StrokeThickness="0.8">
+                <Entry />
+            </Border>
+        </VerticalStackLayout>
+
+        <!--Date of Birth-->
+        <VerticalStackLayout>
+            <Label Text="Date of Birth"
+                   FontFamily="Finlandica"
+                   Margin="5,0"/>
+            <Border StrokeShape="RoundRectangle 10"
+            StrokeThickness="0.8">
+                <DatePicker Margin="10,0"/>
+            </Border>
+        </VerticalStackLayout>
+        
+        <!--Email address-->
+        <VerticalStackLayout>
+            <Label Text="Email Address"
+           FontFamily="Finlandica"
+           Margin="5,0"/>
+            <Border StrokeShape="RoundRectangle 10"
+            StrokeThickness="0.8">
+                <Entry />
+            </Border>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Label Text="Home Address"
+           FontFamily="Finlandica"
+           Margin="5,0"/>
+            <Border StrokeShape="RoundRectangle 10"
+            StrokeThickness="0.8">
+                <Entry />
+            </Border>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentView>

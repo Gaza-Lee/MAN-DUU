@@ -1,11 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:icon="clr-namespace:MANDUU.Helpers"
              x:Class="MANDUU.Views.MainPages.SubPages.GetVerified.FaceVerification">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout Margin="5" Spacing="30">
+        <VerticalStackLayout>
+            <Label Text="Face Verification"
+                    FontSize="16"
+                    FontFamily="Finlandica"
+                    FontAttributes="Bold"/>
+            <Label FontFamily="Finlandica"
+                   FontSize="12"
+                   Text="Complete face verification for security"
+                   Margin="10,0"
+                   TextColor="{StaticResource Gray600}"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Take a selfie of your face clearly"
+           FontFamily="Finlandica"
+           FontSize="16"
+           FontAttributes="Bold"/>
+
+            <Border StrokeDashArray="2,2"
+            StrokeShape="RoundRectangle 10"
+            Margin="10,5"
+            Padding="10">
+                <Grid RowDefinitions="*,auto,auto"
+              HorizontalOptions="Center" RowSpacing="10">
+                    <Label Text="{x:Static icon:Icons.cameraIcon}"
+                   FontFamily="MaterialIcon"
+                   FontSize="50"
+                   Grid.Row="0"
+                   HorizontalOptions="Center"/>
+                    <Label Text="Tab to open camera"
+                   Grid.Row="1"
+                   FontFamily="Finlandica"
+                   HorizontalOptions="Center"/>
+
+                    <Border Grid.Row="2"
+                    HorizontalOptions="Center"
+                    StrokeShape="RoundRectangle 5"
+                    StrokeThickness="0.8"
+                    Padding="10,5"
+                    StrokeDashArray="2">
+                        <Label Text="Take Selfie"
+                       HorizontalOptions="Center"
+                       FontFamily="Finlandica"
+                       FontAttributes="Bold"/>
+                    </Border>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentView>
