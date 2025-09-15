@@ -80,9 +80,11 @@ namespace MANDUU.ViewModels
 
 
         [RelayCommand]
-        private void RemoveDocumentAsync()
+        private async Task RemoveDocumentAsync()
         {
-            SelectedDocument = string.Empty;
+            var confirm = Shell.Current.DisplayAlert("Caution",
+                "Are you sure you want to remove Document",
+                "No", "Yes");
         }
 
         [RelayCommand]

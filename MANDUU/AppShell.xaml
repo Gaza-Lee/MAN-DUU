@@ -9,7 +9,9 @@
     xmlns:Icon ="clr-namespace:MANDUU.Helpers"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="MANDUU"
-    x:Name="AppShellRoot">
+    x:Name="AppShellRoot"
+    Shell.TabBarForegroundColor="{StaticResource Primary}"
+    Shell.TabBarTitleColor="{StaticResource Primary}">
 
     <Shell.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor ="{StaticResource Primary}"/>

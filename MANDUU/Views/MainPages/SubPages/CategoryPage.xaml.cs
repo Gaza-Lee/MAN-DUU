@@ -7,10 +7,16 @@ public partial class CategoryPage : ContentPage
 {
     private readonly CategoryViewModel _categoryViewModel;
 
-    public CategoryPage(ProductService productService, ProductCategoryService categoryService, INavigationService navigationService)
+    public CategoryPage(CategoryViewModel categoryViewModel)
     {
         InitializeComponent();
-        _categoryViewModel = new CategoryViewModel(productService, categoryService, navigationService);
+        _categoryViewModel = categoryViewModel;
         BindingContext = _categoryViewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _categoryViewModel.InitializeAsync();
     }
 }

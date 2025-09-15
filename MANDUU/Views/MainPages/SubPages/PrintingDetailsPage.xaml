@@ -20,7 +20,7 @@
             <Border HorizontalOptions="Center"
                 Padding="10,5"
                 StrokeShape="RoundRectangle 10"
-                Background="#f7f7f7"
+                Background="{AppThemeBinding Dark={StaticResource Gray300}, Light={StaticResource Gray100}}"
                 StrokeThickness="0">
                 <Border.Shadow>
                     <Shadow Brush="Gray"
@@ -34,11 +34,9 @@
 
             <Grid RowDefinitions="*,auto">
                 <Label Text="{Binding SelectedDocument, StringFormat='Uploaded file:{0}'}"
-                   FontFamily="Finlandica"
-                   FontSize="16"
-                   VerticalOptions="Center"
+                   Style="{StaticResource Title}"
                    Grid.Row="0"
-                   TextColor="Gray"/>
+                       TextColor="{StaticResource Gray200}"/>
                 <!--Remove Document-->
                 <Border Background="Red"
                         VerticalOptions="End"
@@ -50,18 +48,17 @@
                                 Offset="5,5"
                                 Opacity="0.4"/>
                     </Border.Shadow>
-                    
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RemoveDocumentCommand}"/>
+                    </Border.GestureRecognizers>
                     <HorizontalStackLayout>
                         <Label Text="{x:Static icons:Icons.removeIcon}"
-                           FontFamily="MaterialIcon"
-                           Margin="0,2,0,0"
-                           FontSize="22"
-                           TextColor="#fff"/>
+                               Style="{StaticResource MaterialIcon}"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource White}"/>
                         <Label Text="Remove Document"
-                           TextColor="#fff"
-                           FontSize="20"
-                           FontFamily="Finlandica"
-                           Margin="0,0,3,0"/>
+                           TextColor="{StaticResource White}"
+                               Style="{StaticResource Title}"/>
                     </HorizontalStackLayout>
                 </Border>
             </Grid>

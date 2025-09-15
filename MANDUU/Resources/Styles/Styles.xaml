@@ -6,9 +6,92 @@
 <!--Personal styles-->
     <Style TargetType="Label" x:Key="MaterialIcon">
         <Setter Property="FontFamily" Value="MaterialIcon" />
-        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
     </Style>
-<!--Personal styles End-->
+    <Style TargetType="Label" x:Key="ButtonLabelText">
+        <Setter Property="FontFamily" Value="ADLaMDisplay"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+    <Style TargetType="Label" x:Key="Title">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style TargetType="Border" x:Key="DisplayProductBorder">
+        <Setter Property="WidthRequest" Value="{OnPlatform Android=170, WinUI=250, MacCatalyst=250, iOS=170}"/>
+        <Setter Property="HeightRequest" Value="{OnPlatform Android=200, WinUI=300, MacCatalyst=200,iOS=200}"/>
+        <Setter Property="StrokeThickness" Value="0.4"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+    </Style>
+    <Style TargetType="Grid" x:Key="DisplayProductGrid">
+        <Setter Property="RowDefinitions" Value="*,*"/>
+        <Setter Property="RowSpacing" Value="5" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+    <Style TargetType="Border" x:Key="DisplayShopBorder">
+        <Setter Property="StrokeThickness" Value="0.4"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+        <Setter Property="WidthRequest" Value="{OnPlatform Android=200, WinUI=250, MacCatalyst=250, iOS=170}"/>
+        <Setter Property="HeightRequest" Value="{OnPlatform Android=200, WinUI=300, MacCatalyst=200,iOS=200}"/>
+    </Style>
+    
+
+    <Style TargetType="Label" x:Key="BigPrice" >
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="FontFamily" Value="ADLaMDisplay" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="CustomButton">
+        <Setter Property="TextColor" Value="{StaticResource White}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="FontFamily" Value="ADLaMDisplay"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="BorderWidth" Value="0"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="MinimumHeightRequest" Value="0" />
+        <Setter Property="MinimumWidthRequest" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver" />
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="catTitleBorder">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#FF9549" Offset="0.0"/>
+                    <GradientStop Color="#FF7B1C" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="StrokeShape" Value="RoundRectangle 5" />
+        <Setter Property="Margin" Value="5,0,0,0" />
+        <Setter Property="Padding" Value="15,5" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="StrokeThickness" Value="0" />
+    </Style>
+    <Style TargetType="Label" x:Key="CatTitleText">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="TextColor" Value="#fff"/>
+    </Style>
+    <!--Personal styles End-->
     
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
@@ -170,7 +253,7 @@
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="ADLaMDisplay" />
+        <Setter Property="FontFamily" Value="Finlandica" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -200,6 +283,7 @@
     <Style TargetType="Label" x:Key="SubHeadline">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource White}}" />
         <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
     </Style>

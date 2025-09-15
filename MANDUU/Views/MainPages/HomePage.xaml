@@ -22,9 +22,9 @@
 
             <Label Text="Home"
                Grid.Column="1"
-               FontSize="20"
                HorizontalOptions="Center"
-               VerticalOptions="Center"/>
+               VerticalOptions="Center"
+               Style="{StaticResource SubHeadline}"/>
 
             <HorizontalStackLayout Grid.Column="2" VerticalOptions="Center"
                                    HorizontalOptions="End"
@@ -82,7 +82,7 @@
             </Label>
 
             <CollectionView ItemsSource="{Binding Offers}"
-                        HeightRequest="80"
+                           HeightRequest="95"
                         Margin="0,10,0,0">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" 
@@ -97,16 +97,16 @@
                                 <BoxView BackgroundColor="{Binding BgColor}"
                                          Opacity="0.4"/>
 
-                                <Grid RowDefinitions="auto, *, auto"
-                                  Margin="5">
+                                <Grid RowDefinitions="auto, *, auto" Margin="5">
                                     <Label Text="{Binding Title}"
-                                       Grid.Row="0"/>
+                                       Grid.Row="0"
+                                           Style="{StaticResource Title}"/>
                                     <Label Text="{Binding Description}" 
                                        Grid.Row="1"
-                                       Margin="5,0,0,0"
-                                       FontFamily="Finlandica"/>
+                                           Margin="5,0,0,0"/>
                                     <Label Text="{Binding offerCode}" 
-                                       Grid.Row="2"/>
+                                       Grid.Row="2"
+                                           FontAttributes="Bold"/>
                                 </Grid>
                             </Grid>
                         </Border>
@@ -117,7 +117,6 @@
             <!--Categories-->
             <VerticalStackLayout Margin="0,10,0,5">
                 <Border StrokeThickness="0"
-                    StrokeShape="RoundRectangle 5"
                     Style="{x:StaticResource catTitleBorder}">
                     <Label Text="Categories"
                        Style="{x:StaticResource CatTitleText}"/>
@@ -125,11 +124,7 @@
 
                 <CollectionView ItemsSource="{Binding MainCategories}"
                             Margin="0,10"
-                            HorizontalOptions="Center"
-                            SelectionMode="Single"
-                            x:Name="CategoriesCollectionView"
-                            SelectionChangedCommand="{Binding GoToSelectedMainCategoryCommand}"
-                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference CategoriesCollectionView}}">
+                            HorizontalOptions="Center">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal"
                            ItemSpacing="10"/>
@@ -138,35 +133,38 @@
                         <DataTemplate x:DataType="models:MainCategory">
                             <Border StrokeShape="RoundRectangle 10"
                                 StrokeThickness="0"
-                                WidthRequest="80"
-                                BackgroundColor="{StaticResource PrimaryLightColor}">
-                                <Grid>
+                                WidthRequest="95"
+                                BackgroundColor="{AppThemeBinding Dark={StaticResource Gray100}, Light={StaticResource PrimaryLight300}}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.GoToSelectedMainCategoryCommand}"
+                                                            CommandParameter="{Binding}"/>
+                                </Border.GestureRecognizers>
 
-                                    <VerticalStackLayout VerticalOptions="Center"
+                                <Grid VerticalOptions="Center" RowDefinitions="*,auto"
                                                      Margin="5"
-                                                     Spacing="2">
-                                        <Image Source="{Binding Icon}"
-                                           Aspect="AspectFill"
+                                                     RowSpacing="5">
+                                    <Image Source="{Binding Icon}"
+                                           Aspect="AspectFit"
                                            HorizontalOptions="Center"
                                            VerticalOptions="Center"
-                                           HeightRequest="40"/>
-                                        <Border Grid.Row="1"
+                                           HeightRequest="40"
+                                           Grid.Row="0"/>
+                                    <Border Grid.Row="1"
                                             VerticalOptions="End"
                                             StrokeShape="RoundRectangle 10"
                                             Background="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}"
                                             StrokeThickness="0.1"
-                                            Margin="0,0,0,5">
-                                            <Border.Shadow>
-                                                <Shadow Brush="#000"
+                                            Margin="0,0,0,5"
+                                                Padding="5,0">
+                                        <Border.Shadow>
+                                            <Shadow Brush="#000"
                                                     Offset="5,5"
                                                     Opacity="0.3"/>
-                                            </Border.Shadow>
-                                            <Label Text="{Binding Name}"
-                                               Margin="6,3"
-                                               FontSize="10"
-                                               HorizontalTextAlignment="Center"/>
-                                        </Border>
-                                    </VerticalStackLayout>
+                                        </Border.Shadow>
+                                        <Label Text="{Binding Name}"
+                                                   Style="{StaticResource ButtonLabelText}"
+                                                   FontSize="13"/>
+                                    </Border>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -176,7 +174,7 @@
         </VerticalStackLayout>
 
         <ScrollView Grid.Row="1">
-            <Grid RowDefinitions="*,*" RowSpacing="15">
+            <Grid RowDefinitions="*,*" RowSpacing="15" Margin="0,0,0,20">
                 <!--Best Sales-->
                 <VerticalStackLayout Margin="0" Grid.Row="0">
                     <Border StrokeThickness="0"
@@ -188,32 +186,24 @@
 
                     <CollectionView  x:Name="BestSalesCollectionView"
                              Margin="0,10"
-                            ItemsSource="{Binding BestSellingProducts}"
-                            SelectionMode="Single"
-                            SelectionChangedCommand="{Binding GoToSelectedProductDetailsCommand, Mode=TwoWay}"
-                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference BestSalesCollectionView}}">
+                            ItemsSource="{Binding BestSellingProducts}">
                         <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal"/>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Product">
-                                <Border StrokeShape="RoundRectangle 5"
-                                StrokeThickness="0.5"
-                                Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
-                                WidthRequest="{OnPlatform Android=170, WinUI=250, MacCatalyst=250, iOS=170}"
-                                HeightRequest="{OnPlatform Android=200, WinUI=300, MacCatalyst=200,iOS=200}"
-                                Margin="5">
+                                <Border Style="{StaticResource DisplayProductBorder}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.GoToSelectedProductDetailsCommand}"
+                                                                CommandParameter="{Binding}"/>
+                                    </Border.GestureRecognizers>
+                                    
                                     <Grid RowDefinitions="*,auto">
                                         <Grid Grid.Row="0">
                                             <BoxView BackgroundColor="#000" Opacity="0.1"
                                                      ZIndex="1"/>
-                                            <Label Text="{x:Static icons:Icons.favoriteIcon}"
-                                                   FontFamily="MaterialIcon"
-                                                   FontSize="30"
-                                                   TextColor="#fff"
-                                                   VerticalOptions="Start"
-                                                   HorizontalOptions="End"
-                                                   ZIndex="2">
+                                            <Label Style="{StaticResource FavoriteIcon}"
+                                                   TextColor="#fff">
                                                 <Label.GestureRecognizers>
                                                     <TapGestureRecognizer 
                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleProductFavoriteCommand}"
@@ -222,40 +212,29 @@
                                             </Label>
                                             <Image Source="{Binding ImageUrl}" Aspect="AspectFill"/>
                                         </Grid>
-                                        <Grid RowDefinitions="auto,auto,*" Grid.Row="1" Padding="5" ColumnDefinitions="*,auto"
-                                                ColumnSpacing="10">
-                                            <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="1" Grid.Row="0"
-                                                    Grid.ColumnSpan="2"/>
-                                            <HorizontalStackLayout Grid.Row="1" Grid.Column="0">
-                                                <Label Text="{x:Static icons:Icons.locationIcon}" FontFamily="MaterialIcon" Margin="0,2,0,0"/>
-                                                <Label Text="{Binding ShopLocation}"
-                                               FontFamily="Finlandica"/>
-                                            </HorizontalStackLayout>
-                                            <Label Text="{Binding FormattedPrice}" TextColor="{StaticResource Primary}" FontAttributes="Bold"
-                                                   Grid.Row="3"
-                                                   FontSize="16"/>
-                                            
-                                            <!--Add to Cart-->
-                                            <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"
-                                                    HorizontalOptions="Center"
-                                                    VerticalOptions="Center"
-                                                    StrokeThickness="0"
-                                                    StrokeShape="RoundRectangle 2"
-                                                    BackgroundColor="{StaticResource Primary}"
-                                                    Padding="5,-5,5,2">
-                                                <Border.GestureRecognizers>
-                                                    <TapGestureRecognizer 
-                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToCartCommand}"
-                                                                CommandParameter="{Binding}"/>
-                                                </Border.GestureRecognizers>
-                                                <Label Text="+"
-                                               VerticalOptions="Center"
-                                               HorizontalOptions="Center"
-                                               VerticalTextAlignment="Center"
-                                               HorizontalTextAlignment="Center"
-                                               TextColor="#fff"
-                                               FontSize="24"/>
-                                            </Border>
+                                        <Grid Grid.Row="1" Style="{StaticResource DisplayProductGrid}">
+                                            <VerticalStackLayout Grid.Row="0">
+                                                <Label Text="{Binding Name}" Style="{StaticResource Title}" LineBreakMode="TailTruncation" MaxLines="1"/>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="{x:Static icons:Icons.locationIcon}" Style="{StaticResource MaterialIcon}"/>
+                                                    <Label Text="{Binding ShopLocation}"/>
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                            <Grid Grid.Row="1" ColumnDefinitions="*,*">
+                                                <Label Text="{Binding FormattedPrice}" Style="{StaticResource BigPrice}"
+                                                       Grid.Column="0"
+                                                       VerticalOptions="Center"
+                                                       VerticalTextAlignment="Center"/>
+
+                                                <!--Add to Cart-->
+                                                <Button Style="{StaticResource CustomButton}"
+                                                        Grid.Column="1"
+                                                        Text="+"
+                                                        HorizontalOptions="End"
+                                                        VerticalOptions="Center"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToCartCommand}"
+                                                        CommandParameter="{Binding}"/>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -274,32 +253,29 @@
                     </Border>
                     <CollectionView  x:Name="RecommendedShopsCollectionView"
                                      Margin="0,10"
-                                    ItemsSource="{Binding RecommendedShops}"
-                                    SelectionMode="Single"
-                                    SelectionChangedCommand="{Binding GoToSelectedShopProfileCommand, Mode=TwoWay}"
-                                    SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference RecommendedShopsCollectionView}}">
+                                    ItemsSource="{Binding RecommendedShops}">
                         <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal"/>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Shop">
-                                <Border StrokeShape="RoundRectangle 5"
-                                        StrokeThickness="0.5"
-                                        Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
-                                        WidthRequest="180"
-                                        HeightRequest="160"
-                                        Margin="5">
+                                <Border Style="{StaticResource DisplayShopBorder}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.GoToSelectedShopProfileCommand}"
+                                                                CommandParameter="{Binding}"/>
+                                    </Border.GestureRecognizers>
                                     <Grid RowDefinitions="*,auto">
                                         <Grid>
                                             <BoxView BackgroundColor="#000" Opacity="0.1"
                                                      ZIndex="1"/>
                                             <Label Text="{x:Static icons:Icons.favoriteIcon}"
-                                                   FontFamily="MaterialIcon"
-                                                   FontSize="30"
+                                                   Style="{StaticResource MaterialIcon}"
                                                    TextColor="#fff"
                                                    VerticalOptions="Start"
                                                    HorizontalOptions="End"
-                                                   ZIndex="2">
+                                                   ZIndex="2"
+                                                   Margin="5"
+                                                   FontSize="26">
                                                 <Label.GestureRecognizers>
                                                     <TapGestureRecognizer 
                                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleShopFavoriteCommand}"
@@ -309,11 +285,11 @@
                                             <Image Source="{Binding ShopProfileImage}" Aspect="AspectFill"/>
                                         </Grid>
                                         <VerticalStackLayout Grid.Row="1" Padding="5">
-                                            <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="1"/>
+                                            <Label Text="{Binding Name}" LineBreakMode="TailTruncation" MaxLines="1"
+                                                   Style="{StaticResource Title}"/>
                                             <HorizontalStackLayout>
-                                                <Label Text="{x:Static icons:Icons.locationIcon}" FontFamily="MaterialIcon" Margin="0,2,0,0"/>
-                                                <Label Text="{Binding ShortLocation}"
-                                                        FontFamily="Finlandica"/>
+                                                <Label Text="{x:Static icons:Icons.locationIcon}" Style="{StaticResource MaterialIcon}"/>
+                                                <Label Text="{Binding ShortLocation}"/>
                                             </HorizontalStackLayout>
                                         </VerticalStackLayout>
                                     </Grid>

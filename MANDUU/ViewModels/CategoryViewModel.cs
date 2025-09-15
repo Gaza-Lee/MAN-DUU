@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using CommunityToolkit.Maui.Alerts;
 
 namespace MANDUU.ViewModels
 {
@@ -15,23 +16,28 @@ namespace MANDUU.ViewModels
         private readonly ProductService _productService;
         private readonly ProductCategoryService _categoryService;
         private readonly INavigationService _navigationService;
+        private readonly CartService _cartService;
 
         [ObservableProperty] private int categoryId;
         [ObservableProperty] private MainCategory selectedMainCategory;
         [ObservableProperty] private ObservableCollection<SubCategory> subCategories = new();
+        [ObservableProperty] private bool _hasCartItems;
 
         public CategoryViewModel(
             ProductService productService,
             ProductCategoryService categoryService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            CartService cartService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _navigationService = navigationService;
+            _cartService = cartService;
+            _cartService.CartUpdated += OnCartUpdated;
         }
 
         [RelayCommand]
-        private async Task GoToProductDetailAsync(Product product)
+        private async Task GoToSelectedProductDetailsAsync(Product product)
         {
             if (product == null) return;
 
@@ -39,6 +45,23 @@ namespace MANDUU.ViewModels
         {
             { "ProductId", product.Id }
         });
+        }
+
+        [RelayCommand]
+        private async Task AddToCartAsync(Product product)
+        {
+            if (product != null)
+            {
+                await _cartService.AddToCartAsync(product);
+                var addToCartToast = Toast.Make($"{product.Name} added to cart", CommunityToolkit.Maui.Core.ToastDuration.Short, 12);
+                await addToCartToast.Show();
+            }
+        }
+
+        [RelayCommand]
+        private async Task GoToCartAsync()
+        {
+            await _navigationService.NavigateToAsync("cartpage");
         }
 
         public async Task LoadProductsAsync()
@@ -68,12 +91,26 @@ namespace MANDUU.ViewModels
             SubCategories = new ObservableCollection<SubCategory>(subCategories);
         }
 
-        public async void ApplyQueryAttributes(IDictionary<string, object> query)
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.TryGetValue("CategoryId", out var catId) && catId is int id)
                 CategoryId = id;
+        }
 
+        private void UpdateCartStatus()
+        {
+            HasCartItems = _cartService.HasItems();
+        }
+
+        private void OnCartUpdated(object sender, EventArgs e)
+        {
+            UpdateCartStatus();
+        }
+
+        public async Task InitializeAsync()
+        {
             await LoadProductsAsync();
+            UpdateCartStatus();
         }
     }
 }

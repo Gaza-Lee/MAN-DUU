@@ -16,16 +16,17 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*, Auto, *"
+        <Grid ColumnDefinitions="auto,* ,auto"
           Padding="0, 0, 5, 0"
           Margin="0"
           VerticalOptions="Center">
+            
             <Label Grid.Column="0" 
-           Text="{x:Static icons:Icons.profileIcon}"
-           HorizontalOptions="Start"
-           FontFamily="MaterialIcon"
-           VerticalOptions="Center"
-           FontSize="30">
+               Text="{x:Static icons:Icons.profileIcon}"
+               HorizontalOptions="Start"
+               FontFamily="MaterialIcon"
+               VerticalOptions="Center"
+               FontSize="30">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToProfileCommand}"/>
                 </Label.GestureRecognizers>
@@ -33,8 +34,8 @@
 
             <Label Text="Electronic Printing"
                    Grid.Column="1"
-                   FontSize="20"
-                   HorizontalOptions="Center"
+                   Style="{StaticResource SubHeadline}"
+                   HorizontalTextAlignment="Center"
                    VerticalOptions="Center"/>
 
             <Grid VerticalOptions="Center" HorizontalOptions="End" WidthRequest="40" HeightRequest="40"
@@ -68,37 +69,36 @@
         <VerticalStackLayout Grid.Row="0" Spacing="5">
             <Border HorizontalOptions="Center"
                 VerticalOptions="Center"
-                Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource WhiteBrush}}"
+                Background="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource Gray100}}"
                 StrokeShape="RoundRectangle 5"
                 StrokeThickness="0"
                 Padding="10,5">
                 <Border.Shadow>
                     <Shadow Offset="5,0"
                         Opacity="0.2"
-                        Brush="White"/>
+                        Brush="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"/>
                 </Border.Shadow>
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding SelectDocumentCommand}"/>
                 </Border.GestureRecognizers>
                 <HorizontalStackLayout Spacing="5">
                     <Label Text="{x:Static icons:Icons.documentIcon}"
-                           FontFamily="MaterialIcon"
+                           Style="{StaticResource MaterialIcon}"
                            FontSize="60"/>
                     <Border Background="{StaticResource Primary}"
                             VerticalOptions="Center"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 5">
-                        <HorizontalStackLayout Spacing="5" Margin="5,0,10,0">
+                            StrokeShape="RoundRectangle 5"
+                            Padding="10,5">
+                        <HorizontalStackLayout >
                             <Label Text="{x:Static icons:Icons.UploadIcon}"
-                                   FontFamily="MaterialIcon"
-                                   FontSize="30"
-                                   TextColor="#fff"/>
+                                   Style="{StaticResource MaterialIcon}"
+                                   FontSize="26"/>
                             <Label Text="Upload Document"
                                    x:Name="UploadLabel"
                                    VerticalTextAlignment="Center"
-                                   TextColor="#fff"
-                                   FontSize="20"
-                                   FontFamily="Finlandica">
+                                   Style="{StaticResource ButtonLabelText}"
+                                   FontSize="20">
                                 <Label.Triggers>
                                     <DataTrigger TargetType="Label"
                                                  Binding="{Binding IsDocumentSelected}"
@@ -131,14 +131,10 @@
                 </HorizontalStackLayout>
             </Border>
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
-                <Border BackgroundColor="Transparent"
-                        Stroke="Red"
-                        StrokeShape="RoundRectangle 100">
-                    <Label Text="i" FontSize="20" Padding="10,0"
-                           TextColor="Red"/>
-                </Border>
+                <Label Text="{x:Static icons:Icons.infoIcon}"
+                       Style="{StaticResource MaterialIcon}"
+                       TextColor="Red"/>
                 <Label Text="Select Printing station and upload document"
-                       FontFamily="Finlandica"
                        VerticalTextAlignment="Center"
                        TextColor="Red"/>
             </HorizontalStackLayout>
@@ -148,28 +144,20 @@
             <Label Text="Available Printing Stations"
                    FontSize="Title"
                    HorizontalOptions="Center" Grid.Row="0"/>
-            <HorizontalStackLayout Margin="20,0" Grid.Row="1">
+            <Grid Margin="20,0" Grid.Row="1" ColumnDefinitions="*,*">
                 <Border Stroke="Gray"
                         HorizontalOptions="Start"
-                        StrokeShape="RoundRectangle 5"
-                        Padding="5,0">
-                    <HorizontalStackLayout>
-                        <Label Text="{x:Static icons:Icons.searchIcon}"
-                               FontSize="20"
-                               FontFamily="MaterialIcon"
-                               VerticalOptions="Center"/>
-                        <Entry VerticalOptions="Center"
-                               VerticalTextAlignment="Center"
-                               MinimumWidthRequest="120"
-                               Text="{Binding SearchText}"/>
-                    </HorizontalStackLayout>
+                        StrokeShape="RoundRectangle 5" >
+                    <SearchBar Text="{Binding SearchText}"/>
                 </Border>
                 <!-- Active Filter Toggle -->
-                <CheckBox IsChecked="{Binding IsActive}"
-                          VerticalOptions="Center"/>
-                <Label Text="Active Only"
-                       VerticalOptions="Center"/>
-            </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
+                    <CheckBox IsChecked="{Binding IsActive}"
+                              VerticalOptions="Center"/>
+                    <Label Text="Active Only"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Grid>
 
             <CollectionView ItemsSource="{Binding DisplayStations}" Grid.Row="2">
                 <CollectionView.ItemsLayout>
@@ -206,34 +194,31 @@
                                         StrokeShape="RoundRectangle 100"
                                         Background="{StaticResource Primary}"
                                         Padding="5"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start"
                                         Grid.Column="0">
                                     <Label Text="{x:Static icons:Icons.ePrintIcon}"
-                                           FontFamily="MaterialIcon"
+                                           Style="{StaticResource MaterialIcon}"
                                            FontSize="60"
                                            TextColor="#fff"/>
                                 </Border>
 
-                                <VerticalStackLayout Grid.Column="1">
-                                    <Label Text="{Binding Name}"/>
-                                    <Grid ColumnDefinitions="* ,auto">
-                                        <HorizontalStackLayout HorizontalOptions="Start" Grid.Column="0">
+                                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                    <Label Text="{Binding Name}"
+                                           Style="{StaticResource Title}"/>
+                                    <Grid ColumnDefinitions="* ,*">
+                                        <HorizontalStackLayout HorizontalOptions="Start" Grid.Column="0" Spacing="2">
                                             <Label Text="{x:Static icons:Icons.locationIcon}"
-                                                   FontFamily="MaterialIcon"
-                                                   FontSize="20"/>
+                                                  Style="{StaticResource MaterialIcon}"/>
                                             <Label Text="{Binding ShortLocation}"
                                                    TextColor="Gray"/>
                                         </HorizontalStackLayout>
 
-                                        <Border StrokeShape="RoundRectangle 5"
-                                                Padding="5,0"
-                                                StrokeThickness="0"
-                                                Background="{StaticResource Primary}"
-                                                HorizontalOptions="End"
-                                                Grid.Column="1">
-                                            <Label Text="Locate on Map"
-                                                   TextColor="#fff"
-                                                   FontFamily="Finlandica"/>
-                                        </Border>
+                                        <Button Grid.Column="1" Style="{StaticResource CustomButton}"
+                                                Text="Locate on map"
+                                                FontSize="Small"
+                                                Padding="5,2"
+                                                HorizontalOptions="End"/>
                                     </Grid>
                                     <Label Text="{Binding PhoneNumber}"
                                            TextColor="{StaticResource Primary}"/>

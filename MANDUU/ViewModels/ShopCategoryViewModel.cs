@@ -37,7 +37,7 @@ namespace MANDUU.ViewModels
         }
 
         [RelayCommand]
-        private async Task SelectedShopAsync(Shop shop)
+        private async Task GoToSelectedShopProfileAsync(Shop shop)
         {
             if (shop == null) return;
 
@@ -45,7 +45,7 @@ namespace MANDUU.ViewModels
             {
                 { "ShopId", shop.Id },
                 { "ShopName", shop.Name }
-            });
+            });            
         }
 
         [RelayCommand]

@@ -23,7 +23,7 @@ namespace MANDUU.ViewModels
         private ObservableCollection<PrintingStation> _displayStations = new();
 
         [ObservableProperty]
-        private bool _isActive;
+        private bool _isActive = true;
 
         [ObservableProperty]
         private string _selectedDocument;
