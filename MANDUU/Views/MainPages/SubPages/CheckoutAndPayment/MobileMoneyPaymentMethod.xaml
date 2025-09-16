@@ -7,7 +7,8 @@
         <Border StrokeThickness="0.5"
             StrokeShape="RoundRectangle 10"
             Grid.Row="0">
-            <Picker Title="Select Network" Margin="10,0"/>
+            <Picker Title="Select Network" Margin="10,0"
+                    ItemsSource="{Binding SelectedpaymentNetworkProvider}"/>
         </Border>
         <VerticalStackLayout Grid.Row="1">
             <Label Text="Mobile Number"
@@ -15,7 +16,8 @@
                TextColor="{AppThemeBinding Dark={StaticResource Gray100}, Light= {StaticResource Gray600}}"/>
             <Border StrokeThickness="0.5"
                 StrokeShape="RoundRectangle 10">
-                <Entry Placeholder="e.g. 0241234567" />
+                <Entry Placeholder="e.g. 0241234567"
+                       Text="{Binding PhoneNumber}"/>
             </Border>
             <HorizontalStackLayout Margin="0,5">
                 <Label Text="{x:Static icons:Icons.infoIcon}"
@@ -55,13 +57,14 @@
             </VerticalStackLayout>
         </Border>
 
-        <Button Text="{Binding CartTotal, StringFormat='Pay ₵ {0:N2}'}"
+        <Button Text="{Binding OverallTotal, StringFormat='Pay ₵ {0:N2}'}"
             TextColor="{StaticResource White}"
             BackgroundColor="{StaticResource Primary}"
             HorizontalOptions="Center"
             Padding="100,0"
             Grid.Row="3"
             VerticalOptions="End"
-            Margin="0,0,0,50"/>
+            Margin="0,0,0,50"
+                Command="{Binding MakePaymentCommand}"/>
     </Grid>
 </ContentView>

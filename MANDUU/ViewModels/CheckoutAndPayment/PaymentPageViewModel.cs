@@ -6,12 +6,14 @@ using MANDUU.Enumeration;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace MANDUU.ViewModels.CheckoutAndPayment
 {
     public partial class PaymentPageViewModel : BaseViewModel
     {
         private readonly CartService _cartService;
+        public MobileMoneyViewModel _mobileMoneyPaymentVM { get; }
 
         [ObservableProperty]
         private int selectedPaymentMethodIndex = 0; // Default: MobileMoney = 0
@@ -23,7 +25,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         private string cartItemsNames = string.Empty;
 
         [ObservableProperty]
-        private decimal cartTotal;
+        private decimal _overallTotal;
 
         [ObservableProperty]
         private decimal deliveryFee = 20m;
@@ -32,9 +34,11 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         private int orderNumber = 35; //
 
         public PaymentPageViewModel(CartService cartService,
-            INavigationService navigationService) : base(navigationService)
+            INavigationService navigationService,
+            MobileMoneyViewModel mobileMoneyPaymentVM) : base(navigationService)
         {
             _cartService = cartService;
+            _mobileMoneyPaymentVM = mobileMoneyPaymentVM;
         }
 
         public override async Task InitializeAsync()
@@ -44,7 +48,8 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
             CartItemsNames = string.Join(", ",
                 cartItems.Select(item => item.Product?.Name)
                          .Where(name => !string.IsNullOrWhiteSpace(name)));
-            CartTotal = _cartService.GetCartTotal();
-        }
+            var cartTotal = _cartService.GetCartTotal();
+            OverallTotal = cartTotal + DeliveryFee;
+        }  
     }
 }

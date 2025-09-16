@@ -126,7 +126,9 @@ namespace MANDUU
             builder.Services.AddTransient<CreateShopViewModel>();
             builder.Services.AddTransient<CheckoutPageViewModel>();
             builder.Services.AddTransient<PaymentPageViewModel>();
+            builder.Services.AddTransient<MobileMoneyViewModel>();
             builder.Services.AddTransient<GetVerifiedPageViewModel>();
+
 
             return builder;
         }

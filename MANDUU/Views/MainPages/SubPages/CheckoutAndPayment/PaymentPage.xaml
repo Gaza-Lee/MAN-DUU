@@ -81,13 +81,12 @@
                            FontFamily="Finlandica"/>
                     <Label Grid.Row="3"
                            Grid.Column="1"
-                           Text="{Binding CartTotal, StringFormat='₵ {0:N2}'}"
+                           Text="{Binding OverallTotal, StringFormat='₵ {0:N2}'}"
                            Grid.ColumnSpan="2"
                            VerticalTextAlignment="Center"
                            FontSize="20"
                            TextColor="{StaticResource Primary}"
-                           HorizontalOptions="Start"
-                           FontFamily="Finlandica"/>
+                           HorizontalOptions="Start"/>
                 </Grid>
             </Border>
             <Border Grid.Row="2"
