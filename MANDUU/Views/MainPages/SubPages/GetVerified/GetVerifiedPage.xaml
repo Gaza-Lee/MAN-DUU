@@ -68,15 +68,15 @@
             <Grid Grid.Row="0"
                   ColumnDefinitions="*,*"
                   RowDefinitions="auto,*">
-                <Label Text="Step 1 of 4"
+                <Label Text="{Binding StepText}"
                        Grid.Row="0"
                        Grid.Column="0"
                        HorizontalOptions="Start"/>
-                <Label Text="25%"
+                <Label Text="{Binding PercentText}"
                        Grid.Column="1"
                        HorizontalOptions="End"
                        />
-                <ProgressBar Progress="0.25"
+                <ProgressBar Progress="{Binding ProgressValue}"
                             ProgressColor="{StaticResource Primary}"
                              Grid.Column="0"
                              Grid.Row="1"
@@ -89,7 +89,7 @@
                                    TabType="Fixed"
                                    VerticalOptions="Start"
                                    Orientation="Vertical"
-                                   SelectedIndex="{Binding Source={x:Reference Switcher}, Path=SelectedIndex, Mode=TwoWay}">
+                                   SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
 
                 <sharpnado:TabHostView.Tabs>
                     <!-- Personal Information Tab -->
@@ -172,28 +172,28 @@
                     </sharpnado:ViewSwitcher>
                     <Grid ColumnDefinitions="*,*" Grid.Row="1" Padding="5,10"
                           VerticalOptions="End">
-                        <Border HorizontalOptions="Start"
-                                Padding="10,5"
-                                StrokeShape="RoundRectangle 10"
-                                BackgroundColor="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}"
-                                StrokeThickness="0"
-                                Grid.Column="0"
-                                VerticalOptions="Center">
-                            <Border.Shadow>
-                                <Shadow Brush="{AppThemeBinding Light={StaticResource Gray300}}"
+                        <Button Text="Previous"
+                                IsVisible="{Binding CanShowPreviousButton}"
+                                Command="{Binding PreviousCommand}"
+                                Style="{StaticResource CustomButton}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                                TextColor="{AppThemeBinding Light={StaticResource Black},Dark={StaticResource White}}">
+                            <Button.Shadow>
+                                <Shadow Brush="{StaticResource Gray400}"
+                                        Opacity="0.5"
                                         Offset="5,5"
-                                        Opacity="0.5"/>
-                            </Border.Shadow>
-                            <Label Text="Previous"
-                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryDarkText}, Dark={StaticResource White}}"
-                                   FontSize="20"/>
-                        </Border>
+                                        Radius="100"/>
+                            </Button.Shadow>
+                        </Button>
 
                         <Button Grid.Column="1"
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"
-                                Text="Next"
-                                FontSize="18">
+                                Text="{Binding NextButtonText}"
+                                Style="{StaticResource CustomButton}"
+                                Command="{Binding NextCommand, Mode=TwoWay}">
                             <Button.Shadow>
                                 <Shadow Brush="{StaticResource Gray400}"
                                         Opacity="0.5"

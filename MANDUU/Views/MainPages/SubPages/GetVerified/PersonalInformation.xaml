@@ -18,21 +18,21 @@
         <!--First Name-->
         <VerticalStackLayout>
             <Label Text="First Name"
-                   FontFamily="Finlandica"
                    Margin="5,0"/>
             <Border StrokeShape="RoundRectangle 10"
                     StrokeThickness="0.8">
-                <Entry />
+                <Entry Text="{Binding FirstName}"
+                       Margin="5,0"/>
             </Border>
         </VerticalStackLayout>
         <!--Last Name-->
         <VerticalStackLayout>
             <Label Text="Last Name"
-           FontFamily="Finlandica"
-           Margin="5,0"/>
+                   Margin="5,0"/>
             <Border StrokeShape="RoundRectangle 10"
-            StrokeThickness="0.8">
-                <Entry />
+                    StrokeThickness="0.8">
+                <Entry Text="{Binding LastName}"
+                       Margin="5,0"/>
             </Border>
         </VerticalStackLayout>
 
@@ -54,7 +54,8 @@
            Margin="5,0"/>
             <Border StrokeShape="RoundRectangle 10"
             StrokeThickness="0.8">
-                <Entry />
+                <Entry Margin="5,0"
+                       Text="{Binding Email}"/>
             </Border>
         </VerticalStackLayout>
 
