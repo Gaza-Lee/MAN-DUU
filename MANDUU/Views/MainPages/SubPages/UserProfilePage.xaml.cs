@@ -6,11 +6,11 @@ namespace MANDUU.Views.MainPages.SubPages;
 public partial class UserProfilePage : ContentPage
 {
 	private readonly UserProfileViewModel _userProfileViewModel;
-	public UserProfilePage(IUserService userService, INavigationService navigationService)
+	public UserProfilePage(UserProfileViewModel userProfileViewModel)
 	{
 		InitializeComponent();
-		_userProfileViewModel = new UserProfileViewModel(userService, navigationService);
-		BindingContext = _userProfileViewModel;
+		_userProfileViewModel = userProfileViewModel;
+        BindingContext = _userProfileViewModel;
 	}
 
     protected override async void OnAppearing()

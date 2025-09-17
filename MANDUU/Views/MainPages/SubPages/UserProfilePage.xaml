@@ -4,6 +4,27 @@
              xmlns:icons="clr-namespace:MANDUU.Helpers"
              x:Class="MANDUU.Views.MainPages.SubPages.UserProfilePage"
              Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Border" x:Key="Icons">
+                <Setter Property="StrokeThickness" Value="0"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource Gray600}}"
+                                Opacity="0.4"
+                                Offset="5,5"
+                                Radius="100"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Shell.TitleView>
             <Grid ColumnDefinitions="*,auto" Padding="10,0">
                 <!-- Page Title -->
@@ -41,7 +62,7 @@
                 StrokeThickness="0"
                 Padding="5,20,5,5">
             <Border.Shadow>
-                <Shadow Brush="Gray"
+                <Shadow Brush="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource Gray400}}"
                         Offset="5,5"
                         Opacity="0.5"/>
             </Border.Shadow>
@@ -76,144 +97,178 @@
             </VerticalStackLayout>
         </Border>
 
-        <Grid RowDefinitions="auto,auto,auto,auto" VerticalOptions="End"
-              Grid.Row="1" RowSpacing="10">
+        <Grid Grid.Row="1" RowDefinitions="*,*">
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*">
+                <Border Grid.Column="0"
+                        Grid.Row="0"
+                        Style="{x:StaticResource Icons}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToCartCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Grid HeightRequest="60" WidthRequest="65" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Button Style="{StaticResource CustomButton}"
+                                Text="{Binding CartItemCount}"
+                                CornerRadius="200"
+                                WidthRequest="20"
+                                Padding="2"
+                                FontSize="12"
+                                HeightRequest="20"
+                                BackgroundColor="{StaticResource PrimaryLightColor}"
+                                TextColor="{StaticResource Black}"
+                                VerticalOptions="Start"
+                                HorizontalOptions="End"
+                                ZIndex="1"/>
+                        <!--Cart Icon-->
+                        <Label Text="{x:Static icons:Icons.cartIcon}"
+                               Style="{StaticResource MaterialIcon}"
+                               FontSize="50"
+                               VerticalOptions="End"
+                               HorizontalOptions="Center"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            
+            <Grid RowDefinitions="auto,auto,auto,auto" VerticalOptions="End" RowSpacing="10"
+                  Grid.Row="1">
 
-            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
                     Grid.Row="0">
-                <Border.Shadow>
-                    <Shadow Brush="Gray"
+                    <Border.Shadow>
+                        <Shadow Brush="Gray"
                             Offset="5,5"
                             Opacity="0.3"/>
-                </Border.Shadow>
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToGetVerifiedCommand, Mode=TwoWay}"/>
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
-                    <Label Grid.Column="0"
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToGetVerifiedCommand, Mode=TwoWay}"/>
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
+                        <Label Grid.Column="0"
                            Text="{x:Static icons:Icons.verificationBadgeIcon}"
                            FontFamily="MaterialIcon"
                            TextColor="Green"
                            FontSize="30"
                            VerticalTextAlignment="Center"/>
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                        <Label Text="GET VERIFIED"
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="GET VERIFIED"
                                FontSize="18"/>
-                        <HorizontalStackLayout Spacing="5">
-                            <Label Text="{x:Static icons:Icons.infoIcon}"
+                            <HorizontalStackLayout Spacing="5">
+                                <Label Text="{x:Static icons:Icons.infoIcon}"
                                    FontFamily="MaterialIcon"
                                    VerticalOptions="Center"
                                    VerticalTextAlignment="Center"/>
-                            <Label Text="Recommended for vendors"
+                                <Label Text="Recommended for vendors"
                                    VerticalTextAlignment="Center"
                                    FontFamily="Finlandica"/>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                    <Label Text="{x:Static icons:Icons.getStartedIcon}"
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                        <Label Text="{x:Static icons:Icons.getStartedIcon}"
                            Grid.Column="2"
                            FontFamily="MaterialIcon"
                            FontSize="30"
                            VerticalOptions="Center"
                            HorizontalOptions="End"
                            TextColor="Gray"/>
-                </Grid>
-            </Border>
+                    </Grid>
+                </Border>
 
-            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
                     Grid.Row="1">
-                <Border.Shadow>
-                    <Shadow Brush="Gray"
+                    <Border.Shadow>
+                        <Shadow Brush="Gray"
                             Offset="5,5"
                             Opacity="0.3"/>
-                </Border.Shadow>
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToFavoritesCommand, Mode=TwoWay}"/>
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
-                    <Label Grid.Column="0"
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToFavoritesCommand, Mode=TwoWay}"/>
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
+                        <Label Grid.Column="0"
                            Text="{x:Static icons:Icons.favoriteIcon}"
                            FontFamily="MaterialIcon"
                            TextColor="Red"
                            FontSize="30"/>
-                    <Label Text="FAVORITES"
+                        <Label Text="FAVORITES"
                            Grid.Column="1"
                            FontSize="20"/>
-                    <Label Text="{x:Static icons:Icons.getStartedIcon}"
+                        <Label Text="{x:Static icons:Icons.getStartedIcon}"
                            Grid.Column="2"
                            FontFamily="MaterialIcon"
                            FontSize="30"
                            VerticalOptions="Center"
                            HorizontalOptions="End"
                            TextColor="Gray"/>
-                </Grid>
-            </Border>
-            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
+                    </Grid>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
                     Grid.Row="3">
-                <Border.Shadow>
-                    <Shadow Brush="Gray"
+                    <Border.Shadow>
+                        <Shadow Brush="Gray"
                             Offset="5,5"
                             Opacity="0.3"/>
-                </Border.Shadow>
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToFAQCommand, Mode=TwoWay}"/>
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
-                    <Label Grid.Column="0"
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToFAQCommand, Mode=TwoWay}"/>
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
+                        <Label Grid.Column="0"
                            Text="{x:Static icons:Icons.FAQIcon}"
                            FontFamily="MaterialIcon"
                            FontSize="30"/>
-                    <Label Text="FAQ"
+                        <Label Text="FAQ"
                            Grid.Column="1"
                            FontSize="20"/>
-                    <Label Text="{x:Static icons:Icons.getStartedIcon}"
+                        <Label Text="{x:Static icons:Icons.getStartedIcon}"
                            Grid.Column="2"
                            FontFamily="MaterialIcon"
                            FontSize="30"
                            VerticalOptions="Center"
                            HorizontalOptions="End"
                            TextColor="Gray"/>
-                </Grid>
-            </Border>
-            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
+                    </Grid>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
                     StrokeShape="RoundRectangle 10"
                     Padding="10,5"
                     StrokeThickness="0"
                     Grid.Row="2">
-                <Border.Shadow>
-                    <Shadow Brush="Gray"
+                    <Border.Shadow>
+                        <Shadow Brush="Gray"
                             Offset="5,5"
                             Opacity="0.3"/>
-                </Border.Shadow>
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToSettingsCommand, Mode=TwoWay}"/>
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
-                    <Label Grid.Column="0"
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToSettingsCommand, Mode=TwoWay}"/>
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="5">
+                        <Label Grid.Column="0"
                            Text="{x:Static icons:Icons.settingsIcon}"
                            FontFamily="MaterialIcon"
                            FontSize="30"/>
-                    <Label Text="SETTINGS"
+                        <Label Text="SETTINGS"
                            Grid.Column="1"
                            FontSize="20"/>
-                    <Label Text="{x:Static icons:Icons.getStartedIcon}"
+                        <Label Text="{x:Static icons:Icons.getStartedIcon}"
                            Grid.Column="2"
                            FontFamily="MaterialIcon"
                            FontSize="30"
                            VerticalOptions="Center"
                            HorizontalOptions="End"
                            TextColor="Gray"/>
-                </Grid>
-            </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+
         </Grid>
+
         <Grid RowDefinitions="auto, *" Grid.Row="2" RowSpacing="10">
             <Border BackgroundColor="Gray"
                     HeightRequest="1"

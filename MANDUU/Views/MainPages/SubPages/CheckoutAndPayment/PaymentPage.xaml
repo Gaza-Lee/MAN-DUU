@@ -62,7 +62,7 @@
                            Grid.Row="2"
                            Grid.Column="0"
                            FontFamily="Finlandica"/>
-                    <Label Text="Residential Address"
+                    <Label Text="{Binding ResidentialAddress}"
                            Grid.Column="1"
                            Grid.Row="2"
                            LineBreakMode="TailTruncation"
@@ -121,7 +121,6 @@
 
                         <sharpnado:TabHostView.Tabs>
                             <sharpnado:SegmentedTabItem Label="Mobile Money"
-                                                        FontFamily="Finlandica"
                                                         Margin="5"/>
                             <sharpnado:SegmentedTabItem Label="Card"
                                                         FontFamily="Finlandica"
@@ -139,7 +138,7 @@
 
                         <!-- Mobile Money -->
                         <sharpnado:DelayedView x:TypeArguments="tabviews:MobileMoneyPaymentMethod"
-                                               Animate="True">                            
+                                               Animate="True" BindingContext="{Binding MobileMoneyVM}">
                         </sharpnado:DelayedView>
                         <!-- Card -->
                         <sharpnado:DelayedView x:TypeArguments="tabviews:CardPaymentMethod"

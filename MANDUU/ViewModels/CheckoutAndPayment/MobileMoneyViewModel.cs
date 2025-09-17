@@ -24,11 +24,15 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         [ObservableProperty]
         private string _phoneNumber;
 
+        [ObservableProperty]
+        private decimal _overallTotal;
+
         public MobileMoneyViewModel(INavigationService navigationService, 
             CartService cartService, IUserService userService): base (navigationService)
         {
             _cartService = cartService;
-            _userService = userService;            
+            _userService = userService;
+
         }
 
         private bool CanMakePayment()
@@ -58,13 +62,13 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
             var confirmPayment = await Shell.Current.DisplayAlert(
                 "Confirm Payment",
                 "You are about to make payment for your order",
-                "Cancel", "Confirm");
+                "Confirm", "Cancel");
 
             if (confirmPayment)
             {
                 await _cartService.ClearCartAsync();
                 //navigate user to main page
-                await NavigationService.NavigateToAsync("//main");
+                await NavigationService.NavigateToAsync("//main/home");
             }
         }
     }

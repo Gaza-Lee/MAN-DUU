@@ -10,10 +10,13 @@ using System.Collections.ObjectModel;
 
 namespace MANDUU.ViewModels.CheckoutAndPayment
 {
-    public partial class PaymentPageViewModel : BaseViewModel
+    public partial class PaymentPageViewModel : BaseViewModel, IQueryAttributable
     {
         private readonly CartService _cartService;
-        public MobileMoneyViewModel _mobileMoneyPaymentVM { get; }
+        private readonly MobileMoneyViewModel _mobileMoneyPaymentVM;
+        public MobileMoneyViewModel MobileMoneyVM => _mobileMoneyPaymentVM;
+
+
 
         [ObservableProperty]
         private int selectedPaymentMethodIndex = 0; // Default: MobileMoney = 0
@@ -22,16 +25,19 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         public PaymentMethod SelectedPaymentMethod => (PaymentMethod)SelectedPaymentMethodIndex;
 
         [ObservableProperty]
-        private string cartItemsNames = string.Empty;
+        private string _cartItemsNames = string.Empty;
+
+        [ObservableProperty]
+        private decimal _deliveryFee = 20m;
+
+        [ObservableProperty]
+        private int _orderNumber = 35; //
 
         [ObservableProperty]
         private decimal _overallTotal;
 
         [ObservableProperty]
-        private decimal deliveryFee = 20m;
-
-        [ObservableProperty]
-        private int orderNumber = 35; //
+        private string _residentialAddress;
 
         public PaymentPageViewModel(CartService cartService,
             INavigationService navigationService,
@@ -50,6 +56,16 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
                          .Where(name => !string.IsNullOrWhiteSpace(name)));
             var cartTotal = _cartService.GetCartTotal();
             OverallTotal = cartTotal + DeliveryFee;
-        }  
+
+            _mobileMoneyPaymentVM.OverallTotal = OverallTotal;
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.TryGetValue("Address", out var addressObj) && addressObj is string address)
+            {
+                ResidentialAddress = address;
+            }
+        }
     }
 }

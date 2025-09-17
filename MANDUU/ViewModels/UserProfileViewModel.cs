@@ -11,30 +11,48 @@ namespace MANDUU.ViewModels
     {
         private readonly IUserService _userService;
         private readonly INavigationService _navigationService;
+        private readonly CartService _cartService;
 
         [ObservableProperty] private string _fullName;
         [ObservableProperty] private string _profileImage;
+        [ObservableProperty] private string _cartItemCount;
 
-        public UserProfileViewModel(IUserService userService, INavigationService navigationService)
+        public UserProfileViewModel(IUserService userService,
+            INavigationService navigationService,
+            CartService cartService)
         {
             _userService = userService;
             _navigationService = navigationService;
+            _cartService = cartService;
         }
 
         public async Task InitializeAsync()
         {
+            UpdateCartItemCount();
             var user = await _userService.GetCurrentUserAsync();
             if (user != null)
             {
-                FullName = $"{user.FirstName} {user.LastName}";
+                FullName = user.FullName;
                 ProfileImage = user.ProfilePicture;
             }
             else
             {
                 FullName = "Guest";
-                ProfileImage = "fashion.png";
             }
         }
+
+        [RelayCommand]
+        private async Task GoToEditProfileAsync()
+        {
+            await _navigationService.NavigateToAsync("editprofilepage");
+        }
+
+        [RelayCommand]
+        private async Task GoToCartAsync()
+        {
+            await _navigationService.NavigateToAsync("cartpage");
+        }
+
 
         [RelayCommand]
         private async Task GoToFAQAsync()
@@ -83,6 +101,13 @@ namespace MANDUU.ViewModels
                         "OK");
                 }
             }
+        }
+
+
+        public void UpdateCartItemCount()
+        {
+            var items = _cartService.GetCartItems().Count;
+            CartItemCount = items > 9 ? "9+" : items.ToString();
         }
     }
 }

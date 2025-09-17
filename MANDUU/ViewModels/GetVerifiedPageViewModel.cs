@@ -12,11 +12,30 @@ namespace MANDUU.ViewModels
 {
     public partial class GetVerifiedPageViewModel: BaseViewModel
     {
-        [ObservableProperty]
-        private int _selectedTabIndex = 0;
+        private readonly IUserService _userService;
 
-        public GetVerifiedPageViewModel(INavigationService navigationService): base(navigationService)
-        { }        
+        [ObservableProperty] private int _selectedTabIndex = 0;
 
+        [ObservableProperty] private string _firstName;
+
+        [ObservableProperty] private string _lastName;
+
+        [ObservableProperty] private DateTime _dateOfBirth = DateTime.Today;
+
+        [ObservableProperty] private string _email;
+
+        [ObservableProperty] private string _phoneNumber;
+
+        [ObservableProperty] private string _residentialAddress;
+        public GetVerifiedPageViewModel(INavigationService navigationService, 
+            IUserService userService): base(navigationService)
+        { 
+            _userService = userService;
+        }        
+
+        [RelayCommand]
+        private async Task NextAsycn()
+        {
+        }
     }
 }

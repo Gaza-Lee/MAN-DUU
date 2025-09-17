@@ -31,6 +31,31 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
+
+            <Style TargetType="Label" x:Key="TabText">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Source={RelativeSource AncestorType={x:Type sharpnado:UnderlinedTabItem}}, Path=IsSelected}"
+                                 Value="True" TargetType="Label">
+                        <Setter Property="TextColor" Value="{StaticResource Black}"/>
+                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="FontAttributes" Value="Bold"/>
+                        <Setter Property="VerticalOptions" Value="Center" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="Label" x:Key="TabIcon">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Source={RelativeSource AncestorType={x:Type sharpnado:UnderlinedTabItem}}, Path=IsSelected}"
+                     Value="True" TargetType="Label">
+                        <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+                        <Setter Property="FontSize" Value="24" />
+                        <Setter Property="FontAttributes" Value="Bold" />
+                    </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontFamily" Value="MaterialIcon" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -73,11 +98,9 @@
                             <Border Style="{StaticResource TabBorderStyle}">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="{x:Static icons:Icons.personalInfoIcon}"
-                                           FontFamily="MaterialIcon"
-                                           FontSize="20"
-                                           VerticalOptions="Center"/>
+                                          Style="{StaticResource TabIcon}"/>
                                     <Label Text="Personal Information"
-                                           FontFamily="Finlandica" />
+                                           Style="{StaticResource TabText}"/>
                                 </HorizontalStackLayout>
                             </Border>
                         </sharpnado:UnderlinedTabItem.Content>
@@ -89,11 +112,9 @@
                             <Border Style="{StaticResource TabBorderStyle}">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="{x:Static icons:Icons.locationIcon}"
-                                           FontFamily="MaterialIcon"
-                                           FontSize="20"
-                                           VerticalOptions="Center"/>
+                                           Style="{StaticResource TabIcon}"/>
                                     <Label Text="Location Details"
-                                           FontFamily="Finlandica" />
+                                           Style="{StaticResource TabText}" />
                                 </HorizontalStackLayout>
                             </Border>
                         </sharpnado:UnderlinedTabItem.Content>
@@ -105,11 +126,9 @@
                             <Border Style="{StaticResource TabBorderStyle}">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="{x:Static icons:Icons.identidicationCardIcon}"
-                                           FontFamily="MaterialIcon"
-                                           FontSize="20"
-                                           VerticalOptions="Center"/>
+                                          Style="{StaticResource TabIcon}"/>
                                     <Label Text="ID Verification"
-                                            FontFamily="Finlandica" />
+                                            Style="{StaticResource TabText}" />
                                 </HorizontalStackLayout>
                             </Border>
                         </sharpnado:UnderlinedTabItem.Content>
@@ -121,11 +140,9 @@
                             <Border Style="{StaticResource TabBorderStyle}">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="{x:Static icons:Icons.faceIdenticationIcon}"
-                                           FontFamily="MaterialIcon"
-                                           FontSize="20"
-                                           VerticalOptions="Center"/>
+                                           Style="{StaticResource TabIcon}"/>
                                     <Label Text="Face verification"
-                                            FontFamily="Finlandica" />
+                                            Style="{StaticResource TabText}" />
                                 </HorizontalStackLayout>
                             </Border>
                         </sharpnado:UnderlinedTabItem.Content>
@@ -172,22 +189,18 @@
                                    FontSize="20"/>
                         </Border>
 
-                        <Border HorizontalOptions="End"
-                                Padding="10,5"
-                                StrokeShape="RoundRectangle 10"
-                                BackgroundColor="{StaticResource Primary}"
-                                StrokeThickness="0"
-                                Grid.Column="1"
-                                VerticalOptions="Center">
-                            <Border.Shadow>
-                                <Shadow Brush="{AppThemeBinding Light={StaticResource Gray300}}"
+                        <Button Grid.Column="1"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                Text="Next"
+                                FontSize="18">
+                            <Button.Shadow>
+                                <Shadow Brush="{StaticResource Gray400}"
+                                        Opacity="0.5"
                                         Offset="5,5"
-                                        Opacity="0.5"/>
-                            </Border.Shadow>
-                            <Label Text="Next"
-                                   TextColor="{StaticResource White}"
-                                   FontSize="20"/>
-                        </Border>
+                                        Radius="100"/>
+                            </Button.Shadow>
+                        </Button>
                     </Grid>
                 </Grid>
             </Border>

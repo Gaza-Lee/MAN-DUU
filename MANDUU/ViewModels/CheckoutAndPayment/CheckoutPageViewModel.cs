@@ -116,10 +116,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
 
                 await NavigationService.NavigateToAsync("paymentpage", new Dictionary<string, object>
                 {
-                    ["FullName"] = FullName,
-                    ["Address"] = ResidentialAddress,
-                    ["City"] = City,
-
+                    ["Address"] = ResidentialAddress                    
                 });
             });
         }
