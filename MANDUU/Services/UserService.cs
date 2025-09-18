@@ -28,7 +28,7 @@ namespace MANDUU.Services
                 new User
                 {
                     Id = 1,
-                    Email = "userone@gmail.com",
+                    Email = "bernardobenganim@gmail.com",
                     PhoneNumber = "+1234567890",
                     HashPassword = "Password1!",
                     FirstName = "User",

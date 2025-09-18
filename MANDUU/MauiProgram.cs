@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using MANDUU.Services;
+using MANDUU.Services.PaymentService;
 using MANDUU.ViewModels;
 using MANDUU.ViewModels.CheckoutAndPayment;
 using MANDUU.Views;
@@ -32,7 +33,7 @@ namespace MANDUU
                     fonts.AddFont("Finlandica-Regular.ttf", "Finlandica");
                 });
 
-            
+
             // Entry handler to remove underline on Android
             EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, view) =>
             {
@@ -56,6 +57,12 @@ namespace MANDUU
             builder.RegisterViews();
             builder.RegisterViewModels();
 
+
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["Paystack:SecretKey"] = ""  //Paystack TestKey
+            });
+
             return builder.Build();
         }
 
@@ -71,6 +78,7 @@ namespace MANDUU
             builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddSingleton<CartService>();
             builder.Services.AddSingleton<FavoritesService>();
+            builder.Services.AddSingleton<IPaymentService, PaymentService>();
 
             return builder;
         }

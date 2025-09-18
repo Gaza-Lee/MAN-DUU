@@ -1,27 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MANDUU.Models;
 using MANDUU.Services;
 using MANDUU.ViewModels.Base;
 using MANDUU.Enumeration;
-using CommunityToolkit.Mvvm.Input;
-using System.Diagnostics;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace MANDUU.ViewModels.CheckoutAndPayment
 {
     public partial class PaymentPageViewModel : BaseViewModel, IQueryAttributable
     {
         private readonly CartService _cartService;
-        private readonly MobileMoneyViewModel _mobileMoneyPaymentVM;
-        public MobileMoneyViewModel MobileMoneyVM => _mobileMoneyPaymentVM;
-
-
+        public MobileMoneyViewModel MobileMoneyVM { get; }
 
         [ObservableProperty]
-        private int selectedPaymentMethodIndex = 0; // Default: MobileMoney = 0
+        private int selectedPaymentMethodIndex = 0; // Default Mobile Money
 
-        // Derived property 
         public PaymentMethod SelectedPaymentMethod => (PaymentMethod)SelectedPaymentMethodIndex;
 
         [ObservableProperty]
@@ -31,7 +26,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         private decimal _deliveryFee = 20m;
 
         [ObservableProperty]
-        private int _orderNumber = 35; //
+        private int _orderNumber = 35;
 
         [ObservableProperty]
         private decimal _overallTotal;
@@ -39,25 +34,29 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         [ObservableProperty]
         private string _residentialAddress;
 
-        public PaymentPageViewModel(CartService cartService,
+        public PaymentPageViewModel(
+            CartService cartService,
             INavigationService navigationService,
             MobileMoneyViewModel mobileMoneyPaymentVM) : base(navigationService)
         {
             _cartService = cartService;
-            _mobileMoneyPaymentVM = mobileMoneyPaymentVM;
+            MobileMoneyVM = mobileMoneyPaymentVM;
         }
 
         public override async Task InitializeAsync()
         {
             await base.InitializeAsync();
+
             var cartItems = _cartService.GetCartItems();
             CartItemsNames = string.Join(", ",
                 cartItems.Select(item => item.Product?.Name)
                          .Where(name => !string.IsNullOrWhiteSpace(name)));
+
             var cartTotal = _cartService.GetCartTotal();
             OverallTotal = cartTotal + DeliveryFee;
 
-            _mobileMoneyPaymentVM.OverallTotal = OverallTotal;
+            // Inject total into mobile money VM
+            MobileMoneyVM.OverallTotal = OverallTotal;
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)

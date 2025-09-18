@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icons="clr-namespace:MANDUU.Helpers"
              x:Class="MANDUU.Views.MainPages.SubPages.CheckoutAndPayment.MobileMoneyPaymentMethod">
-    <Grid RowSpacing="10" RowDefinitions="auto,auto,*,*">
+    <Grid RowSpacing="20" RowDefinitions="auto,auto,*,*">
         <Border StrokeThickness="0.5"
             StrokeShape="RoundRectangle 10"
             Grid.Row="0">
             <Picker Title="Select Network" Margin="10,0"
-                    ItemsSource="{Binding NetworkProviders}"/>
+                    ItemsSource="{Binding NetworkProviders}"
+                    SelectedItem="{Binding SelectedProvider}"/>
         </Border>
         <VerticalStackLayout Grid.Row="1">
             <Label Text="Mobile Number"
@@ -36,22 +37,21 @@
             <VerticalStackLayout>
                 <HorizontalStackLayout Spacing="5">
                     <Label Text="{x:Static icons:Icons.infoIcon}"
-                       FontFamily="MaterialIcon"
-                       VerticalOptions="Center"
-                       VerticalTextAlignment="Center"
-                       FontSize="20"/>
+                       Style="{StaticResource MaterialIcon}"
+                           TextColor="{StaticResource White}"/>
                     <Label Text="Payment Process"
-                       FontFamily="Finlandica"/>
+                           TextColor="{StaticResource White}"
+                           Style="{StaticResource Title}"/>
                 </HorizontalStackLayout>
                 <VerticalStackLayout Margin="30,5">
                     <Label Text="1. You will receive a payment prompt on your phone" 
-                       FontFamily="Finlandica"
-                       FontSize="12"/>
+                       FontSize="12"
+                           TextColor="{StaticResource White}"/>
                     <Label Text="2. Enter Mobile Money PIN to confirm" 
-                       FontFamily="Finlandica"
+                       TextColor="{StaticResource White}"
                        FontSize="12"/>
                     <Label Text="3. Payment will be processed instantly" 
-                       FontFamily="Finlandica"
+                      TextColor="{StaticResource White}"
                        FontSize="12"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
