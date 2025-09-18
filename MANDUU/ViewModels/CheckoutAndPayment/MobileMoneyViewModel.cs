@@ -1,43 +1,55 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MANDUU.Models.PaymentModels;
 using MANDUU.RegexValidation;
 using MANDUU.Services;
+using MANDUU.Services.PaymentService;
 using MANDUU.ViewModels.Base;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace MANDUU.ViewModels.CheckoutAndPayment
 {
-    public partial class MobileMoneyViewModel: BaseViewModel
+    public partial class MobileMoneyViewModel : BaseViewModel
     {
         private readonly CartService _cartService;
         private readonly IUserService _userService;
+        private readonly IPaymentService _paymentService;
 
-        //For now hardcoded network services
         [ObservableProperty]
-        private ObservableCollection<string> _networkProviders = new() { "MTN Mobile Money", "Telecel", "Airtel Tigo" };
+        private ObservableCollection<string> _networkProviders = new()
+        {
+            "MTN Mobile Money",
+            "Vodafone Cash",
+            "AirtelTigo Money"
+        };
 
         [ObservableProperty]
         private string _phoneNumber;
 
         [ObservableProperty]
+        private string _selectedProvider;
+
+        [ObservableProperty]
         private decimal _overallTotal;
 
-        public MobileMoneyViewModel(INavigationService navigationService, 
-            CartService cartService, IUserService userService): base (navigationService)
+
+        public MobileMoneyViewModel(
+            INavigationService navigationService,
+            CartService cartService,
+            IUserService userService,
+            IPaymentService paymentService) : base(navigationService)
         {
             _cartService = cartService;
             _userService = userService;
-
+            _paymentService = paymentService;
         }
 
         private bool CanMakePayment()
         {
-            return !string.IsNullOrWhiteSpace(PhoneNumber);
+            return !string.IsNullOrWhiteSpace(PhoneNumber) &&
+                   !string.IsNullOrWhiteSpace(SelectedProvider);
         }
 
         [RelayCommand]
@@ -45,7 +57,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         {
             if (!CanMakePayment())
             {
-                ShowToast("All fields are required");
+                ShowToast("Phone and provider required");
                 return;
             }
 
@@ -55,21 +67,74 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
                 return;
             }
 
-            /*In using API can further decide how payment for each network should behave but for
-            now all payment network should just follow the same procedure*/
-
-            //Notify user to confirm payment
-            var confirmPayment = await Shell.Current.DisplayAlert(
+            var confirm = await Shell.Current.DisplayAlert(
                 "Confirm Payment",
-                "You are about to make payment for your order",
+                $"Pay {OverallTotal:C} with {SelectedProvider}?",
                 "Confirm", "Cancel");
 
-            if (confirmPayment)
+            if (!confirm) return;
+
+            try
             {
-                await _cartService.ClearCartAsync();
-                //navigate user to main page
-                await NavigationService.NavigateToAsync("//main/home");
+                await IsBusyFor(async () =>
+                {
+                    var user = await _userService.GetCurrentUserAsync();
+                    var userEmail = user?.Email;
+                    if (string.IsNullOrEmpty(userEmail))
+                    {
+                        ShowToast("No valid user email found.");
+                        return;
+                    }
+
+                    var result = await _paymentService.InitializeMobileMoneyPayment(
+                        OverallTotal,
+                        userEmail,
+                        FormatPhoneNumber(PhoneNumber),
+                        MapProviderCode(SelectedProvider)
+                    );
+
+                    if (result?.Status == true && result.Data != null)
+                    {
+                        Debug.WriteLine($"Payment initialized. Ref: {result.Data.Reference}");
+
+                        // ✅ Real UX: open authorization URL or instruct provider
+                        ShowToast("Please approve payment in your mobile money app.");
+
+                        await _cartService.ClearCartAsync();
+                        await NavigationService.NavigateToAsync("//main/home");
+                    }
+                    else
+                    {
+                        ShowToast(result?.Message ?? "Payment failed to start");
+                    }
+                });
             }
+            catch (PaystackApiException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                ShowToast("Payment request failed. Try again.");
+            }
+        }
+
+        // Normalize Ghana numbers → 233XXXXXXXXX
+        private string FormatPhoneNumber(string phone)
+        {
+            phone = phone.Trim().Replace(" ", "");
+            if (phone.StartsWith("+233")) return phone[1..];
+            if (phone.StartsWith("0")) return "233" + phone[1..];
+            if (phone.StartsWith("233")) return phone;
+            return "233" + phone; // If user typed without zero
+        }
+        // Map human names to provider codes understood by Paystack.
+        private string MapProviderCode(string providerName)
+        {
+            return providerName switch
+            {
+                "MTN Mobile Money" => "mtn",
+                "Vodafone Cash" => "vod",
+                "AirtelTigo Money" => "atl", 
+                _ => "mtn"
+            };
         }
     }
 }
