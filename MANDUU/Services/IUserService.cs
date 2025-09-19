@@ -21,5 +21,7 @@ namespace MANDUU.Services
         Task<bool> AddShopToUserAsync(int userId, Shop shop);
         Task<bool> UpdateFaceVerificationStatusAsync(int userId, bool isVerified, string status);
         Task<bool> UpdateUserAsync(User user);
+
+        Task<bool> GetUserIsVerifiedByIdAsync(int userId);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MANDUU.Enumeration;
+using MANDUU.Services;
 
 namespace MANDUU.Models
 {
@@ -43,6 +44,10 @@ namespace MANDUU.Models
         public List<int> Products { get; set; } = new List<int>();
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+
+        public bool IsVerified { get; set; } = false;
+
 
 
         public bool CanSellInCategory(int categoryId)

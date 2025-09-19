@@ -42,6 +42,7 @@ namespace MANDUU.ViewModels
 
         [ObservableProperty]
         private bool _hasCartItems;
+
         #endregion
 
         #region Constructor
@@ -219,6 +220,7 @@ namespace MANDUU.ViewModels
                 var shops = await _shopService.GetRecommendedShopsAsync(4);
                 foreach (var shop in shops)
                 {
+                    shop.IsVerified = await _shopService.GetVerificationStatusAsync(shop.Id);
                     RecommendedShops.Add(shop);
                 }
             }
