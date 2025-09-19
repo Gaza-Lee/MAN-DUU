@@ -2,74 +2,143 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icon="clr-namespace:MANDUU.Helpers"
+             xmlns:local="clr-namespace:MANDUU.Converters"
              x:Class="MANDUU.Views.MainPages.SubPages.GetVerified.IdentificationCardVerification">
-    <VerticalStackLayout Margin="5" Spacing=" 10">
-        <VerticalStackLayout>
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <local:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <VerticalStackLayout Margin="16" Spacing="16">
+
+        <!-- Header -->
+        <VerticalStackLayout Spacing="4">
             <Label Text="Identity Verification"
-            FontSize="16"
-            FontFamily="Finlandica"
+                   FontSize="20"
+                   FontFamily="Finlandica"
                    FontAttributes="Bold"/>
-            <Label FontFamily="Finlandica"
-            FontSize="12"
-            Text="Upload a valid Identification Document"
-            Margin="10,0"
-            TextColor="{StaticResource Gray600}"/>
+            <Label Text="Upload a valid Identification Document"
+                   FontFamily="Finlandica"
+                   FontSize="14"
+                   TextColor="{StaticResource Gray600}"/>
         </VerticalStackLayout>
 
-        <VerticalStackLayout>
-            <Border StrokeThickness="0.8"
-                    StrokeShape="RoundRectangle 10">
+        <!-- ID Type Picker -->
+        <VerticalStackLayout Spacing="5">
+            <Label Text="ID Type" 
+                   FontFamily="Finlandica"
+                   FontSize="14"
+                   Margin="0,5,0,0"/>
+            <Border StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10"
+                    Stroke="{StaticResource Gray300}">
                 <Picker Title="Select ID Type"
-                        Margin="10,0"/>
+                        ItemsSource="{Binding IdType}"
+                        SelectedItem="{Binding SelectedIdType}"
+                        TitleColor="{StaticResource Gray500}"
+                        Margin="10,5"/>
             </Border>
         </VerticalStackLayout>
 
-        <VerticalStackLayout>
+        <!-- ID Number -->
+        <VerticalStackLayout Spacing="5">
             <Label Text="ID Number"
                    FontFamily="Finlandica"
-                   Margin="5,0"/>
+                   FontSize="14"
+                   Margin="0,5,0,0"/>
             <Border StrokeShape="RoundRectangle 10"
-                    StrokeThickness="0.8">
-                <Entry />
+                    StrokeThickness="1"
+                    Stroke="{StaticResource Gray300}">
+                <Entry Text="{Binding IdNumber}"
+                       Placeholder="Enter ID number"
+                       Margin="10,5"/>
             </Border>
         </VerticalStackLayout>
 
-        
-        <VerticalStackLayout Spacing="5">
-            <Label Text="Upload a clean file of your ID Document"
+        <!-- Upload Section -->
+        <VerticalStackLayout Spacing="10" Margin="0,10">
+
+            <Label Text="Upload Document"
                    FontFamily="Finlandica"
-                   FontSize="16"
+                   FontSize="18"
                    FontAttributes="Bold"/>
-            
-            <Border StrokeDashArray="2,2"
-                    StrokeShape="RoundRectangle 10"
-                    Margin="10,5"
-                    Padding="10">
-                <Grid RowDefinitions="*,auto,auto"
-                      HorizontalOptions="Center" RowSpacing="10">
+
+            <!-- STATE: NOT UPLOADED -->
+            <Border StrokeDashArray="4,4"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="{StaticResource Gray400}"
+                    BackgroundColor="Transparent"
+                    Padding="20"
+                    IsVisible="{Binding IsDocumentSelected, Converter={StaticResource InvertedBoolConverter}}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseFileCommand}"/>
+                </Border.GestureRecognizers>
+                <Grid RowDefinitions="Auto,Auto,Auto"
+                      HorizontalOptions="Center"
+                      RowSpacing="12">
                     <Label Text="{x:Static icon:Icons.UploadIcon}"
                            FontFamily="MaterialIcon"
                            FontSize="50"
-                           Grid.Row="0"
+                           TextColor="{StaticResource Gray500}"
                            HorizontalOptions="Center"/>
-                    <Label Text="Click here to upload document"
-                           Grid.Row="1"
+                    <Label Text="Tap to upload your ID document"
                            FontFamily="Finlandica"
-                           HorizontalOptions="Center"/>
-
+                           FontSize="14"
+                           TextColor="{StaticResource Gray600}"
+                           HorizontalOptions="Center"
+                           Grid.Row="1"/>
                     <Border Grid.Row="2"
-                            HorizontalOptions="Center"
-                            StrokeShape="RoundRectangle 5"
-                            StrokeThickness="0.8"
-                            Padding="10,5"
-                            StrokeDashArray="2">
+                            BackgroundColor="{StaticResource Primary}"
+                            StrokeShape="RoundRectangle 20"
+                            Padding="16,8"
+                            HorizontalOptions="Center">
                         <Label Text="Choose File"
-                               HorizontalOptions="Center"
+                               TextColor="White"
                                FontFamily="Finlandica"
-                               FontAttributes="Bold"/>
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
                     </Border>
                 </Grid>
             </Border>
+
+            <!-- STATE: UPLOADED -->
+            <Border StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    BackgroundColor="{StaticResource PrimaryLight400}"
+                    Padding="20"
+                    IsVisible="{Binding IsDocumentSelected}">
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="{x:Static icon:Icons.tickIcon}"
+                           FontFamily="MaterialIcon"
+                           FontSize="48"
+                           TextColor="{StaticResource Primary}"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Document Uploaded Successfully!"
+                           FontFamily="Finlandica"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource Primary}"/>
+                    <Label Text="{Binding SelectedDocument}"
+                           FontSize="13"
+                           TextColor="{StaticResource Gray700}"
+                           HorizontalOptions="Center"
+                           MaxLines="2"
+                           LineBreakMode="TailTruncation"/>
+                    <Button Text="↻ Change File"
+                            Command="{Binding ChooseFileCommand}"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource Primary}"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            Margin="0,10"/>
+                </VerticalStackLayout>
+            </Border>
+
         </VerticalStackLayout>
+
     </VerticalStackLayout>
 </ContentView>

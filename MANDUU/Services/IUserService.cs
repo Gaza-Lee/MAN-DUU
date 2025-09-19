@@ -12,11 +12,14 @@ namespace MANDUU.Services
         Task<bool> IsUserAuthenticatedAsync();
         Task<User> GetCurrentUserAsync();
         Task<bool> LoginAsync(string emailOrPhone, string password);
+        Task<bool> RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string password);
+        Task<bool> IsEmailExistsAsync(string email);
+        Task<bool> IsPhoneExistsAsync(string phoneNumber);
         Task<bool> LogoutAsync();
-
         Task<List<Shop>> GetShopsByUserAsync(int userId);
         Task<bool> DoesUserOwnShopAsync(int userId, int shopId);
         Task<bool> AddShopToUserAsync(int userId, Shop shop);
-        Task<bool> RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string password);
+        Task<bool> UpdateFaceVerificationStatusAsync(int userId, bool isVerified, string status);
+        Task<bool> UpdateUserAsync(User user);
     }
 }

@@ -1,10 +1,71 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
              x:Class="MANDUU.Views.MainPages.SubPages.GetVerified.LocationDetails">
-    <VerticalStackLayout Margin="5" Spacing="10" >
-        <VerticalStackLayout>
-            
+    <Grid>
+        <Border StrokeThickness="0"
+                StrokeShape="RoundRectangle 10">
+            <Grid>
+                <BoxView Opacity="0.5"
+                         IsVisible="{Binding IsBusy}"/>
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+           IsVisible="{Binding IsBusy}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   ZIndex="3"/>
+            </Grid>
+        </Border>
+        <VerticalStackLayout Margin="5" Spacing="10" >
+            <VerticalStackLayout Spacing="-2">
+                <Label Text="Location Details"
+               Style="{StaticResource Title}"/>
+                <Label Text="Provide your location details for verification"/>
+            </VerticalStackLayout>
+            <HorizontalStackLayout Spacing="10">
+                <Switch HorizontalOptions="Start"
+                IsToggled="{Binding IsStudent}"/>
+                <Label Text="I am a Student"
+               VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <VerticalStackLayout>
+                <Label Text="{Binding LocationLabelText}"
+               Margin="5,0"/>
+                <Border StrokeShape="RoundRectangle 10"
+                StrokeThickness="0.8">
+                    <Entry Text="{Binding Location}"
+                    Margin="5,0"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="-2">
+                <Label Text="Hall or hostel Location Verification"
+                Style="{StaticResource Title}"/>
+                <Label Text="capture your current location for verification"/>
+            </VerticalStackLayout>
+
+            <Border StrokeThickness="0"
+            StrokeShape="RoundRectangle 5"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Padding="10,2,20,5"
+            BackgroundColor="{StaticResource Primary}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CaptureCurrentLocationCommand}"/>
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="5">
+                    <Label Text="{x:Static icons:Icons.locationIcon}"
+                   Style="{StaticResource MaterialIcon}"
+                   TextColor="{StaticResource White}"/>
+                    <Label Text="Capture Location"                       
+                   Style="{StaticResource ButtonLabelText}"/>
+                </HorizontalStackLayout>
+            </Border>
+            <Border StrokeThickness="0.5"
+            StrokeShape="RoundRectangle 5">
+                <Label Text="{Binding Location}"
+                       Margin="5,2"/>
+            </Border>
         </VerticalStackLayout>
-    </VerticalStackLayout>
+    </Grid>
 </ContentView>

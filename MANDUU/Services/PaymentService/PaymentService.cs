@@ -27,7 +27,7 @@ namespace MANDUU.Services.PaymentService
                 BaseAddress = new Uri(BaseUrl)
             };
 
-            _secretKey = config["Paystack:SecretKey"]; // fixed key lookup (remove whitespace in key!!)
+            _secretKey = config["Paystack:SecretKey"];
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", _secretKey);
         }

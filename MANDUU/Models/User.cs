@@ -8,7 +8,6 @@ namespace MANDUU.Models
 {
     public class User
     {
-        
         public int Id { get; set; }
 
         // Basic Info
@@ -19,11 +18,16 @@ namespace MANDUU.Models
         public string PhoneNumber { get; set; }
 
         // Seller Info
-        public bool IsSeller { get; set; } = false;// By default every user is a buyer and can become a seller later
+        public bool IsSeller { get; set; } = false;
 
         // Authentication
         public string HashPassword { get; set; }
         public bool IsVerified { get; set; }
+
+        // Face Verification
+        public bool IsFaceVerified { get; set; }
+        public string VerificationStatus { get; set; } = "Pending";
+        public DateTime? VerificationDate { get; set; }
 
         // Profile
         public string? ProfilePicture { get; set; }
@@ -34,7 +38,5 @@ namespace MANDUU.Models
 
         // Shops owned by the user
         public List<Shop> Shops { get; set; } = new List<Shop>();
-
-        public DateTime? VerificationDate { get; set; }
     }
 }

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sharpnado="http://sharpnado.com"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
+             xmlns:favtabs="clr-namespace:MANDUU.Views.MainPages.SubPages.Favorites"
+             x:Class="MANDUU.Views.MainPages.SubPages.Favorites.FavoritePage"
+             Shell.TabBarIsVisible="False"
+             Title="Favorites">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="sharpnado:UnderlinedTabItem" >
+                <Setter Property="SelectedTabColor" Value="{StaticResource PrimaryLight400}"/>
+                <Setter Property="Margin" Value="5,0" />
+            </Style>
+
+            <!-- Tab Border Style with Triggers -->
+            <Style TargetType="Border" x:Key="TabBorderStyle">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="StrokeThickness" Value="2"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 20"/>
+                <Setter Property="Padding" Value="20,3" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <!-- Trigger for when the tab is selected -->
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Source={RelativeSource AncestorType={x:Type sharpnado:UnderlinedTabItem}}, Path=IsSelected}" 
+                     Value="True" TargetType="Border">
+                        <Setter Property="Stroke" Value="{StaticResource Primary}"/>
+                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryLight400}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Label" x:Key="TabText">
+                <Setter Property="FontFamily" Value="ADLaMDisplay"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="{StaticResource Black}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid RowDefinitions="auto,auto,*" Margin="10,6" RowSpacing="10">
+        <Grid ColumnDefinitions="*,auto" Margin="10,0">
+            <sharpnado:TabHostView x:Name="TabHost"
+                        Grid.Column="0"
+                        TabType="Fixed"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+
+                <sharpnado:TabHostView.Tabs>
+                    <!--All -->
+                    <sharpnado:UnderlinedTabItem x:Name="All">
+                        <sharpnado:UnderlinedTabItem.Content>
+                            <Border Style="{StaticResource TabBorderStyle}">
+                                <Label Text="All"
+                                       Style="{StaticResource TabText}"/>
+                            </Border>
+                        </sharpnado:UnderlinedTabItem.Content>
+                    </sharpnado:UnderlinedTabItem>
+                    <!--Products-->
+                    <sharpnado:UnderlinedTabItem x:Name="products">
+                        <sharpnado:UnderlinedTabItem.Content>
+                            <Border Style="{StaticResource TabBorderStyle}">
+                                <Label Text="Products"
+                                        Style="{StaticResource TabText}"/>
+                            </Border>
+                        </sharpnado:UnderlinedTabItem.Content>
+                    </sharpnado:UnderlinedTabItem>
+
+                    <!--Shops-->
+                    <sharpnado:UnderlinedTabItem x:Name="shops">
+                        <sharpnado:UnderlinedTabItem.Content>
+                            <Border Style="{StaticResource TabBorderStyle}">
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="Shops"
+                                 Style="{StaticResource TabText}" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </sharpnado:UnderlinedTabItem.Content>
+                    </sharpnado:UnderlinedTabItem>
+                </sharpnado:TabHostView.Tabs>
+            </sharpnado:TabHostView>
+
+            <!--Delete Icon-->
+            <Border Grid.Column="1"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 100"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource Gray100}}"
+                    Padding="2">
+                <Label Text="{x:Static icons:Icons.deleteIcon}"
+                       Style="{StaticResource MaterialIcon}"
+                       TextColor="Red"
+                       FontSize="30"/>
+            </Border>
+        </Grid>
+        
+        <!--Search-->
+        <Border Padding="0" Grid.Row="1"
+                StrokeThickness="0.5"
+                StrokeShape="RoundRectangle 20">
+            <SearchBar Placeholder="Searh..."/>
+        </Border>
+
+        <ScrollView Grid.Row="2">
+            <sharpnado:ViewSwitcher x:Name="Switcher"
+                        SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}"
+                        Animate="True">
+                <sharpnado:DelayedView x:TypeArguments="favtabs:All" 
+                           Animate="True"/>
+                <sharpnado:DelayedView x:TypeArguments="favtabs:Products"
+                           Animate="True"/>
+                <sharpnado:DelayedView x:TypeArguments="favtabs:Shops"
+                           Animate="True"/>
+            </sharpnado:ViewSwitcher>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

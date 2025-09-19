@@ -69,7 +69,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
 
             var confirm = await Shell.Current.DisplayAlert(
                 "Confirm Payment",
-                $"Pay {OverallTotal:C} with {SelectedProvider}?",
+                $"Pay {OverallTotal:₵} with {SelectedProvider}?",
                 "Confirm", "Cancel");
 
             if (!confirm) return;
@@ -97,7 +97,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
                     {
                         Debug.WriteLine($"Payment initialized. Ref: {result.Data.Reference}");
 
-                        // ✅ Real UX: open authorization URL or instruct provider
+                        // Real UX: open authorization URL or instruct provider
                         ShowToast("Please approve payment in your mobile money app.");
 
                         await _cartService.ClearCartAsync();

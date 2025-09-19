@@ -43,7 +43,8 @@
                    Margin="5,0"/>
             <Border StrokeShape="RoundRectangle 10"
             StrokeThickness="0.8">
-                <DatePicker Margin="10,0"/>
+                <DatePicker Margin="10,0"
+                            Date="{Binding DateOfBirth}"/>
             </Border>
         </VerticalStackLayout>
         
@@ -58,6 +59,16 @@
                        Text="{Binding Email}"/>
             </Border>
         </VerticalStackLayout>
+        <VerticalStackLayout>
+            <Label Text="Phone Number"
+                   FontFamily="Finlandica"
+                   Margin="5,0"/>
+            <Border StrokeShape="RoundRectangle 10"
+                    StrokeThickness="0.8">
+                <Entry Margin="5,0"
+               Text="{Binding PhoneNumber}"/>
+            </Border>
+        </VerticalStackLayout>
 
         <VerticalStackLayout>
             <Label Text="Home Address"
@@ -65,7 +76,7 @@
            Margin="5,0"/>
             <Border StrokeShape="RoundRectangle 10"
             StrokeThickness="0.8">
-                <Entry />
+                <Entry Text="{Binding ResidentialAddress}"/>
             </Border>
         </VerticalStackLayout>
     </VerticalStackLayout>
