@@ -2,27 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MANDUU.Services
 {
     public class UserService : IUserService
     {
-        private readonly List<User> _users;
-        private readonly ShopService _shopService;
+        private readonly List<User> _users = new(); 
+        private bool _isInitialized = false;
 
-        public UserService(ShopService shopService)
+        public UserService()
         {
-            _shopService = shopService;
-            _users = InitializeUsersWithShops();
+            
         }
 
-        private List<User> InitializeUsersWithShops()
+        public async Task InitializeAsync(ShopService shopService)
         {
-            var allShops = _shopService.GetAllShopsAsync().Result.ToList();
+            if (_isInitialized) return;
 
-            return new List<User>
+            var allShops = await shopService.GetAllShopsAsync(); 
+
+            _users.AddRange(new List<User>
             {
                 new User
                 {
@@ -34,6 +34,7 @@ namespace MANDUU.Services
                     LastName = "One",
                     ProfilePicture = "profile_picture.jpg",
                     IsFaceVerified = true,
+                    IsVerified = true,
                     VerificationStatus = "Completed",
                     VerificationDate = DateTime.UtcNow.AddDays(-1),
                     Shops = allShops.Where(s => s.Id == 3 || s.Id == 4).ToList()
@@ -46,12 +47,16 @@ namespace MANDUU.Services
                     HashPassword = "password2!",
                     FirstName = "User",
                     LastName = "Two",
-                    IsFaceVerified = false,
-                    VerificationStatus = "Pending",
+                    IsVerified = true,
+                    IsFaceVerified = true,
+                    VerificationStatus = "Complete",
                     Shops = allShops.Where(s => s.Id == 6).ToList()
                 }
-            };
+            });
+
+            _isInitialized = true;
         }
+
 
         public async Task<bool> UpdateFaceVerificationStatusAsync(int userId, bool isVerified, string status)
         {
@@ -76,7 +81,6 @@ namespace MANDUU.Services
             var existingUser = _users.FirstOrDefault(u => u.Id == user.Id);
             if (existingUser != null)
             {
-                // Update all properties
                 existingUser.FirstName = user.FirstName;
                 existingUser.LastName = user.LastName;
                 existingUser.Email = user.Email;
@@ -215,6 +219,20 @@ namespace MANDUU.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task<bool> GetIsVerifiedAsync()
+        {
+            await Task.Yield();
+            var currentUser = await GetCurrentUserAsync();
+            return currentUser?.IsFaceVerified == true && currentUser.VerificationStatus == "Completed";
+        }
+
+        public async Task<bool> GetUserIsVerifiedByIdAsync(int userId)
+        {
+            await Task.Yield();
+            var user = _users.FirstOrDefault(u => u.Id == userId);
+            return user?.IsFaceVerified == true && user.VerificationStatus == "Completed";
         }
     }
 }

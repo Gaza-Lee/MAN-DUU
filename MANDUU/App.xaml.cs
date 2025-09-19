@@ -14,7 +14,15 @@ namespace MANDUU
         protected override async void OnStart()
         {
             base.OnStart();
+            var services = Current.Handler.MauiContext.Services;
+            var userService = services.GetService<IUserService>() as UserService;
+            var shopService = services.GetService<ShopService>();
             var navigationService = Handler.MauiContext.Services.GetService<INavigationService>();
+
+            if (userService != null && shopService != null)
+            {
+                await userService.InitializeAsync(shopService);
+            }            
             await navigationService.InitializeAsync();
         }
 

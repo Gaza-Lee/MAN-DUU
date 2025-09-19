@@ -285,14 +285,25 @@
                                             </Label>
                                             <Image Source="{Binding ShopProfileImage}" Aspect="AspectFill"/>
                                         </Grid>
-                                        <VerticalStackLayout Grid.Row="1" Padding="5">
-                                            <Label Text="{Binding Name}" LineBreakMode="TailTruncation" MaxLines="1"
-                                                   Style="{StaticResource Title}"/>
-                                            <HorizontalStackLayout>
-                                                <Label Text="{x:Static icons:Icons.locationIcon}" Style="{StaticResource MaterialIcon}"/>
-                                                <Label Text="{Binding ShortLocation}"/>
-                                            </HorizontalStackLayout>
-                                        </VerticalStackLayout>
+                                        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+                                            <VerticalStackLayout Padding="5" HorizontalOptions="Start" Grid.Column="0">
+                                                <Label Text="{Binding Name}" LineBreakMode="TailTruncation" MaxLines="1"
+                                                        Style="{StaticResource Title}"/>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="{x:Static icons:Icons.locationIcon}" Style="{StaticResource MaterialIcon}"/>
+                                                    <Label Text="{Binding ShortLocation}"/>
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                            <Label Text="{x:Static icons:Icons.verificationBadgeIcon}"
+                                                   Style="{StaticResource MaterialIcon}"
+                                                   Grid.Column="1"
+                                                   IsVisible="{Binding IsVerified}"
+                                                   TextColor="Green"
+                                                   HorizontalOptions="End"
+                                                   VerticalOptions="Center"
+                                                   FontSize="30"
+                                                   Margin="10"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

@@ -10,11 +10,13 @@ namespace MANDUU.Services
     {
         private List<Shop> _shops = new();
         private readonly ShopCategoryService _shopCategoryService;
+        private readonly IUserService _userService;
         private bool _isInitialized = false;
 
-        public ShopService(ShopCategoryService shopCategoryService)
+        public ShopService(ShopCategoryService shopCategoryService, IUserService userService)
         {
             _shopCategoryService = shopCategoryService;
+            _userService = userService;
         }
 
         private async Task InitializeShops()
@@ -29,6 +31,8 @@ namespace MANDUU.Services
                 {
                     Id = 1,
                     Name = "GrandMa iShop",
+                    OwnerId = 1,
+                    OwnerName = "User One",
                     Description = "Your one-stop electronics shop with the latest gadgets and devices",
                     Logo = "grandma_ishop_logo.png",
                     CoverImage = "grandma_ishop_cover.jpg",
@@ -46,6 +50,8 @@ namespace MANDUU.Services
                 {
                     Id = 2,
                     Name = "Attract Them Saloon",
+                    OwnerId = 1,
+                    OwnerName = "User One",
                     Description = "Premium beauty and wellness products for your self-care routine",
                     Logo = "attract_saloon_logo.png",
                     CoverImage = "attract_saloon_cover.jpg",
@@ -334,6 +340,14 @@ namespace MANDUU.Services
                     .ToList();
             }
             await Task.CompletedTask;
+        }
+        public async Task<bool> GetVerificationStatusAsync(int shopId)
+        {
+            var shop = await GetShopByIdAsync(shopId);
+            if (shop == null)
+                return false;
+
+            return await _userService.GetUserIsVerifiedByIdAsync(shop.OwnerId);
         }
     }
 }
