@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
 using MANDUU.Services;
 using MANDUU.Services.PaymentService;
 using MANDUU.ViewModels;
@@ -8,12 +9,14 @@ using MANDUU.Views.AuthenticationPages;
 using MANDUU.Views.MainPages;
 using MANDUU.Views.MainPages.SubPages;
 using MANDUU.Views.MainPages.SubPages.CheckoutAndPayment;
+using MANDUU.Views.MainPages.SubPages.Favorites;
 using MANDUU.Views.MainPages.SubPages.GetVerified;
 using MANDUU.Views.ShopPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 using Sharpnado.Tabs;
+
 
 namespace MANDUU
 {
@@ -25,6 +28,7 @@ namespace MANDUU
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitCore()
                 .UseSharpnadoTabs(loggerEnable:false)
                 .ConfigureFonts(fonts =>
                 {
@@ -102,7 +106,7 @@ namespace MANDUU
             builder.Services.AddTransient<DashboardPage>();
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<CartPage>();
-            builder.Services.AddTransient<FavoritesPage>();
+            builder.Services.AddTransient<FavoritePage>();
             builder.Services.AddTransient<FAQPage>();
             builder.Services.AddTransient<CheckoutPage>();
             builder.Services.AddTransient<PaymentPage>();
@@ -137,6 +141,7 @@ namespace MANDUU
             builder.Services.AddTransient<MobileMoneyViewModel>();
             builder.Services.AddTransient<GetVerifiedPageViewModel>();
             builder.Services.AddTransient<UserProfileViewModel>();
+            builder.Services.AddTransient<FavoritesViewModel>();
 
 
             return builder;

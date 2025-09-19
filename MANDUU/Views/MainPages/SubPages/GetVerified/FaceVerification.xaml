@@ -2,13 +2,21 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icon="clr-namespace:MANDUU.Helpers"
+             xmlns:converter="clr-namespace:MANDUU.Converters"
              x:Class="MANDUU.Views.MainPages.SubPages.GetVerified.FaceVerification">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
     <VerticalStackLayout Margin="5" Spacing="30">
+        <!-- Title -->
         <VerticalStackLayout>
             <Label Text="Face Verification"
-                    FontSize="16"
-                    FontFamily="Finlandica"
-                    FontAttributes="Bold"/>
+                   FontSize="16"
+                   FontFamily="Finlandica"
+                   FontAttributes="Bold"/>
             <Label FontFamily="Finlandica"
                    FontSize="12"
                    Text="Complete face verification for security"
@@ -16,41 +24,94 @@
                    TextColor="{StaticResource Gray600}"/>
         </VerticalStackLayout>
 
-        <VerticalStackLayout Spacing="5">
+        <!-- Status Display -->
+        <Border Stroke="{Binding VerificationStatusColor}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 10"
+                Padding="10"
+                IsVisible="{Binding IsFaceCaptured, Converter={StaticResource InvertedBoolConverter}}"
+                BackgroundColor="Transparent">
+            <Label Text="{Binding VerificationStatus}"
+                   FontFamily="Finlandica"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="{Binding VerificationStatusColor}" />
+        </Border>
+
+        <!-- Image Preview -->
+        <Border StrokeShape="RoundRectangle 10"
+                StrokeThickness="1"
+                StrokeDashArray="2,2"
+                Margin="10,5"
+                Padding="10"
+                IsVisible="{Binding IsFaceCaptured}">
+            <Image Source="{Binding CapturedImage}"
+                   Aspect="AspectFit"
+                   HeightRequest="200"
+                   HorizontalOptions="Center"/>
+        </Border>
+
+        <!-- Take Selfie Button / Placeholder -->
+        <VerticalStackLayout Spacing="5"
+                             IsVisible="{Binding IsFaceCaptured, Converter={StaticResource InvertedBoolConverter}}">
             <Label Text="Take a selfie of your face clearly"
-           FontFamily="Finlandica"
-           FontSize="16"
-           FontAttributes="Bold"/>
+                   FontFamily="Finlandica"
+                   FontSize="16"
+                   FontAttributes="Bold"/>
 
             <Border StrokeDashArray="2,2"
-            StrokeShape="RoundRectangle 10"
-            Margin="10,5"
-            Padding="10">
+                    StrokeShape="RoundRectangle 10"
+                    Margin="10,5"
+                    Padding="10">
                 <Grid RowDefinitions="*,auto,auto"
-              HorizontalOptions="Center" RowSpacing="10">
+                      HorizontalOptions="Center"
+                      RowSpacing="10">
                     <Label Text="{x:Static icon:Icons.cameraIcon}"
-                   FontFamily="MaterialIcon"
-                   FontSize="50"
-                   Grid.Row="0"
-                   HorizontalOptions="Center"/>
-                    <Label Text="Tab to open camera"
-                   Grid.Row="1"
-                   FontFamily="Finlandica"
-                   HorizontalOptions="Center"/>
+                           FontFamily="MaterialIcon"
+                           FontSize="50"
+                           Grid.Row="0"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Tap to open camera"
+                           Grid.Row="1"
+                           FontFamily="Finlandica"
+                           HorizontalOptions="Center"/>
 
+                    <!-- BOUND TO COMMAND -->
                     <Border Grid.Row="2"
-                    HorizontalOptions="Center"
-                    StrokeShape="RoundRectangle 5"
-                    StrokeThickness="0.8"
-                    Padding="10,5"
-                    StrokeDashArray="2">
+                            HorizontalOptions="Center"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="0.8"
+                            Padding="10,5"
+                            StrokeDashArray="2">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TakeSelfieCommand}"/>
+                        </Border.GestureRecognizers>
                         <Label Text="Take Selfie"
-                       HorizontalOptions="Center"
-                       FontFamily="Finlandica"
-                       FontAttributes="Bold"/>
+                               HorizontalOptions="Center"
+                               FontFamily="Finlandica"
+                               FontAttributes="Bold"/>
                     </Border>
                 </Grid>
             </Border>
         </VerticalStackLayout>
+
+        <!-- Retake Selfie Button (shown after capture)-->
+        <Border StrokeShape="RoundRectangle 20"
+                StrokeThickness="0"
+                BackgroundColor="{StaticResource Primary}"
+                Padding="15"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsFaceCaptured}">
+            <Label Text="Retake Selfie"
+                   TextColor="White"
+                   FontFamily="Finlandica"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RetakeSelfieCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Border>
+
     </VerticalStackLayout>
 </ContentView>

@@ -5,175 +5,209 @@
              xmlns:model="clr-namespace:MANDUU.Models"
              x:Class="MANDUU.Views.ShopPages.DashboardPage"
              Title="Dashboard"
-             Shell.TabBarIsVisible='False'>
-    <Grid RowDefinitions="auto, *" Margin="10,0" RowSpacing="30">
-        <Grid ColumnDefinitions="*,auto" HorizontalOptions="Center" Margin="0,0,-20,0">
-            <VerticalStackLayout Grid.Column="0" Spacing="5">
+             Shell.TabBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto, *" Margin="16,0" RowSpacing="24">
+
+        <!-- HEADER SECTION -->
+        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="20" HorizontalOptions="Fill">
+
+            <!-- Shop Info + Profile Image -->
+            <VerticalStackLayout Spacing="2" >
                 <Label Text="{Binding Shop.Name}"
-                       FontSize="20"
-                       HorizontalOptions="Start"/>
-                <Border HeightRequest="180"
-                        WidthRequest="300"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 10">
+                       Style="{StaticResource Title}"
+                       FontSize="24"
+                       TextColor="{StaticResource Primary}"
+                       Margin="10,0"/>
+
+                <Border StrokeThickness="0"
+                        StrokeShape="RoundRectangle 16"
+                        HeightRequest="160"
+                        MinimumWidthRequest="300"
+                        HorizontalOptions="Start">
                     <Border.Shadow>
-                        <Shadow Brush="Gray"
-                                Opacity="0.5"/>
+                        <Shadow Brush="Black" Opacity="0.1" Radius="12" Offset="2,4"/>
                     </Border.Shadow>
                     <Image Source="{Binding Shop.ShopProfileImage}"
-                           Aspect="AspectFill"/>
+                           Aspect="AspectFill"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"/>
                 </Border>
             </VerticalStackLayout>
-            <Grid Grid.Column="1">
-                <Grid RowDefinitions="auto,auto,*" RowSpacing="10">
-                    <VerticalStackLayout Grid.Row="0">
-                        <Border StrokeThickness="0"
-                                StrokeShape="RoundRectangle 100"
-                                BackgroundColor="#d9d9d9"
-                                HeightRequest="50"
-                                WidthRequest="50">
-                            <Label Text="{x:Static icon:Icons.analyticsIcon}"
-                                   FontFamily="MaterialIcon"
-                                   VerticalTextAlignment="Center"
-                                   HorizontalTextAlignment="Center"
-                                   FontSize="35"/>
-                        </Border>
-                        <Label Text="Analytics"
-                               FontSize="Micro"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
-                               VerticalTextAlignment="Center"
-                               HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
 
-                    <VerticalStackLayout Grid.Row="1">
-                        <Border StrokeThickness="0"
-                                StrokeShape="RoundRectangle 100"
-                                BackgroundColor="#d9d9d9"
-                                HeightRequest="50"
-                                WidthRequest="50">
-                            <Label Text="{x:Static icon:Icons.deleteIcon}"
-                                   FontFamily="MaterialIcon"
-                                   VerticalTextAlignment="Center"
-                                   HorizontalTextAlignment="Center"
-                                   FontSize="35"
-                                   TextColor="Red"/>
-                        </Border>
-                        <Label Text="Delete Product"
-                               FontSize="Micro"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
-                               VerticalTextAlignment="Center"
-                               HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
+            <!-- Action Buttons -->
+            <Grid Grid.Column="1" RowDefinitions="Auto, Auto, Auto" RowSpacing="10" VerticalOptions="Center">
 
-                    <VerticalStackLayout Grid.Row="2">
-                        <Border StrokeThickness="0"
-                                StrokeShape="RoundRectangle 100"
-                                BackgroundColor="#d9d9d9"
-                                HeightRequest="50"
-                                WidthRequest="50">
-                            <Label Text="+"
-                                   FontFamily="MaterialIcon"
-                                   VerticalTextAlignment="Center"
-                                   HorizontalTextAlignment="Center"
-                                   FontSize="35"/>
-                        </Border>
-                        <Label Text="Add Product"
-                               FontSize="Micro"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
+                <!-- Analytics -->
+                <VerticalStackLayout Grid.Row="0" HorizontalOptions="Center">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 25"
+                            BackgroundColor="#E0E0E0"
+                            HeightRequest="50"
+                            WidthRequest="50"
+                            HorizontalOptions="Center">
+                        <Label Text="{x:Static icon:Icons.analyticsIcon}"
+                               FontFamily="MaterialIcon"
                                VerticalTextAlignment="Center"
-                               HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                </Grid>                
+                               HorizontalTextAlignment="Center"
+                               FontSize="24"
+                               TextColor="{StaticResource Primary}"/>
+                    </Border>
+                    <Label Text="Analytics"
+                           FontSize="12"
+                           HorizontalOptions="Center"
+                           TextColor="Gray"/>
+                </VerticalStackLayout>
+
+                <!-- Delete Product -->
+                <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 25"
+                            BackgroundColor="#FFE0E0"
+                            HeightRequest="50"
+                            WidthRequest="50"
+                            HorizontalOptions="Center">
+                        <Label Text="{x:Static icon:Icons.deleteIcon}"
+                               FontFamily="MaterialIcon"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               FontSize="24"
+                               TextColor="Red"/>
+                    </Border>
+                    <Label Text="Delete"
+                           FontSize="12"
+                           HorizontalOptions="Center"
+                           TextColor="Gray"/>
+                </VerticalStackLayout>
+
+                <!-- Add Product -->
+                <VerticalStackLayout Grid.Row="2" HorizontalOptions="Center">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 25"
+                            BackgroundColor="{StaticResource Primary}"
+                            HeightRequest="50"
+                            WidthRequest="50"
+                            HorizontalOptions="Center">
+                        <Label Text="+"
+                               FontFamily="MaterialIcon"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               FontSize="30"
+                               TextColor="White"/>
+                    </Border>
+                    <Label Text="Add Product"
+                           FontSize="12"
+                           HorizontalOptions="Center"
+                           TextColor="Gray"/>
+                </VerticalStackLayout>
+
             </Grid>
         </Grid>
-        
-        <!--Products-->
 
-        <ScrollView Grid.Row="1" Margin="0,0,0,20">
-            <Grid RowDefinitions="auto, *">
-                <HorizontalStackLayout Grid.Row="0">
-                <Border>
-                    <HorizontalStackLayout>
-                        <Label Text="{x:Static icon:Icons.searchIcon}"
-                               FontFamily="MaterialIcon"
-                               FontSize="20"
-                               VerticalTextAlignment="Center"/>
-                        <Entry Margin="0" />
-                    </HorizontalStackLayout>
+        <!-- PRODUCTS SECTION -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16" Margin="0,0,0,30">
+
+                <!-- Search Bar -->
+                <Border Stroke="{StaticResource Gray300}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 25"
+                        Padding="0"
+                        HorizontalOptions="Fill">
+                    <SearchBar Placeholder="Search Product..."/>
                 </Border>
-            </HorizontalStackLayout>
-                
-            <CollectionView ItemsSource="{Binding ShopProducts}" Grid.Row="1">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Product">
-                            <Border StrokeThickness="0"
-                                StrokeShape="RoundRectangle 10"
-                                BackgroundColor="#1A008000"
-                                    Padding="10">
-                                <Grid ColumnDefinitions="auto, auto, *" ColumnSpacing="10">
+
+                <!-- Products List -->
+                <CollectionView ItemsSource="{Binding ShopProducts}"
+                                SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Product">
+                            <Border StrokeThickness="0.4"
+                                    StrokeShape="RoundRectangle 16"
+                                    BackgroundColor="White"
+                                    Padding="10"
+                                    HorizontalOptions="Fill">
+                                <Border.Shadow>
+                                    <Shadow Brush="Black" Opacity="0.08" Radius="8" Offset="1,2"/>
+                                </Border.Shadow>
+
+                                <Grid ColumnDefinitions="120, *, Auto" ColumnSpacing="16" HorizontalOptions="Fill">
+
+                                    <!-- Product Image -->
                                     <Border Grid.Column="0"
-                                            HeightRequest="150"
+                                            HeightRequest="140"
                                             WidthRequest="120"
                                             StrokeThickness="0"
-                                            StrokeShape="RoundRectangle 10">
-                                        <Border.Shadow>
-                                            <Shadow Brush="Gray"
-                                                    Opacity="0.2"
-                                                    Offset="5,5"/>
-                                        </Border.Shadow>
+                                            StrokeShape="RoundRectangle 12">
                                         <Image Source="{Binding ImageUrl}"
-                                               Aspect="AspectFill"/>
+                                               Aspect="AspectFill"
+                                               HorizontalOptions="Fill"
+                                               VerticalOptions="Fill"/>
                                     </Border>
-                                
-                                    <VerticalStackLayout VerticalOptions="Start" Grid.Column="1">
+
+                                    <!-- Product Info -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Start">
                                         <Label Text="{Binding Name}"
-                                               FontSize="18"
+                                               Style="{StaticResource Title}"
                                                LineBreakMode="TailTruncation"
-                                               MaxLines="1"
-                                               WidthRequest="100"
+                                               MaxLines="2"
                                                HorizontalOptions="Start"/>
+
                                         <Label Text="{Binding FormattedDate}"
-                                               FontFamily="Finlandica"/>
+                                               FontSize="12"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray100}}"/>
+
                                         <Label Text="{Binding FormattedLastUpdated}"
-                                               FontFamily="Finlandica"/>
+                                               FontSize="12"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray100}}"/>
                                     </VerticalStackLayout>
 
-                                    <Grid Grid.Column="2" RowDefinitions="auto, auto, *">
+                                    <!-- Price -->
+                                    <Grid Grid.Column="2" RowSpacing="8" HorizontalOptions="End" RowDefinitions="auto, *">
                                         <Label Text="{Binding FormattedPrice}"
-                                               FontSize="20"
-                                               FontFamily="Finlandica"
-                                               Grid.Row="1"
-                                               HorizontalOptions="Center"/>
-                                        <Border HorizontalOptions="Center"
+                                               HorizontalOptions="End"
+                                               Grid.Row="0"
+                                               VerticalOptions="Start"
+                                               Style="{StaticResource BigPrice}"/>
+
+                                        <Border BackgroundColor="{StaticResource Primary}"
                                                 StrokeThickness="0"
-                                                Background="{StaticResource Primary}"
-                                                Padding="10,2"
-                                                Grid.Row="2"
-                                                VerticalOptions="End" Margin="5"
-                                                StrokeShape="RoundRectangle 10">
+                                                StrokeShape="RoundRectangle 20"
+                                                Padding="12,6"
+                                                HorizontalOptions="End"
+                                                VerticalOptions="End"
+                                                Grid.Row="1">
                                             <HorizontalStackLayout>
-                                                <Label Text="View Product"
-                                                       TextColor="#fff"/>
+                                                <Label Text="View"
+                                                      Style="{StaticResource ButtonLabelText}"
+                                                       VerticalTextAlignment="Center"/>
                                                 <Label Text="{x:Static icon:Icons.getStartedIcon}"
-                                                       FontSize="20"
-                                                       FontFamily="MaterialIcon"
-                                                       VerticalTextAlignment="Center"
-                                                       TextColor="#fff"/>
+                                                       Style="{StaticResource MaterialIcon}"
+                                                       TextColor="{StaticResource White}"/>
                                             </HorizontalStackLayout>
                                         </Border>
                                     </Grid>
+
                                 </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-           </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Optional: Empty State -->
+                <!--
+                <Label Text="No products found. Add one to get started!"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       IsVisible="{Binding IsEmpty}"
+                       Margin="0,60,0,0"/>
+                -->
+
+            </VerticalStackLayout>
         </ScrollView>
+
     </Grid>
 </ContentPage>

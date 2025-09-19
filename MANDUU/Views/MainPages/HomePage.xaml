@@ -163,7 +163,8 @@
                                         </Border.Shadow>
                                         <Label Text="{Binding Name}"
                                                    Style="{StaticResource ButtonLabelText}"
-                                                   FontSize="13"/>
+                                                   FontSize="13"
+                                               TextColor="{StaticResource Black}"/>
                                     </Border>
                                 </Grid>
                             </Border>

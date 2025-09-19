@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MANDUU.Models"
+             xmlns:icons="clr-namespace:MANDUU.Helpers"
+             x:Class="MANDUU.Views.MainPages.SubPages.Favorites.All">
+    <VerticalStackLayout Spacing="10">
+        <Label Text="Currently displaying all favorites"
+               Style="{StaticResource Title}"/>
+
+        <CollectionView ItemsSource="{Binding AllFavoriteItems}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10"
+                                 HorizontalItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:FavoriteItem">
+                    <Border StrokeThickness="0.5"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="5">
+                        <Grid RowDefinitions="*,auto">
+                            <Border HeightRequest="120"
+                                    StrokeShape="RoundRectangle 15"
+                                    StrokeThickness="0"
+                                    Grid.Row="0">
+                                <Grid>
+                                    <Label Text="{Static icons:Icons.favoriteIcon}"
+                                           TextColor="Red"
+                                           Style="{StaticResource MaterialIcon}"
+                                           HorizontalOptions="End"
+                                           VerticalOptions="Start"
+                                           ZIndex="2"
+                                           Margin="5"
+                                           FontSize="24"/>
+                                    <Image Source="{Binding ImageUrl}"
+                                           Aspect="AspectFill"/>
+                                </Grid>
+                            </Border>
+                            <VerticalStackLayout Grid.Row="1"
+                                                 Margin="10,5">
+                                <Grid ColumnDefinitions="*,*">
+                                    <Label Text="{Binding DisplayName}"
+                                           Style="{StaticResource Title}"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="1"
+                                           Grid.Column="0"/>
+                                    <Label Text="{x:Static icons:Icons.verificationBadgeIcon}"
+                                           Style="{StaticResource MaterialIcon}"
+                                           Grid.Column="1"
+                                           IsVisible="{Binding IsShop}"
+                                           TextColor="Green"
+                                           HorizontalOptions="End"
+                                           FontSize="24"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,*">
+                                    <Label Text="{Binding AddedDateFormatted}"
+                                           Grid.Column="0"/>
+                                    <Label Text="{Binding AddedTimeFormatted}" 
+                                           Grid.Column="1"
+                                           HorizontalOptions="End"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,*"
+                                      IsVisible="{Binding IsProduct}">
+                                    <Label Text="{Binding ProductPrice}"
+                                           IsVisible="{Binding IsProduct}"
+                                           Style="{StaticResource BigPrice}"
+                                           VerticalOptions="Center"/>
+                                    <Button Style="{StaticResource CustomButton}"
+                                             Grid.Column="1"
+                                             Text="+"
+                                             HorizontalOptions="End"
+                                             VerticalOptions="Center"
+                                            Padding="10,3"
+                                            IsVisible="{Binding IsProduct}"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentView>

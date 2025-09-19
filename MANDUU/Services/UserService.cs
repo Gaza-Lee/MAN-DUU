@@ -20,7 +20,6 @@ namespace MANDUU.Services
 
         private List<User> InitializeUsersWithShops()
         {
-            // Get all shops first
             var allShops = _shopService.GetAllShopsAsync().Result.ToList();
 
             return new List<User>
@@ -34,7 +33,10 @@ namespace MANDUU.Services
                     FirstName = "User",
                     LastName = "One",
                     ProfilePicture = "profile_picture.jpg",
-                    Shops = allShops.Where(s => s.Id == 3 || s.Id == 4).ToList() // FashionFix (id:3) and Emart (id:4)
+                    IsFaceVerified = true,
+                    VerificationStatus = "Completed",
+                    VerificationDate = DateTime.UtcNow.AddDays(-1),
+                    Shops = allShops.Where(s => s.Id == 3 || s.Id == 4).ToList()
                 },
                 new User
                 {
@@ -44,9 +46,51 @@ namespace MANDUU.Services
                     HashPassword = "password2!",
                     FirstName = "User",
                     LastName = "Two",
-                    Shops = allShops.Where(s => s.Id == 6).ToList() // TechGadgets Hub (id:6)
+                    IsFaceVerified = false,
+                    VerificationStatus = "Pending",
+                    Shops = allShops.Where(s => s.Id == 6).ToList()
                 }
             };
+        }
+
+        public async Task<bool> UpdateFaceVerificationStatusAsync(int userId, bool isVerified, string status)
+        {
+            await Task.Delay(100);
+
+            var user = _users.FirstOrDefault(u => u.Id == userId);
+            if (user != null)
+            {
+                user.IsFaceVerified = isVerified;
+                user.VerificationStatus = status;
+                user.VerificationDate = isVerified ? DateTime.UtcNow : null;
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> UpdateUserAsync(User user)
+        {
+            await Task.Delay(100);
+
+            var existingUser = _users.FirstOrDefault(u => u.Id == user.Id);
+            if (existingUser != null)
+            {
+                // Update all properties
+                existingUser.FirstName = user.FirstName;
+                existingUser.LastName = user.LastName;
+                existingUser.Email = user.Email;
+                existingUser.PhoneNumber = user.PhoneNumber;
+                existingUser.IsFaceVerified = user.IsFaceVerified;
+                existingUser.VerificationStatus = user.VerificationStatus;
+                existingUser.VerificationDate = user.VerificationDate;
+                existingUser.IsSeller = user.IsSeller;
+                existingUser.ProfilePicture = user.ProfilePicture;
+
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<bool> IsUserAuthenticatedAsync()
@@ -68,9 +112,8 @@ namespace MANDUU.Services
 
         public async Task<bool> LoginAsync(string emailOrPhone, string password)
         {
-            await Task.Delay(100); // Simulate async operation
+            await Task.Delay(100);
 
-            // Try to find user by email
             var userByEmail = _users.FirstOrDefault(u =>
                 u.Email.Equals(emailOrPhone, StringComparison.OrdinalIgnoreCase) &&
                 u.HashPassword == password);
@@ -81,7 +124,6 @@ namespace MANDUU.Services
                 return true;
             }
 
-            // Try to find user by phone number (remove any non-digit characters first)
             var cleanPhone = new string(emailOrPhone.Where(char.IsDigit).ToArray());
             var userByPhone = _users.FirstOrDefault(u =>
                 u.PhoneNumber != null &&
@@ -97,47 +139,41 @@ namespace MANDUU.Services
             return false;
         }
 
-
         public async Task<bool> RegisterAsync(string firstName, string lastName, string email, string phoneNumber, string password)
         {
-            await Task.Delay(100); // Simulate async operation
+            await Task.Delay(100);
 
-            // Check if email already exists
             if (_users.Any(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase)))
             {
-                return false; // Email already registered
+                return false;
             }
 
-            // Check if phone number already exists
-            var cleanPhone = phoneNumber; // Keep the format as provided
+            var cleanPhone = phoneNumber;
             if (_users.Any(u => u.PhoneNumber != null && u.PhoneNumber.Equals(cleanPhone, StringComparison.OrdinalIgnoreCase)))
             {
-                return false; // Phone number already registered
+                return false;
             }
 
-            // Create new user
             var newUser = new User
             {
-                Id = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1, // Add user to the end of the list
+                Id = _users.Count > 0 ? _users.Max(u => u.Id) + 1 : 1,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                HashPassword = password, // Should be hashed in Production
+                HashPassword = password,
                 FirstName = firstName,
                 LastName = lastName,
-                ProfilePicture = null, // Can be set later
-                Shops = new List<Shop>() // New user starts with no shops
+                ProfilePicture = null,
+                IsFaceVerified = false,
+                VerificationStatus = "Pending",
+                Shops = new List<Shop>()
             };
 
-            // Add user to the list of users
             _users.Add(newUser);
-
-            //automatically log in the user after registration
             Preferences.Default.Set("CurrentUserId", newUser.Id);
 
             return true;
         }
 
-        //check if email or phone exists
         public async Task<bool> IsEmailExistsAsync(string email)
         {
             await Task.Delay(10);
@@ -152,28 +188,24 @@ namespace MANDUU.Services
                 new string(u.PhoneNumber.Where(char.IsDigit).ToArray()) == cleanPhone);
         }
 
-        // Logout
         public async Task<bool> LogoutAsync()
         {
             Preferences.Default.Remove("CurrentUserId");
             return true;
         }
 
-        // Shops belonging to current User
         public async Task<List<Shop>> GetShopsByUserAsync(int userId)
         {
             var user = _users.FirstOrDefault(u => u.Id == userId);
             return user?.Shops ?? new List<Shop>();
         }
 
-        //if user owns a specific shop
         public async Task<bool> DoesUserOwnShopAsync(int userId, int shopId)
         {
             var user = _users.FirstOrDefault(u => u.Id == userId);
             return user?.Shops.Any(s => s.Id == shopId) ?? false;
         }
 
-        //Add shop to user's ownership
         public async Task<bool> AddShopToUserAsync(int userId, Shop shop)
         {
             var user = _users.FirstOrDefault(u => u.Id == userId);
