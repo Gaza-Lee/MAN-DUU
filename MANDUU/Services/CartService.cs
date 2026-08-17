@@ -10,7 +10,7 @@ namespace MANDUU.Services
         private ObservableCollection<CartItem> _cartItems = new();
         private int _nextCartItemId = 1;
 
-        public event EventHandler CartUpdated;
+        public event EventHandler? CartUpdated;
 
         public IReadOnlyList<CartItem> GetCartItems() => _cartItems.ToList().AsReadOnly();
 

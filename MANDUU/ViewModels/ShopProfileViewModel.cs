@@ -16,7 +16,7 @@ namespace MANDUU.ViewModels
         private readonly ProductService _productService;
         private readonly INavigationService _navigationService;
 
-        [ObservableProperty] private Shop shop;
+        [ObservableProperty] private Shop shop = null!;
         [ObservableProperty] private ObservableCollection<Product> shopProducts = new();
 
         public ShopProfileViewModel(ShopService shopService, ProductService productService, INavigationService navigationService)

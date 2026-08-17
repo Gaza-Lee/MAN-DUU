@@ -19,13 +19,13 @@ namespace MANDUU.ViewModels
         private readonly FavoritesService _favoritesService;
 
         [ObservableProperty]
-        private ObservableCollection<FavoriteItem> _favoriteShops;
+        private ObservableCollection<FavoriteItem> _favoriteShops = null!;
 
         [ObservableProperty]
-        private ObservableCollection<FavoriteItem> _favoriteProducts;
+        private ObservableCollection<FavoriteItem> _favoriteProducts = null!;
 
         [ObservableProperty]
-        private ObservableCollection<FavoriteItem> _allFavoriteItems;
+        private ObservableCollection<FavoriteItem> _allFavoriteItems = null!;
 
         [ObservableProperty]
         private int _selectedTabIndex = 0;

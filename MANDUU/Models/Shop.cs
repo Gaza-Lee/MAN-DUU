@@ -11,29 +11,29 @@ namespace MANDUU.Models
     public class Shop
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Offer ShopAd { get; set; } //Shop Advertisement(could later be multiple ads) so might need to be a list later
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public Offer ShopAd { get; set; } = null!; //Shop Advertisement(could later be multiple ads) so might need to be a list later
 
         // Owner Info
         public int OwnerId { get; set; }
-        public string OwnerName { get; set; }
+        public string OwnerName { get; set; } = string.Empty;
         public string? UniqueShopPin { get; set; }
 
 
         public string? Email { get; set; }
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
 
         public string? Logo { get; set; }
         public string? CoverImage { get; set; }
 
-        public string ShortLocation { get; set; }
-        public string LongLocation { get; set; }
+        public string ShortLocation { get; set; } = string.Empty;
+        public string LongLocation { get; set; } = string.Empty;
 
-        public string ShopProfileImage { get; set; }
+        public string ShopProfileImage { get; set; } = string.Empty;
 
         public int MainCategoryId { get; set; }
-        public ShopCategory MainCategory { get; set; } // The primary category that the shop belongs to
+        public ShopCategory MainCategory { get; set; } = null!; // The primary category that the shop belongs to
 
         // Other main categories that the shop can belong to (for shops that sell multiple types of products)
         public List<ShopCategory> AdditionalCategories { get; set; } = new();

@@ -26,19 +26,19 @@ namespace MANDUU.ViewModels
         private decimal _estimatedPrice;
 
         [ObservableProperty]
-        private string _selectedPrintType;
+        private string _selectedPrintType = string.Empty;
 
         [ObservableProperty]
-        private string _selectedPageSetting;  
+        private string _selectedPageSetting = string.Empty;  
 
         [ObservableProperty]
-        private string _selectedPaperSize;
+        private string _selectedPaperSize = string.Empty;
 
         [ObservableProperty]
-        private PrintingStation _selectedPrintingStation;
+        private PrintingStation _selectedPrintingStation = null!;
 
         [ObservableProperty]
-        private string _selectedDocument;
+        private string _selectedDocument = string.Empty;
 
         [ObservableProperty]
         private ObservableCollection<string> _printTypes = new() { "Black and White", "Coloured" };
@@ -50,7 +50,7 @@ namespace MANDUU.ViewModels
         private ObservableCollection<string> _paperSizes = new() { "A4", "A3", "Letter", "Legal" };
 
         [ObservableProperty]
-        private ObservableCollection<PrintingStation> _printStations;
+        private ObservableCollection<PrintingStation> _printStations = null!;
 
         public PrintingDetailsViewModel(PrintingStationService printingStationService)
         {
@@ -69,11 +69,11 @@ namespace MANDUU.ViewModels
         {
             if (query.ContainsKey("SelectedStation"))
             {
-                SelectedPrintingStation = query["SelectedStation"] as PrintingStation;
+                SelectedPrintingStation = (query["SelectedStation"] as PrintingStation)!;
             }
             if (query.ContainsKey("SelectedDocument"))
             {
-                SelectedDocument = query["SelectedDocument"] as string;
+                SelectedDocument = (query["SelectedDocument"] as string)!;
             }
         }
 
@@ -82,7 +82,7 @@ namespace MANDUU.ViewModels
         [RelayCommand]
         private async Task RemoveDocumentAsync()
         {
-            var confirm = Shell.Current.DisplayAlert("Caution",
+            var confirm = await Shell.Current.DisplayAlertAsync("Caution",
                 "Are you sure you want to remove Document",
                 "No", "Yes");
         }

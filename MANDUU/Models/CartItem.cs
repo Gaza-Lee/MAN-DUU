@@ -16,7 +16,7 @@ namespace MANDUU.Models
         private int productId;
 
         [ObservableProperty]
-        private Product product;
+        private Product product = null!;
 
         [ObservableProperty]
         private int quantity;

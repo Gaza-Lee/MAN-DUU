@@ -17,7 +17,7 @@ namespace MANDUU.ViewModels
         #region Observable properties
 
         [ObservableProperty]
-        private string _email;
+        private string _email = string.Empty;
         #endregion
 
         public ResetPasswordPageViewModel(INavigationService navigationService): base(navigationService)

@@ -11,17 +11,17 @@ namespace MANDUU.Models
         public int Id { get; set; }
 
         // Basic Info
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
         public string FullName => $"{FirstName} {LastName}";
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
 
         // Seller Info
         public bool IsSeller { get; set; } = false;
 
         // Authentication
-        public string HashPassword { get; set; }
+        public string HashPassword { get; set; } = string.Empty;
         public bool IsVerified { get; set; }
 
         // Face Verification

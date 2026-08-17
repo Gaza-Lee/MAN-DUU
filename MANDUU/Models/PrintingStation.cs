@@ -9,10 +9,10 @@ namespace MANDUU.Models
     public class PrintingStation
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string ShortLocation { get; set; }
-        public string LongLocation { get; set; }
-        public string PhoneNumber { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string ShortLocation { get; set; } = string.Empty;
+        public string LongLocation { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
         public PrintingStationStatus Status { get; set; }
     }
     public enum PrintingStationStatus

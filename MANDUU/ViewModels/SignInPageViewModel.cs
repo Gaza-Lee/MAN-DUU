@@ -18,10 +18,10 @@ namespace MANDUU.ViewModels
         private readonly IUserService _userService;
 
         [ObservableProperty]
-        private string _emailOrPhone;
+        private string _emailOrPhone = string.Empty;
 
         [ObservableProperty]
-        private string _password;
+        private string _password = string.Empty;
 
 
         public SignInPageViewModel(IUserService userService, INavigationService navigationService) : base(navigationService)

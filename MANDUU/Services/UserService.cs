@@ -62,7 +62,7 @@ namespace MANDUU.Services
         {
             await Task.Delay(100);
 
-            var user = _users.FirstOrDefault(u => u.Id == userId);
+            var user = _users.FirstOrDefault(u => u.Id == userId)!;
             if (user != null)
             {
                 user.IsFaceVerified = isVerified;
@@ -109,9 +109,9 @@ namespace MANDUU.Services
             var userId = Preferences.Default.Get("CurrentUserId", -1);
             if (userId == -1)
             {
-                return null;
+                return null!;
             }
-            return _users.FirstOrDefault(u => u.Id == userId);
+            return _users.FirstOrDefault(u => u.Id == userId)!;
         }
 
         public async Task<bool> LoginAsync(string emailOrPhone, string password)
@@ -200,19 +200,19 @@ namespace MANDUU.Services
 
         public async Task<List<Shop>> GetShopsByUserAsync(int userId)
         {
-            var user = _users.FirstOrDefault(u => u.Id == userId);
+            var user = _users.FirstOrDefault(u => u.Id == userId)!;
             return user?.Shops ?? new List<Shop>();
         }
 
         public async Task<bool> DoesUserOwnShopAsync(int userId, int shopId)
         {
-            var user = _users.FirstOrDefault(u => u.Id == userId);
+            var user = _users.FirstOrDefault(u => u.Id == userId)!;
             return user?.Shops.Any(s => s.Id == shopId) ?? false;
         }
 
         public async Task<bool> AddShopToUserAsync(int userId, Shop shop)
         {
-            var user = _users.FirstOrDefault(u => u.Id == userId);
+            var user = _users.FirstOrDefault(u => u.Id == userId)!;
             if (user != null && !user.Shops.Any(s => s.Id == shop.Id))
             {
                 user.Shops.Add(shop);
@@ -231,7 +231,7 @@ namespace MANDUU.Services
         public async Task<bool> GetUserIsVerifiedByIdAsync(int userId)
         {
             await Task.Yield();
-            var user = _users.FirstOrDefault(u => u.Id == userId);
+            var user = _users.FirstOrDefault(u => u.Id == userId)!;
             return user?.IsFaceVerified == true && user.VerificationStatus == "Completed";
         }
     }

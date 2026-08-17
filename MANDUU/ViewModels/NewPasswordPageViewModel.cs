@@ -17,10 +17,10 @@ namespace MANDUU.ViewModels
     {
         #region Observable properties
         [ObservableProperty]
-        private string _newPassword;
+        private string _newPassword = string.Empty;
 
         [ObservableProperty]
-        private string _confirmNewPassword;
+        private string _confirmNewPassword = string.Empty;
         #endregion
 
         public NewPasswordPageViewModel(INavigationService navigationService) :base(navigationService)

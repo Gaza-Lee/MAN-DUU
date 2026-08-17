@@ -5,9 +5,9 @@ namespace MANDUU.Models.PaymentModels
     public class PaymentAuthorization
     {
         [JsonProperty("authorization_code")]
-        public string AuthorizationCode { get; set; }
+        public string AuthorizationCode { get; set; } = string.Empty;
 
         [JsonProperty("channel")]
-        public string Channel { get; set; }
+        public string Channel { get; set; } = string.Empty;
     }
 }

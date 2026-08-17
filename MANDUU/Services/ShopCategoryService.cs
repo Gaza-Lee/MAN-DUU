@@ -60,7 +60,7 @@ namespace MANDUU.Services
 
         public async Task<ShopCategory> GetShopCategoryByIdAsync(int id)
         {
-            return await Task.FromResult(_shopCategories.FirstOrDefault(sc => sc.Id == id));
+            return await Task.FromResult(_shopCategories.FirstOrDefault(sc => sc.Id == id)!);
         }
     }
 }

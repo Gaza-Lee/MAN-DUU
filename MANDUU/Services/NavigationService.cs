@@ -32,7 +32,7 @@ namespace MANDUU.Services
             }
         } 
 
-        public async Task NavigateToAsync(string route, IDictionary<string, object> parameters = null)
+        public async Task NavigateToAsync(string route, IDictionary<string, object> parameters = null!)
         {
             if (parameters != null)
             {

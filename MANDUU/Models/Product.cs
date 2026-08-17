@@ -6,9 +6,9 @@ namespace MANDUU.Models
     public class Product
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string ImageUrl { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
         public List<string> Gallery { get; set; } = new List<string>();
         public decimal Price { get; set; }
         public int TotalSold { get; set; }
@@ -21,11 +21,11 @@ namespace MANDUU.Models
         // Navigation Properties
         public MainCategory? MainCategory { get; set; }
         public SubCategory? SubCategory { get; set; }
-        public Shop Shop { get; set; }
+        public Shop Shop { get; set; } = null!;
 
         // Denormalized fields for quick access
-        public string ShopName { get; set; }
-        public string ShopLocation { get; set; }
+        public string ShopName { get; set; } = string.Empty;
+        public string ShopLocation { get; set; } = string.Empty;
 
         // Timestamps
         public DateTime CreatedDate { get; set; }

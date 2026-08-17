@@ -14,7 +14,7 @@ namespace MANDUU.ViewModels
     public partial class VerificationPageViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private string _verificationCode;
+        private string _verificationCode = string.Empty;
         
 
 

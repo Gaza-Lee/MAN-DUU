@@ -23,37 +23,37 @@ namespace MANDUU.ViewModels
         private readonly IUserService _userService;
 
         [ObservableProperty]
-        private string _shopProfileImage;
+        private string _shopProfileImage = string.Empty;
 
         [ObservableProperty]
-        private string _shopCoverImage;
+        private string _shopCoverImage = string.Empty;
 
         [ObservableProperty]
-        private string _shopName;
+        private string _shopName = string.Empty;
 
         [ObservableProperty]
-        private string _shopEmail;
+        private string _shopEmail = string.Empty;
 
         [ObservableProperty]
-        private string _shortLocation;
+        private string _shortLocation = string.Empty;
 
         [ObservableProperty]
-        private string _shopPhoneNumber;
+        private string _shopPhoneNumber = string.Empty;
 
         [ObservableProperty]
-        private string _shopDescription;
+        private string _shopDescription = string.Empty;
 
         [ObservableProperty]
-        private string _shopPassword;
+        private string _shopPassword = string.Empty;
 
         [ObservableProperty]
-        private string _longLocation;
+        private string _longLocation = string.Empty;
 
         [ObservableProperty]
         private ObservableCollection<ShopCategory> _availableShopCategories = new();
 
         [ObservableProperty]
-        private ShopCategory _selectedShopMainCategory;
+        private ShopCategory _selectedShopMainCategory = null!;
 
         [ObservableProperty]
         private string _locationButtonText = "LOCATE";
@@ -78,7 +78,7 @@ namespace MANDUU.ViewModels
         {
             try
             {
-                var result = await MediaPicker.PickPhotoAsync();
+                var result = (await MediaPicker.PickPhotosAsync()).FirstOrDefault();
                 if (result != null)
                 {
                     ShopCoverImage = await SaveImageToFile(result);
@@ -86,7 +86,7 @@ namespace MANDUU.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", $"An error occurred while picking the image: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlertAsync("Error", $"An error occurred while picking the image: {ex.Message}", "OK");
             }
         }
 
@@ -105,12 +105,12 @@ namespace MANDUU.ViewModels
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Unsupported", "Camera is not supported on device", "OK");
+                    await Shell.Current.DisplayAlertAsync("Unsupported", "Camera is not supported on device", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+                await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
             }
         }
 

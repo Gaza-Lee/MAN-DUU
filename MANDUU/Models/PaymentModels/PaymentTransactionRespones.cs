@@ -8,9 +8,9 @@ namespace MANDUU.Models.PaymentModels
         public bool Status { get; set; }
 
         [JsonProperty("message")]
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
 
         [JsonProperty("data")]
-        public PaymentTransactionData Data { get; set; }
+        public PaymentTransactionData Data { get; set; } = null!;
     }
 }

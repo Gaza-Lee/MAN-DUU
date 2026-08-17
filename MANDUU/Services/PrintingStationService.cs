@@ -111,7 +111,7 @@ namespace MANDUU.Services
         public List<PrintingStation> GetAllStations() => _printingStations;
 
         public PrintingStation GetStationById(int id) =>
-            _printingStations.FirstOrDefault(s => s.Id == id);
+            _printingStations.FirstOrDefault(s => s.Id == id)!;
 
         public List<PrintingStation> GetActiveStations() =>
             _printingStations.Where(s => s.Status == PrintingStationStatus.Active).ToList();
@@ -129,7 +129,7 @@ namespace MANDUU.Services
             {
                 station.Status = status;
             }
-            return station;
+            return station!;
         }
 
         public List<PrintingStation> SearchStations(string searchTerm)

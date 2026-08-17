@@ -25,16 +25,16 @@ namespace MANDUU.ViewModels
         private int _currentImageIndex = 0;
 
         [ObservableProperty]
-        private string currentImage;
+        private string currentImage = string.Empty;
 
         [ObservableProperty]
-        private Product product;
+        private Product product = null!;
 
         [ObservableProperty]
-        private Shop shop;
+        private Shop shop = null!;
 
         [ObservableProperty]
-        private ObservableCollection<Product> suggestedProducts;
+        private ObservableCollection<Product> suggestedProducts = null!;
 
         public bool IsCurrentImage(string imageUrl)
                => string.Equals(CurrentImage, imageUrl, StringComparison.OrdinalIgnoreCase);
@@ -84,8 +84,8 @@ namespace MANDUU.ViewModels
 
             await ImageSlideAnimation.SlideToNextAsync(imageView, () =>
             {
-                _currentImageIndex = (_currentImageIndex + 1) % Product.Gallery.Count;
-                CurrentImage = Product.Gallery[_currentImageIndex];
+                CurrentImageIndex = (CurrentImageIndex + 1) % Product.Gallery.Count;
+                CurrentImage = Product.Gallery[CurrentImageIndex];
             });
 
             _isAnimating = false;
@@ -101,8 +101,8 @@ namespace MANDUU.ViewModels
 
             await ImageSlideAnimation.SlideToPreviousAsync(imageView, () =>
             {
-                _currentImageIndex = (_currentImageIndex - 1 + Product.Gallery.Count) % Product.Gallery.Count;
-                CurrentImage = Product.Gallery[_currentImageIndex];
+                CurrentImageIndex = (CurrentImageIndex - 1 + Product.Gallery.Count) % Product.Gallery.Count;
+                CurrentImage = Product.Gallery[CurrentImageIndex];
             });
 
             _isAnimating = false;
@@ -132,8 +132,8 @@ namespace MANDUU.ViewModels
             }
 
             // Start at first image
-            _currentImageIndex = 0;
-            CurrentImage = Product.Gallery.FirstOrDefault();
+            CurrentImageIndex = 0;
+            CurrentImage = Product.Gallery.FirstOrDefault() ?? string.Empty;
 
             // Load suggested products from same subcategory
             await LoadSuggestedProductsAsync();
@@ -149,7 +149,7 @@ namespace MANDUU.ViewModels
             var index = Product.Gallery.IndexOf(imageUrl);
             if (index >= 0)
             {
-                _currentImageIndex = index;
+                CurrentImageIndex = index;
                 CurrentImage = imageUrl;
             }
         }
@@ -174,7 +174,7 @@ namespace MANDUU.ViewModels
                     SuggestedProducts.Add(p);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Handle error or log it
                 SuggestedProducts.Clear();

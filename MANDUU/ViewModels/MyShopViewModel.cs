@@ -26,7 +26,7 @@ namespace MANDUU.ViewModels
         private bool _hasShops;
 
         [ObservableProperty]
-        private string _userName;
+        private string _userName = string.Empty;
 
         public MyShopViewModel(IUserService userService, ShopService shopService, INavigationService navigationService)
         {
@@ -119,7 +119,7 @@ namespace MANDUU.ViewModels
             if (shop == null) return;
             try
             {
-                var confirm = await Shell.Current.DisplayAlert("Confirm", 
+                var confirm = await Shell.Current.DisplayAlertAsync("Confirm", 
                     $"Are you sure you want to remove the shop '{shop.Name}'? This action cannot be undone.", 
                     "Yes", "No");
                if (confirm)

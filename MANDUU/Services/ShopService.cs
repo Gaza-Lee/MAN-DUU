@@ -146,7 +146,7 @@ namespace MANDUU.Services
             // Enrich shops with category objects
             foreach (var shop in _shops)
             {
-                shop.MainCategory = shopCategories.FirstOrDefault(sc => sc.Id == shop.MainCategoryId);
+                shop.MainCategory = shopCategories.FirstOrDefault(sc => sc.Id == shop.MainCategoryId)!;
                 shop.AdditionalCategories = shopCategories
                     .Where(sc => shop.AdditionalCategoryIds.Contains(sc.Id))
                     .ToList();
@@ -164,7 +164,7 @@ namespace MANDUU.Services
         public async Task<Shop> GetShopByIdAsync(int id)
         {
             await InitializeShops();
-            return _shops.FirstOrDefault(s => s.Id == id);
+            return _shops.FirstOrDefault(s => s.Id == id)!;
         }
 
         public async Task<IEnumerable<Shop>> GetRecommendedShopsAsync(int count = 4)
@@ -254,7 +254,7 @@ namespace MANDUU.Services
 
             // Enrich with category objects
             var shopCategories = (await _shopCategoryService.GetAllShopCategoriesAsync()).ToList();
-            shop.MainCategory = shopCategories.FirstOrDefault(sc => sc.Id == shop.MainCategoryId);
+            shop.MainCategory = shopCategories.FirstOrDefault(sc => sc.Id == shop.MainCategoryId)!;
             shop.AdditionalCategories = shopCategories
                 .Where(sc => shop.AdditionalCategoryIds.Contains(sc.Id))
                 .ToList();
@@ -270,7 +270,7 @@ namespace MANDUU.Services
             {
                 // Enrich with category objects
                 var shopCategories = (await _shopCategoryService.GetAllShopCategoriesAsync()).ToList();
-                updatedShop.MainCategory = shopCategories.FirstOrDefault(sc => sc.Id == updatedShop.MainCategoryId);
+                updatedShop.MainCategory = shopCategories.FirstOrDefault(sc => sc.Id == updatedShop.MainCategoryId)!;
                 updatedShop.AdditionalCategories = shopCategories
                     .Where(sc => updatedShop.AdditionalCategoryIds.Contains(sc.Id))
                     .ToList();
@@ -282,7 +282,7 @@ namespace MANDUU.Services
 
         public async Task DeleteShopAsync(int id)
         {
-            var shop = _shops.FirstOrDefault(s => s.Id == id);
+            var shop = _shops.FirstOrDefault(s => s.Id == id)!;
             if (shop != null)
             {
                 _shops.Remove(shop);

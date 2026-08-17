@@ -11,6 +11,6 @@ namespace MANDUU.Models
         public int TotalProducts { get; set; }
         public int TotalSales { get; set; }
         public decimal TotalRevenue { get; set; }
-        public Product BestSellingProduct { get; set; }
+        public Product BestSellingProduct { get; set; } = null!;
     }
 }

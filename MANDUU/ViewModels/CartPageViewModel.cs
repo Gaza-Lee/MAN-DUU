@@ -17,7 +17,7 @@ namespace MANDUU.ViewModels
         private readonly CartService _cartService;
 
         [ObservableProperty]
-        private ObservableCollection<CartItem> _cartItems;
+        private ObservableCollection<CartItem> _cartItems = null!;
 
         [ObservableProperty]
         private decimal _cartTotal;
@@ -33,7 +33,7 @@ namespace MANDUU.ViewModels
             LoadCartItems();
         }
 
-        private void OnCartUpdated(object sender, EventArgs e)
+        private void OnCartUpdated(object? sender, EventArgs e)
         {
             LoadCartItems();
         }
@@ -63,7 +63,7 @@ namespace MANDUU.ViewModels
         [RelayCommand]
         private async Task RemoveItemAsync(CartItem item)
         {
-            bool confirm = await Shell.Current.DisplayAlert(
+            bool confirm = await Shell.Current.DisplayAlertAsync(
                 "Remove Item",
                 $"Are you sure you want to remove {item.Product.Name} from your cart?",
                 "Yes, Remove",
@@ -81,7 +81,7 @@ namespace MANDUU.ViewModels
         {
             if (!_cartService.HasItems())
             {
-                await Shell.Current.DisplayAlert("Cart Empty", "Your cart is empty. Add some items first.", "OK");
+                await Shell.Current.DisplayAlertAsync("Cart Empty", "Your cart is empty. Add some items first.", "OK");
                 return;
             }
 

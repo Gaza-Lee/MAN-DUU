@@ -15,8 +15,8 @@ namespace MANDUU.Animations
 
             // Slide out left + fade
             await Task.WhenAll(
-                imageView.TranslateTo(-imageView.Width, 0, AnimationSpeed, Easing.CubicIn),
-                imageView.FadeTo(0, AnimationSpeed, Easing.CubicIn)
+                imageView.TranslateToAsync(-imageView.Width, 0, AnimationSpeed, Easing.CubicIn),
+                imageView.FadeToAsync(0, AnimationSpeed, Easing.CubicIn)
             );
 
             // Change the image
@@ -28,8 +28,8 @@ namespace MANDUU.Animations
 
             // Slide in from right + fade in
             await Task.WhenAll(
-                imageView.TranslateTo(0, 0, AnimationSpeed, Easing.CubicOut),
-                imageView.FadeTo(1, AnimationSpeed, Easing.CubicOut)
+                imageView.TranslateToAsync(0, 0, AnimationSpeed, Easing.CubicOut),
+                imageView.FadeToAsync(1, AnimationSpeed, Easing.CubicOut)
             );
         }
 
@@ -40,8 +40,8 @@ namespace MANDUU.Animations
 
             // Slide out right + fade
             await Task.WhenAll(
-                imageView.TranslateTo(imageView.Width, 0, AnimationSpeed, Easing.CubicIn),
-                imageView.FadeTo(0, AnimationSpeed, Easing.CubicIn)
+                imageView.TranslateToAsync(imageView.Width, 0, AnimationSpeed, Easing.CubicIn),
+                imageView.FadeToAsync(0, AnimationSpeed, Easing.CubicIn)
             );
 
             // Change the image
@@ -53,8 +53,8 @@ namespace MANDUU.Animations
 
             // Slide in from left + fade in
             await Task.WhenAll(
-                imageView.TranslateTo(0, 0, AnimationSpeed, Easing.CubicOut),
-                imageView.FadeTo(1, AnimationSpeed, Easing.CubicOut)
+                imageView.TranslateToAsync(0, 0, AnimationSpeed, Easing.CubicOut),
+                imageView.FadeToAsync(1, AnimationSpeed, Easing.CubicOut)
             );
         }
     }

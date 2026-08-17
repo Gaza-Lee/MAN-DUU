@@ -19,7 +19,7 @@ namespace MANDUU.ViewModels
         private readonly CartService _cartService;
 
         [ObservableProperty] private int categoryId;
-        [ObservableProperty] private MainCategory selectedMainCategory;
+        [ObservableProperty] private MainCategory selectedMainCategory = null!;
         [ObservableProperty] private ObservableCollection<SubCategory> subCategories = new();
         [ObservableProperty] private bool _hasCartItems;
 
@@ -69,7 +69,7 @@ namespace MANDUU.ViewModels
             if (CategoryId <= 0) return;
 
             // Load the selected category
-            SelectedMainCategory = await _categoryService.GetMainCategoryByIdAsync(CategoryId);
+            SelectedMainCategory = (await _categoryService.GetMainCategoryByIdAsync(CategoryId))!;
             if (SelectedMainCategory == null) return;
 
             // Get all products in this category
@@ -102,7 +102,7 @@ namespace MANDUU.ViewModels
             HasCartItems = _cartService.HasItems();
         }
 
-        private void OnCartUpdated(object sender, EventArgs e)
+        private void OnCartUpdated(object? sender, EventArgs e)
         {
             UpdateCartStatus();
         }

@@ -26,10 +26,10 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         };
 
         [ObservableProperty]
-        private string _phoneNumber;
+        private string _phoneNumber = string.Empty;
 
         [ObservableProperty]
-        private string _selectedProvider;
+        private string _selectedProvider = string.Empty;
 
         [ObservableProperty]
         private decimal _overallTotal;
@@ -67,7 +67,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
                 return;
             }
 
-            var confirm = await Shell.Current.DisplayAlert(
+            var confirm = await Shell.Current.DisplayAlertAsync(
                 "Confirm Payment",
                 $"Pay {OverallTotal:₵} with {SelectedProvider}?",
                 "Confirm", "Cancel");

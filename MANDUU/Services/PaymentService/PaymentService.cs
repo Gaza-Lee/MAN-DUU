@@ -17,7 +17,7 @@ namespace MANDUU.Services.PaymentService
         private readonly HttpClient _httpClient;
         private const string BaseUrl = "https://api.paystack.co";
         private readonly string _secretKey;
-        private static List<MobileMoneyProvider> _cachedProviders;
+        private static List<MobileMoneyProvider>? _cachedProviders;
         private static DateTime _lastFetchTime = DateTime.MinValue;
 
         public PaymentService(IConfiguration config)
@@ -27,7 +27,7 @@ namespace MANDUU.Services.PaymentService
                 BaseAddress = new Uri(BaseUrl)
             };
 
-            _secretKey = config["Paystack:SecretKey"];
+            _secretKey = config["Paystack:SecretKey"] ?? string.Empty;
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", _secretKey);
         }
@@ -127,7 +127,7 @@ namespace MANDUU.Services.PaymentService
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<T>(json);
+                return JsonConvert.DeserializeObject<T>(json)!;
             }
 
             throw new PaystackApiException(response.StatusCode, json);

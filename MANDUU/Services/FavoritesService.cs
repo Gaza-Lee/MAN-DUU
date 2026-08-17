@@ -26,7 +26,7 @@ namespace MANDUU.Services
             _favoriteItems.CollectionChanged += OnFavoritesChanged;
         }
 
-        private void OnFavoritesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void OnFavoritesChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             // Rebuild both lists efficiently
             SyncFilteredCollections();

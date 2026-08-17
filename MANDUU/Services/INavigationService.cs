@@ -10,7 +10,7 @@ namespace MANDUU.Services
     {
         Task InitializeAsync();
 
-        Task NavigateToAsync(string route, IDictionary<string, object> parameters = null);
+        Task NavigateToAsync(string route, IDictionary<string, object> parameters = null!);
 
         Task PopAsync();
     }

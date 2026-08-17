@@ -32,7 +32,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
         private decimal _overallTotal;
 
         [ObservableProperty]
-        private string _residentialAddress;
+        private string _residentialAddress = string.Empty;
 
         public PaymentPageViewModel(
             CartService cartService,
@@ -59,7 +59,7 @@ namespace MANDUU.ViewModels.CheckoutAndPayment
             MobileMoneyVM.OverallTotal = OverallTotal;
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        public override void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.TryGetValue("Address", out var addressObj) && addressObj is string address)
             {

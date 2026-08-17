@@ -13,9 +13,9 @@ namespace MANDUU.ViewModels
         private readonly INavigationService _navigationService;
         private readonly CartService _cartService;
 
-        [ObservableProperty] private string _fullName;
-        [ObservableProperty] private string _profileImage;
-        [ObservableProperty] private string _cartItemCount;
+        [ObservableProperty] private string _fullName = string.Empty;
+        [ObservableProperty] private string _profileImage = string.Empty;
+        [ObservableProperty] private string _cartItemCount = string.Empty;
 
         public UserProfileViewModel(IUserService userService,
             INavigationService navigationService,
@@ -33,7 +33,7 @@ namespace MANDUU.ViewModels
             if (user != null)
             {
                 FullName = user.FullName;
-                ProfileImage = user.ProfilePicture;
+                ProfileImage = user.ProfilePicture!;
             }
             else
             {
@@ -81,7 +81,7 @@ namespace MANDUU.ViewModels
         [RelayCommand]
         private async Task LogoutAsync()
         {
-            bool confirmLogout = await Application.Current.MainPage.DisplayAlert(
+            bool confirmLogout = await Application.Current!.Windows[0].Page!.DisplayAlertAsync(
                 "Confirm Logout",
                 "Are you sure you want to log out?",
                 "Yes",
@@ -95,7 +95,7 @@ namespace MANDUU.ViewModels
                     await _navigationService.NavigateToAsync("//createaccountorsigninpage");
 
                     //Success message
-                    await Application.Current.MainPage.DisplayAlert(
+                    await Application.Current!.Windows[0].Page!.DisplayAlertAsync(
                         "Logged Out",
                         "You have been successfully logged out.",
                         "OK");

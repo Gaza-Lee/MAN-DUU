@@ -21,7 +21,7 @@ namespace MANDUU.ViewModels
         private ObservableCollection<Product> _shopProducts = new();
 
         [ObservableProperty]
-        private Shop _shop;
+        private Shop _shop = null!;
 
         public DashboardViewModel(ProductService productService, ShopService shopService, INavigationService navigationService) : base(navigationService)
         {

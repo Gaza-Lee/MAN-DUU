@@ -89,17 +89,13 @@ public partial class FloatingLabel : ContentView
             AnimateFloatingLabel(true);
     }
 
-    private void AnimateFloatingLabel(bool up)
+    private async void AnimateFloatingLabel(bool up)
     {
         double targetY = up ? 0 : 20;
         double targetFontSize = up ? 12 : 14;
 
-        FloatingTextLabel.TranslateTo(0, targetY, 150, Easing.CubicOut);
-        Device.StartTimer(TimeSpan.FromMilliseconds(150), () =>
-        {
-            FloatingTextLabel.FontSize = targetFontSize;
-            return false; // don't repeat
-        });
+        await FloatingTextLabel.TranslateToAsync(0, targetY, 150, Easing.CubicOut);
+        FloatingTextLabel.FontSize = targetFontSize;
     }
 
     #endregion

@@ -399,7 +399,7 @@ namespace MANDUU.Services
 
             foreach (var product in _products)
             {
-                var shop = allShops.FirstOrDefault(s => s.Id == product.ShopId);
+                var shop = allShops.FirstOrDefault(s => s.Id == product.ShopId)!;
                 if (shop != null)
                 {
                     product.ShopName = shop.Name;
@@ -423,13 +423,13 @@ namespace MANDUU.Services
             => await Task.FromResult(_products);
 
         public async Task<Product> GetProductByIdAsync(int id)
-            => await Task.FromResult(_products.FirstOrDefault(p => p.Id == id));
+            => await Task.FromResult(_products.FirstOrDefault(p => p.Id == id)!);
 
         // Get product with navigation properties populated
         public async Task<Product> GetProductWithDetailsAsync(int id)
         {
-            var product = _products.FirstOrDefault(p => p.Id == id);
-            if (product == null) return null;
+            var product = _products.FirstOrDefault(p => p.Id == id)!;
+            if (product == null) return null!;
 
             // Clone to avoid modifying the cached version
             var productWithDetails = new Product
@@ -455,7 +455,7 @@ namespace MANDUU.Services
 
             productWithDetails.MainCategory = mainCategories.FirstOrDefault(mc => mc.Id == product.MainCategoryId);
             productWithDetails.SubCategory = subCategories.FirstOrDefault(sc => sc.Id == product.SubCategoryId);
-            productWithDetails.Shop = allShops.FirstOrDefault(s => s.Id == product.ShopId);
+            productWithDetails.Shop = allShops.FirstOrDefault(s => s.Id == product.ShopId)!;
 
             return productWithDetails;
         }
@@ -537,7 +537,7 @@ namespace MANDUU.Services
 
                 // Populate shop info when adding new products
                 var allShops = await _shopService.GetAllShopsAsync();
-                var shop = allShops.FirstOrDefault(s => s.Id == product.ShopId);
+                var shop = allShops.FirstOrDefault(s => s.Id == product.ShopId)!;
                 if (shop != null)
                 {
                     product.ShopName = shop.Name;
@@ -590,7 +590,7 @@ namespace MANDUU.Services
         {
             try
             {
-                var product = _products.FirstOrDefault(p => p.Id == id);
+                var product = _products.FirstOrDefault(p => p.Id == id)!;
                 if (product != null)
                 {
                     _products.Remove(product);

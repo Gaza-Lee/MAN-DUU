@@ -21,22 +21,22 @@ namespace MANDUU.ViewModels
         #region observable properties
 
         [ObservableProperty]
-        private string _firstName;
+        private string _firstName = string.Empty;
 
         [ObservableProperty]
-        private string _lastName;
+        private string _lastName = string.Empty;
 
         [ObservableProperty]
-        private string _phoneNumber;
+        private string _phoneNumber = string.Empty;
 
         [ObservableProperty]
-        private string _email;
+        private string _email = string.Empty;
 
         [ObservableProperty]
-        private string _password;
+        private string _password = string.Empty;
 
         [ObservableProperty]
-        private string _confirmPassword;
+        private string _confirmPassword = string.Empty;
 
         #endregion
 
@@ -133,7 +133,7 @@ namespace MANDUU.ViewModels
                     }
                     else
                     {
-                        await Application.Current.MainPage.DisplayAlert("Failed", "User this account deatails already exist", "OK");
+                        await Application.Current!.Windows[0].Page!.DisplayAlertAsync("Failed", "User this account deatails already exist", "OK");
                     }
                 }
                 catch (Exception ex)

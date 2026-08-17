@@ -9,7 +9,7 @@ namespace MANDUU.Services
 {
     public class ProductCategoryService
     {
-        private IEnumerable<MainCategory> _mainCategories;
+        private IEnumerable<MainCategory>? _mainCategories;
         private int _nextId = 1;
 
         private int NextId() => _nextId++;

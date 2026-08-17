@@ -50,16 +50,16 @@ namespace MANDUU.ViewModels
         [ObservableProperty]
         private ObservableCollection<string> _idType = new() { "Student ID", "National Identity Card" };
 
-        [ObservableProperty] private string _selectedIdType;
+        [ObservableProperty] private string _selectedIdType = string.Empty;
         [ObservableProperty] private string _idNumber = string.Empty;
-        [ObservableProperty] private string _selectedDocument;
-        [ObservableProperty] private FileResult _selectedFile;
+        [ObservableProperty] private string _selectedDocument = string.Empty;
+        [ObservableProperty] private FileResult _selectedFile = null!;
         [ObservableProperty] private bool _isDocumentSelected = false;
         #endregion
 
         #region Face Verification Properties
         [ObservableProperty] private bool _isFaceCaptured = false;
-        [ObservableProperty] private ImageSource _capturedImage;
+        [ObservableProperty] private ImageSource _capturedImage = null!;
         [ObservableProperty] private string _verificationStatus = "Not Started";
         [ObservableProperty] private Color _verificationStatusColor = Colors.Gray;
         [ObservableProperty] private bool _isVerificationSuccessful = false;
@@ -78,7 +78,7 @@ namespace MANDUU.ViewModels
                                      IUserService userService) : base(navigationService)
         {
             _userService = userService;
-            SelectedIdType = IdType.FirstOrDefault();
+            SelectedIdType = IdType.FirstOrDefault()!;
         }
 
         [RelayCommand]
@@ -217,7 +217,7 @@ namespace MANDUU.ViewModels
         private async Task RetakeSelfieAsync()
         {
             IsFaceCaptured = false;
-            CapturedImage = null;
+            CapturedImage = null!;
             VerificationStatus = "Not Started";
             VerificationStatusColor = Colors.Gray;
             IsVerificationSuccessful = false;

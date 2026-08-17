@@ -10,7 +10,7 @@ namespace MANDUU.Converters
 {
     public class ActiveStatusColorConvertor : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if(value is PrintingStationStatus status)
             {
@@ -20,7 +20,7 @@ namespace MANDUU.Converters
             }
             return Colors.Gray;
         }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

@@ -32,10 +32,10 @@ namespace MANDUU.ViewModels
         private ObservableCollection<Offer> _offers = new();
 
         [ObservableProperty]
-        private MainCategory _selectedMainCategory;
+        private MainCategory _selectedMainCategory = null!;
 
         [ObservableProperty]
-        private Shop _selectedShop;
+        private Shop _selectedShop = null!;
 
         [ObservableProperty]
         private ObservableCollection<Shop> _recommendedShops = new();
@@ -80,7 +80,7 @@ namespace MANDUU.ViewModels
                 {
                     { "CategoryId", selectedMainCategory.Id }
                 });
-                selectedMainCategory = null;
+                selectedMainCategory = null!;
             }            
         }
 
@@ -106,7 +106,7 @@ namespace MANDUU.ViewModels
                 { "ShopName", shop.Name }
             });
 
-            SelectedShop = null;
+            SelectedShop = null!;
         }
 
         [RelayCommand]
@@ -236,7 +236,7 @@ namespace MANDUU.ViewModels
             HasCartItems = _cartService.HasItems();
         }
 
-        private void OnCartUpdated(object sender, EventArgs e)
+        private void OnCartUpdated(object? sender, EventArgs e)
         {
             UpdateCartStatus();
         }

@@ -26,13 +26,13 @@ namespace MANDUU.ViewModels
         private bool _isActive = true;
 
         [ObservableProperty]
-        private string _selectedDocument;
+        private string _selectedDocument = string.Empty;
 
         [ObservableProperty]
-        private PrintingStation _selectedStation;
+        private PrintingStation _selectedStation = null!;
 
         [ObservableProperty]
-        private string _searchText;
+        private string _searchText = string.Empty;
 
         [ObservableProperty]
         private bool _isDocumentSelected;
@@ -102,12 +102,12 @@ namespace MANDUU.ViewModels
             // Toggle selection - if same station is clicked again, deselect it
             if (SelectedStation?.Id == station?.Id)
             {
-                SelectedStation = null;
+                SelectedStation = null!;
                 IsStationSelected = false;
             }
             else
             {
-                SelectedStation = station;
+                SelectedStation = station!;
                 IsStationSelected = station != null;
             }
 
@@ -200,7 +200,7 @@ namespace MANDUU.ViewModels
             DisplayStations = new ObservableCollection<PrintingStation>(sortedStations);
         }
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IsActive) || e.PropertyName == nameof(SearchText))
             {

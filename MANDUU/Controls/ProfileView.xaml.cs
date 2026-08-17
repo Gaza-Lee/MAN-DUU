@@ -13,13 +13,13 @@ public partial class ProfileView : ContentView
         {
             TranslationX = -Width;
             IsVisible = true;
-            await this.TranslateTo(0, 0, 250, Easing.CubicOut);
+            await this.TranslateToAsync(0, 0, 250, Easing.CubicOut);
         }
     }
 
     public async Task HideAsync()
     {
-        await this.TranslateTo(-Width, 0, 250, Easing.CubicIn);
+        await this.TranslateToAsync(-Width, 0, 250, Easing.CubicIn);
         IsVisible = false;
     }
 
