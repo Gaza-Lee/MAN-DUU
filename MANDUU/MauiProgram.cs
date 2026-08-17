@@ -62,10 +62,12 @@ namespace MANDUU
             builder.RegisterViewModels();
 
 
-            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
+            var appSettingsStream = typeof(MauiProgram).Assembly
+                .GetManifestResourceStream("MANDUU.appsettings.Development.json");
+            if (appSettingsStream is not null)
             {
-                ["Paystack:SecretKey"] = ""  //Paystack TestKey
-            });
+                builder.Configuration.AddJsonStream(appSettingsStream);
+            }
 
             return builder.Build();
         }
